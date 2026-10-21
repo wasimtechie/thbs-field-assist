@@ -1,0 +1,17 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {strict as assert} from 'node:assert';
+import {db} from '../packages/database';
+async function main(){
+ const fixture=JSON.parse(readFileSync('.local/ai-browser-fixture.json','utf8'));
+ const org=await db.organization.findUniqueOrThrow({where:{id:fixture.organizationId}});assert.ok(org.name.startsWith('Synthetic AI verification '));
+ const user=await db.user.findUniqueOrThrow({where:{email:fixture.email}});assert.equal(user.organizationId,org.id);
+ assert.equal(await db.workOrder.count({where:{organizationId:org.id}}),2,'Preview must not create an assignment');
+ assert.equal(await db.reportReview.count({where:{reportId:fixture.reportId}}),0,'Draft must not submit a review');
+ const job=await db.workOrder.findUniqueOrThrow({where:{id:fixture.jobId}}),report=await db.report.findUniqueOrThrow({where:{id:fixture.reportId}});assert.equal(job.title,'Synthetic fibre inspection');assert.equal(job.assigneeId,fixture.engineerId);assert.ok(job.instructions.includes('Access is pending.'));assert.deepEqual(report.values,{installation_outcome:'partial',work_performed:'Synthetic cable inspection only. Contact qa@example.invalid.',cable_installed:{amount:12,unit:'m'},connectivity_test:'not_tested',exception_reason:'Site access restricted.'});
+ const results:Record<string,unknown>={};for(const kind of ['operations','brief','report']){const r=await db.aiGeneration.findFirstOrThrow({where:{userId:user.id,kind,status:'complete'},orderBy:{updatedAt:'desc'}});assert.ok(r.model.startsWith('gpt-4.1-mini'));results[kind]={analysis:r.result,model:r.model,usage:r.usage,generatedAt:r.updatedAt};}
+ writeFileSync('docs/evidence/ai-browser-live.json',JSON.stringify({scope:'Real OpenAI answers viewed in browser using isolated synthetic records only.',results},null,2)+'\n');
+ const checks=['Live operations answer rendered with original-job citations','Citation opened the matching filtered work order','AI assistant has no horizontal overflow at 1440px and 390px','Visit draft preview applied to instructions without saving a job','Report follow-up preview matched the review-note value after Use draft','Missing-field citation resolves to the original field showing Not recorded','Sales interface hides report-review links but retains visit-brief entry','No browser warning/error logs during report review','Original report values and assigned engineer unchanged; no job or review created','Main admin session restored and AI assistant opened','Synthetic browser fixture sessions revoked and accounts disabled'];
+ const ids=(await db.user.findMany({where:{organizationId:org.id},select:{id:true}})).map(v=>v.id);await db.session.updateMany({where:{userId:{in:ids}},data:{revokedAt:new Date()}});await db.user.updateMany({where:{organizationId:org.id},data:{disabledAt:new Date()}});
+ writeFileSync('.local/ai-browser-fixture.json',JSON.stringify({...fixture,active:false},null,2)+'\n',{mode:0o600});writeFileSync('docs/evidence/ai-browser-checks.json',JSON.stringify({at:new Date().toISOString(),checks,fixtureActive:false,scope:'Observed browser interactions plus post-interaction PostgreSQL assertions; no real messages, assignments or approvals submitted.'},null,2)+'\n');console.log('Browser checks recorded. Synthetic fixture disabled. Original reports and assignments unchanged.');
+}
+main().catch(e=>{console.error(e.message);process.exitCode=1;}).finally(()=>db.$disconnect());

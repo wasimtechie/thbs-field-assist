@@ -1,0 +1,44 @@
+node_modules/
+.next/
+.env
+.env.local
+# Local environment variants may contain credentials. Commit templates only.
+.env.*
+!.env.example
+!.env.*.example
+.local/
+*.log
+playwright-report/
+test-results/
+coverage/
+.DS_Store
+.dart_tool/
+.flutter-plugins-dependencies
+build/
+Pods/
+.symlinks/
+**/local.properties
+**/ephemeral/
+*.xcuserstate
+xcuserdata/
+models/
+*.cact
+*.onnx
+*.so
+*.a
+*.apk
+# Generated delivery artifacts; rebuild from the committed source.
+/Field-Assist-Android-Test.apk.sha256
+/THBS-Field-Assist-Demo.mp4
+# Local verification output may contain device diagnostics or session fixtures.
+/docs/evidence/*
+!/docs/evidence/README.md
+__pycache__/
+*.pyc
+# Signing material and private keys are local only.
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.key
+key.properties

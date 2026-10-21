@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17.11-alpine
+    environment:
+      POSTGRES_USER: fieldassist
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a local database password}
+      POSTGRES_DB: fieldassist
+    ports: ["127.0.0.1:54329:5432"]
+    volumes: ["fieldassist_pg:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fieldassist -d fieldassist"]
+      interval: 3s
+      retries: 10
+volumes:
+  fieldassist_pg:

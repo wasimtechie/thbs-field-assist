@@ -1,0 +1,15 @@
+name: FieldVoiceBindings
+description: Application-owned shim over the verified, pinned Needle C API.
+output: lib/field_voice_bindings_generated.dart
+headers:
+  entry-points: [src/field_voice.h]
+ffi-native:
+functions:
+  rename:
+    fa_available: faAvailable
+    fa_load: faLoad
+    fa_last_error: faLastError
+    fa_init: faInit
+    fa_transcribe: faTranscribe
+    fa_complete: faComplete
+    fa_reset: faReset

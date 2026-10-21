@@ -1,0 +1,54 @@
+{
+  "intro": {
+    "seconds": 7.985541666666666,
+    "sampleRate": 24000
+  },
+  "dispatch": {
+    "seconds": 9.753083333333333,
+    "sampleRate": 24000
+  },
+  "mobile": {
+    "seconds": 9.161333333333333,
+    "sampleRate": 24000
+  },
+  "time": {
+    "seconds": 9.272541666666667,
+    "sampleRate": 24000
+  },
+  "scan": {
+    "seconds": 10.43675,
+    "sampleRate": 24000
+  },
+  "voice": {
+    "seconds": 11.303583333333334,
+    "sampleRate": 24000
+  },
+  "sync": {
+    "seconds": 10.999291666666666,
+    "sampleRate": 24000
+  },
+  "messages": {
+    "seconds": 10.969416666666667,
+    "sampleRate": 24000
+  },
+  "review": {
+    "seconds": 11.393375,
+    "sampleRate": 24000
+  },
+  "ai": {
+    "seconds": 11.844333333333333,
+    "sampleRate": 24000
+  },
+  "people": {
+    "seconds": 12.433833333333334,
+    "sampleRate": 24000
+  },
+  "features": {
+    "seconds": 10.957833333333333,
+    "sampleRate": 24000
+  },
+  "outro": {
+    "seconds": 7.297916666666667,
+    "sampleRate": 24000
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "needleRevision": "93e88ede867e4311c39151285e74df513e4b835b",
+  "whistleRevision": "ca5287601bef25af26dcf2e1b2bdc0843a7c19e5",
+  "kokoroArchive": {
+    "source": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-int8-en-v0_19.tar.bz2",
+    "sha256": "c9f0dd393615805b0bab050c340834d5e684e732aec91c0e860cd30e982c08bd"
+  },
+  "artifacts": [
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/needle3.cact",
+      "sha256": "c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38",
+      "bytes": 35335380,
+      "localPath": ".local/model-assets/needle3.cact"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/ios-arm64/libneedle.a",
+      "sha256": "e1dd5a4c59dc78aea54bcef91f4ba751ee30382adb92b8831ed2832833d76837",
+      "bytes": 1503080,
+      "localPath": "packages/field_voice/native/ios-arm64/libneedle.a"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/ios-arm64/needle.h",
+      "sha256": "a27dac4b3239eead91d124b7f7dbce5495c13019903fd817b68c16d39b055a99",
+      "bytes": 4528,
+      "localPath": "packages/field_voice/native/ios-arm64/needle.h"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/ios-sim-arm64/libneedle.a",
+      "sha256": "adc37ff4a88a928e581f670b4323e7f49f6d6886e37f832b015fea0885c5e177",
+      "bytes": 1540104,
+      "localPath": "packages/field_voice/native/ios-sim-arm64/libneedle.a"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/ios-sim-arm64/needle.h",
+      "sha256": "a27dac4b3239eead91d124b7f7dbce5495c13019903fd817b68c16d39b055a99",
+      "bytes": 4528,
+      "localPath": "packages/field_voice/native/ios-sim-arm64/needle.h"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/android-arm64/libneedle.a",
+      "sha256": "9be8b4b185ef1710f57179e3cc68835ac67fca8470bdbc6915d6966646d95385",
+      "bytes": 2183854,
+      "localPath": "packages/field_voice/native/android-arm64/libneedle.a"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/android-arm64/needle.h",
+      "sha256": "a27dac4b3239eead91d124b7f7dbce5495c13019903fd817b68c16d39b055a99",
+      "bytes": 4528,
+      "localPath": "packages/field_voice/native/android-arm64/needle.h"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/macos-arm64/libneedle.a",
+      "sha256": "c1b955778dcb79c92efaf5606f94e9d3a4ed85e093096b41e502bc9748a90614",
+      "bytes": 1540960,
+      "localPath": "packages/field_voice/native/macos-arm64/libneedle.a"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/macos-arm64/needle.h",
+      "sha256": "a27dac4b3239eead91d124b7f7dbce5495c13019903fd817b68c16d39b055a99",
+      "bytes": 4528,
+      "localPath": "packages/field_voice/native/macos-arm64/needle.h"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/needle3/resolve/93e88ede867e4311c39151285e74df513e4b835b/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "localPath": "docs/licenses/needle-LICENSE"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/whistle/resolve/ca5287601bef25af26dcf2e1b2bdc0843a7c19e5/whistle.cact",
+      "sha256": "b6e02f048568ac5d01a2042556c658061e699acbc0aa2a1439f52f3d461dffeb",
+      "bytes": 16919407,
+      "localPath": ".local/model-assets/whistle.cact"
+    },
+    {
+      "source": "https://huggingface.co/Cactus-Compute/whistle/resolve/ca5287601bef25af26dcf2e1b2bdc0843a7c19e5/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "localPath": "docs/licenses/whistle-LICENSE"
+    }
+  ]
+}

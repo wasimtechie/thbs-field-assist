@@ -1,0 +1,43 @@
+import {test,expect} from '@playwright/test';
+import 'dotenv/config';
+test('publish a field, assign the form, and view historical submissions',async({page})=>{
+  await page.goto('/login');await page.getByLabel('Work email').fill('admin@fieldassist.demo');await page.getByLabel('Password',{exact:true}).fill(process.env.SEED_ADMIN_PASSWORD!);await page.getByRole('button',{name:'Sign in to workspace'}).click();await expect(page.getByRole('heading',{name:'Hello, Alex.'})).toBeVisible();
+  await page.screenshot({path:'docs/evidence/dashboard-desktop.png',fullPage:true});
+  await page.getByRole('link',{name:'Form templates',exact:true}).click();await expect(page.getByRole('heading',{name:'Form templates',exact:true})).toBeVisible();
+  await page.getByRole('link',{name:'Edit template'}).first().click();await expect(page.getByText('BUILD YOUR FORM')).toBeVisible();
+  await page.getByRole('button',{name:'Dropdown',exact:true}).click();await page.getByLabel('Label',{exact:true}).fill('Site access status');await page.getByLabel('Spoken question').fill('What was the site access status?');await page.getByLabel('Extraction description').fill('The engineer explicitly reported site access status. Never guess.');
+  await page.getByRole('button',{name:'Save draft',exact:true}).click();await expect(page.getByRole('status')).toContainText('Draft saved.');
+  await page.getByRole('button',{name:'Preview',exact:true}).click();await expect(page.getByRole('dialog')).toContainText('Site access status');await page.getByRole('button',{name:'Close dialog'}).click();
+  await page.getByRole('button',{name:'Publish',exact:true}).click();await page.getByRole('button',{name:'Publish version',exact:true}).click();await expect(page.getByRole('status')).toContainText('Published');
+  await page.screenshot({path:'docs/evidence/template-editor.png',fullPage:true});
+  await page.getByRole('link',{name:'Engineer types',exact:true}).click();await page.getByRole('button',{name:'Manage type'}).first().click();const select=page.getByLabel('Published default form');const options=await select.locator('option').all();if(options.length>1)await select.selectOption({index:1});await page.getByRole('button',{name:'Save configuration'}).click();await expect(page.getByRole('dialog')).not.toBeVisible();
+  await page.getByRole('link',{name:'Submissions',exact:true}).click();await expect(page.getByRole('heading',{name:'Submissions',exact:true})).toBeVisible();await page.getByRole('link',{name:/^#[A-F0-9]{8}$/}).first().click();await expect(page.getByText('Received and recorded')).toBeVisible();await expect(page.getByText('Report details',{exact:true})).toBeVisible();await page.screenshot({path:'docs/evidence/submission-detail.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});await page.goto('/dashboard');await expect(page.getByRole('heading',{name:'Hello, Alex.'})).toBeVisible();await expect(page.getByRole('button',{name:'Open navigation'})).toBeVisible();await page.screenshot({path:'docs/evidence/dashboard-mobile.png',fullPage:true});
+});
+test('login errors and keyboard access are visible',async({page})=>{await page.goto('/login');await page.getByLabel('Work email').fill('nobody@fieldassist.demo');await page.getByLabel('Password',{exact:true}).fill('invalid-password');await page.getByRole('button',{name:'Sign in to workspace'}).click();await expect(page.getByRole('alert').filter({hasText:'The email or password is incorrect.'})).toBeVisible();await page.getByRole('button',{name:'Need help accessing your account?'}).click();await expect(page.getByRole('dialog')).toContainText('Contact your administrator');await page.keyboard.press('Escape');await expect(page.getByRole('dialog')).not.toBeVisible();});
+
+test('landing introduces the workflow and leads to protected workspace sign-in',async({page})=>{
+ page.on('console',message=>{if(['error','warning'].includes(message.type()))console.log('Browser diagnostic:',message.text());});
+ await page.goto('/');
+ await expect(page.getByRole('heading',{name:'Less paperwork. More fieldwork.'})).toBeVisible();
+ await expect(page.locator('.landing-hero-copy')).toHaveCSS('opacity','1');
+ await expect(page.locator('.landing-scene')).toHaveCSS('opacity','1');
+ await page.screenshot({path:'docs/evidence/landing-hero.png'});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.getByRole('tab',{name:/02 Capture/}).click();
+ await expect(page.getByRole('tabpanel')).toContainText('A little less typing.');
+ await page.getByRole('tab',{name:/02 Capture/}).press('ArrowDown');
+ await expect(page.getByRole('tab',{name:/03 Bring/})).toBeFocused();
+ await expect(page.getByRole('tabpanel')).toContainText('From saved to received.');
+ await page.screenshot({path:'docs/evidence/landing-desktop.png',fullPage:true});
+ await page.getByRole('link',{name:'Workspace sign in',exact:true}).click();
+ await expect(page).toHaveURL('/login');
+ await page.getByRole('link',{name:'← Back to Field Assist'}).click();
+ await expect(page).toHaveURL('/');
+ await page.setViewportSize({width:390,height:844});
+ await expect(page.getByRole('heading',{name:'Less paperwork. More fieldwork.'})).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+ await page.screenshot({path:'docs/evidence/landing-mobile.png',fullPage:true});
+ await page.goto('/dashboard');
+ await expect(page).toHaveURL('/login');
+});

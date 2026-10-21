@@ -1,0 +1,261 @@
+import 'package:flutter/material.dart';
+
+const avatarIds = [
+  "",
+  "vibrent_1",
+  "vibrent_2",
+  "vibrent_3",
+  "vibrent_4",
+  "vibrent_5",
+  "vibrent_6",
+  "vibrent_7",
+  "vibrent_8",
+  "vibrent_9",
+  "vibrent_10",
+  "vibrent_11",
+  "vibrent_12",
+  "vibrent_13",
+  "vibrent_14",
+  "vibrent_15",
+  "vibrent_16",
+  "vibrent_17",
+  "vibrent_18",
+  "vibrent_19",
+  "vibrent_20",
+  "vibrent_21",
+  "vibrent_22",
+  "vibrent_23",
+  "vibrent_24",
+  "vibrent_25",
+  "vibrent_26",
+  "vibrent_27",
+  "3d_1",
+  "3d_2",
+  "3d_3",
+  "3d_4",
+  "3d_5",
+  "bluey_1",
+  "bluey_2",
+  "bluey_3",
+  "bluey_4",
+  "bluey_5",
+  "bluey_6",
+  "bluey_7",
+  "bluey_8",
+  "bluey_9",
+  "bluey_10",
+  "memo_1",
+  "memo_2",
+  "memo_3",
+  "memo_4",
+  "memo_5",
+  "memo_6",
+  "memo_7",
+  "memo_8",
+  "memo_9",
+  "memo_10",
+  "memo_11",
+  "memo_12",
+  "memo_13",
+  "memo_14",
+  "memo_15",
+  "memo_16",
+  "memo_17",
+  "memo_18",
+  "memo_19",
+  "memo_20",
+  "memo_21",
+  "memo_22",
+  "memo_23",
+  "memo_24",
+  "memo_25",
+  "memo_26",
+  "memo_27",
+  "memo_28",
+  "memo_29",
+  "memo_30",
+  "memo_31",
+  "memo_32",
+  "memo_33",
+  "memo_34",
+  "memo_35",
+  "notion_1",
+  "notion_2",
+  "notion_3",
+  "notion_4",
+  "notion_5",
+  "notion_6",
+  "notion_7",
+  "notion_8",
+  "notion_9",
+  "notion_10",
+  "notion_11",
+  "notion_12",
+  "notion_13",
+  "notion_14",
+  "notion_15",
+  "teams_1",
+  "teams_2",
+  "teams_3",
+  "teams_4",
+  "teams_5",
+  "teams_6",
+  "teams_7",
+  "teams_8",
+  "teams_9",
+  "toon_1",
+  "toon_2",
+  "toon_3",
+  "toon_4",
+  "toon_5",
+  "toon_6",
+  "toon_7",
+  "toon_8",
+  "toon_9",
+  "toon_10",
+  "upstream_1",
+  "upstream_2",
+  "upstream_3",
+  "upstream_4",
+  "upstream_5",
+  "upstream_6",
+  "upstream_7",
+  "upstream_8",
+  "upstream_9",
+  "upstream_10",
+  "upstream_11",
+  "upstream_12",
+  "upstream_13",
+  "upstream_14",
+  "upstream_15",
+  "upstream_16",
+  "upstream_17",
+  "upstream_18",
+  "upstream_19",
+  "upstream_20",
+  "upstream_21",
+  "upstream_22",
+];
+const avatarStyles = [
+  {"id": "vibrent", "label": "Vibrant", "count": 27},
+  {"id": "3d", "label": "3D", "count": 5},
+  {"id": "bluey", "label": "Blue portraits", "count": 10},
+  {"id": "memo", "label": "Soft 3D", "count": 35},
+  {"id": "notion", "label": "Line art", "count": 15},
+  {"id": "teams", "label": "Team portraits", "count": 9},
+  {"id": "toon", "label": "Cartoon", "count": 10},
+  {"id": "upstream", "label": "Sketches", "count": 22},
+];
+final avatarOptions = [
+  for (var i = 1; i <= 35; i++)
+    for (final style in avatarStyles)
+      if (i <= (style['count'] as int)) '${style['id']}_$i',
+];
+String avatarLabel(String id) {
+  if (id.isEmpty) return 'Initials';
+  final style = avatarStyles
+      .where((s) => id.startsWith('${s['id']}_'))
+      .firstOrNull;
+  return style == null ? 'Initials' : '${style['label']} ${id.split('_').last}';
+}
+
+class ProfileAvatar extends StatelessWidget {
+  const ProfileAvatar({
+    super.key,
+    required this.name,
+    this.avatarId = '',
+    this.size = 36,
+  });
+  final String name, avatarId;
+  final double size;
+  @override
+  Widget build(BuildContext context) {
+    final parts = name
+        .trim()
+        .split(RegExp(r'\s+'))
+        .where((p) => p.isNotEmpty)
+        .take(2);
+    final fallback = ColoredBox(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Center(
+        child: Text(
+          parts.map((p) => p[0]).join().toUpperCase(),
+          style: TextStyle(
+            fontSize: size * .32,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+    return Semantics(
+      label: '$name profile avatar',
+      child: ClipOval(
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: avatarId.isNotEmpty && avatarIds.contains(avatarId)
+              ? Image.asset(
+                  'assets/avatars/$avatarId.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => fallback,
+                )
+              : fallback,
+        ),
+      ),
+    );
+  }
+}
+
+class AssignmentPeople extends StatelessWidget {
+  const AssignmentPeople({super.key, required this.source});
+  final Map<String, dynamic> source;
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: 20,
+    runSpacing: 12,
+    children: [
+      for (final entry in [
+        ('Assigned by', source['assignedBy']),
+        ('Assigned to', source['assignee']),
+      ])
+        if (entry.$2 != null)
+          SizedBox(
+            width: 140,
+            child: Row(
+              children: [
+                ProfileAvatar(
+                  name: entry.$2['name'] as String,
+                  avatarId: entry.$2['avatarId'] as String? ?? '',
+                  size: 30,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        entry.$1,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      Text(
+                        entry.$2['name'] as String,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+    ],
+  );
+}

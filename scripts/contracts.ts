@@ -1,0 +1,14 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {generateKeyPair,exportJWK,SignJWT} from 'jose';
+import {canonicalize} from 'json-canonicalize';
+import {templateSchema,validateValues,schemaBytes,schemaHash} from '../packages/contracts/src';
+async function main(){
+ const templates=Object.fromEntries(['fibre','repair','business','survey'].map(name=>{const schema=templateSchema.parse(JSON.parse(readFileSync(`fixtures/templates/${name}.json`,'utf8')));return [name,{schema,canonicalBytes:schemaBytes(schema),schemaHash:schemaHash(schema)}];}));
+ const cases=[{name:'false and zero are real values',template:'survey',values:{access_available:false,survey_outcome:'feasible',power_available:false,follow_up:false,estimated_route:{amount:0,unit:'m'}}},{name:'membership partial',template:'fibre',values:{installation_outcome:'partial'}},{name:'membership unable',template:'fibre',values:{installation_outcome:'unable'}},{name:'hidden stale value',template:'fibre',values:{installation_outcome:'partial',ont_serial:'hidden draft serial'}},{name:'equals true',template:'repair',values:{follow_up:true}},{name:'equals false',template:'repair',values:{follow_up:false}},{name:'enum labels rejected',template:'repair',values:{line_test:'Passed'}},{name:'invalid quantity',template:'repair',values:{cable_replaced:{amount:12,unit:'ft'}}},{name:'precision',template:'repair',values:{cable_replaced:{amount:1.234,unit:'m'}}}];
+ writeFileSync('fixtures/contracts.json',JSON.stringify({templates,cases:cases.map(c=>{const r=validateValues(templates[c.template].schema,c.values);return {...c,expected:{valid:r.valid,errors:r.errors.map(e=>({fieldId:e.fieldId,code:e.code})),values:r.values,excluded:r.excluded}};})},null,2)+'\n');
+ const {privateKey,publicKey}=await generateKeyPair('ES256');const claims={entitlementId:'70000000-0000-4000-8000-000000000001',userId:'20000000-0000-4000-8001-000000000001',organizationId:'10000000-0000-4000-8000-000000000001',deviceId:'60000000-0000-4000-8000-000000000001',engineerTypeId:'30000000-0000-4000-8000-000000000001',allowedTemplateIds:['40000000-0000-4000-8000-000000000001'],assignmentRevision:1,issuedAt:'2026-10-15T00:00:00.000Z',expiresAt:'2026-10-18T00:00:00.000Z'};
+ const token=await new SignJWT(claims).setProtectedHeader({alg:'ES256',kid:'fixture-key'}).setIssuer('field-assist').setAudience('field-assist-offline').setIssuedAt(1792022400).setExpirationTime(1792281600).sign(privateKey);
+ writeFileSync('fixtures/entitlement.json',JSON.stringify({publicJwk:await exportJWK(publicKey),keyId:'fixture-key',token,claims},null,2)+'\n');
+ const vectors=[[-0,333333333.33333329,1e30,.000001,1e-7],{b:1,'\uE000':'private','😳':'flushed',a:2},['\n','"','\\','€']];writeFileSync('fixtures/canonical-vectors.json',JSON.stringify(vectors.map(value=>({value,expected:canonicalize(value)})),null,2)+'\n');
+}
+main();

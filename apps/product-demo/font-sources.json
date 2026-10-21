@@ -1,0 +1,8 @@
+{
+  "inter.woff2": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+  "inter-tight.woff2": "https://fonts.gstatic.com/s/intertight/v9/NGSwv5HMAFg6IuGlBNMjxLsH8ag.woff2",
+  "licenses": [
+    "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt",
+    "https://raw.githubusercontent.com/google/fonts/main/ofl/intertight/OFL.txt"
+  ]
+}

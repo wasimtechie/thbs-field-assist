@@ -1,0 +1,188 @@
+{
+  "schemaFormatVersion": 1,
+  "templateId": "40000000-0000-4000-8000-000000000002",
+  "engineerTypeId": "30000000-0000-4000-8000-000000000002",
+  "title": "Fault repair report",
+  "sections": [
+    {
+      "id": "work",
+      "label": "Work and testing",
+      "order": 0
+    }
+  ],
+  "fields": [
+    {
+      "id": "fault_location",
+      "sectionId": "work",
+      "order": 0,
+      "type": "single_select",
+      "label": "Fault location",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of fault location; never infer an unstated outcome.",
+        "question": "What is the fault location?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "premises",
+          "label": "Premises"
+        },
+        {
+          "id": "drop_wire",
+          "label": "Drop wire"
+        },
+        {
+          "id": "dp",
+          "label": "Dp"
+        },
+        {
+          "id": "cabinet",
+          "label": "Cabinet"
+        },
+        {
+          "id": "other",
+          "label": "Other"
+        }
+      ]
+    },
+    {
+      "id": "fault_description",
+      "sectionId": "work",
+      "order": 1,
+      "type": "long_text",
+      "label": "Fault description",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of fault description; never infer an unstated outcome.",
+        "question": "What is the fault description?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "action_taken",
+      "sectionId": "work",
+      "order": 2,
+      "type": "long_text",
+      "label": "Action taken",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of action taken; never infer an unstated outcome.",
+        "question": "What is the action taken?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "cable_replaced",
+      "sectionId": "work",
+      "order": 3,
+      "type": "quantity",
+      "label": "Cable replaced",
+      "required": false,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of cable replaced; never infer an unstated outcome.",
+        "question": "How many metres of cable did you replace?",
+        "synonyms": []
+      },
+      "units": {
+        "allowed": [
+          "m"
+        ],
+        "canonical": "m"
+      },
+      "constraints": {
+        "min": 0,
+        "max": 1000,
+        "precision": 1
+      }
+    },
+    {
+      "id": "line_test",
+      "sectionId": "work",
+      "order": 4,
+      "type": "single_select",
+      "label": "Line test result",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of line test result; never infer an unstated outcome.",
+        "question": "What is the line test result?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "passed",
+          "label": "Passed"
+        },
+        {
+          "id": "failed",
+          "label": "Failed"
+        },
+        {
+          "id": "not_tested",
+          "label": "Not tested"
+        }
+      ]
+    },
+    {
+      "id": "service_restored",
+      "sectionId": "work",
+      "order": 5,
+      "type": "boolean",
+      "label": "Service restored",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of service restored; never infer an unstated outcome.",
+        "question": "What is the service restored?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "follow_up",
+      "sectionId": "work",
+      "order": 6,
+      "type": "boolean",
+      "label": "Follow-up required",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of follow-up required; never infer an unstated outcome.",
+        "question": "What is the follow-up required?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "follow_up_details",
+      "sectionId": "work",
+      "order": 7,
+      "type": "long_text",
+      "label": "Follow-up details",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of follow-up details; never infer an unstated outcome.",
+        "question": "What is the follow-up details?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      },
+      "condition": {
+        "fieldId": "follow_up",
+        "operator": "equals",
+        "value": true
+      }
+    }
+  ]
+}

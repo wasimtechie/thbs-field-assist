@@ -1,0 +1,193 @@
+{
+  "schemaFormatVersion": 1,
+  "templateId": "40000000-0000-4000-8000-000000000003",
+  "engineerTypeId": "30000000-0000-4000-8000-000000000003",
+  "title": "Business circuit installation",
+  "sections": [
+    {
+      "id": "work",
+      "label": "Work and testing",
+      "order": 0
+    }
+  ],
+  "fields": [
+    {
+      "id": "installation_outcome",
+      "sectionId": "work",
+      "order": 0,
+      "type": "single_select",
+      "label": "Installation outcome",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of installation outcome; never infer an unstated outcome.",
+        "question": "What is the installation outcome?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "completed",
+          "label": "Completed"
+        },
+        {
+          "id": "partial",
+          "label": "Partial"
+        },
+        {
+          "id": "blocked",
+          "label": "Blocked"
+        }
+      ]
+    },
+    {
+      "id": "equipment_serial",
+      "sectionId": "work",
+      "order": 1,
+      "type": "short_text",
+      "label": "Equipment serial",
+      "required": true,
+      "voice": {
+        "enabled": false,
+        "description": "Explicit engineer report of equipment serial; never infer an unstated outcome.",
+        "question": "What is the equipment serial?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "completed"
+      }
+    },
+    {
+      "id": "port_reference",
+      "sectionId": "work",
+      "order": 2,
+      "type": "short_text",
+      "label": "Port reference",
+      "required": true,
+      "voice": {
+        "enabled": false,
+        "description": "Explicit engineer report of port reference; never infer an unstated outcome.",
+        "question": "What is the port reference?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "completed"
+      }
+    },
+    {
+      "id": "bandwidth",
+      "sectionId": "work",
+      "order": 3,
+      "type": "quantity",
+      "label": "Bandwidth",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of bandwidth; never infer an unstated outcome.",
+        "question": "What is the bandwidth?",
+        "synonyms": []
+      },
+      "units": {
+        "allowed": [
+          "Mbps",
+          "Gbps"
+        ],
+        "canonical": "Mbps"
+      },
+      "constraints": {
+        "min": 0,
+        "max": 1000,
+        "precision": 1
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "completed"
+      }
+    },
+    {
+      "id": "service_test",
+      "sectionId": "work",
+      "order": 4,
+      "type": "single_select",
+      "label": "Service test result",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of service test result; never infer an unstated outcome.",
+        "question": "What is the service test result?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "passed",
+          "label": "Passed"
+        },
+        {
+          "id": "failed",
+          "label": "Failed"
+        },
+        {
+          "id": "not_tested",
+          "label": "Not tested"
+        }
+      ]
+    },
+    {
+      "id": "customer_handover",
+      "sectionId": "work",
+      "order": 5,
+      "type": "boolean",
+      "label": "Customer handover complete",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of customer handover complete; never infer an unstated outcome.",
+        "question": "What is the customer handover complete?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "notes",
+      "sectionId": "work",
+      "order": 6,
+      "type": "long_text",
+      "label": "Notes",
+      "required": false,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of notes; never infer an unstated outcome.",
+        "question": "What is the notes?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "blocker_details",
+      "sectionId": "work",
+      "order": 7,
+      "type": "long_text",
+      "label": "Blocker details",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of blocker details; never infer an unstated outcome.",
+        "question": "What is the blocker details?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "blocked"
+      }
+    }
+  ]
+}

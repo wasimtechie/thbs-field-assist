@@ -1,0 +1,209 @@
+{
+  "schemaFormatVersion": 1,
+  "templateId": "40000000-0000-4000-8000-000000000001",
+  "engineerTypeId": "30000000-0000-4000-8000-000000000001",
+  "title": "Fibre installation report",
+  "sections": [
+    {
+      "id": "work",
+      "label": "Work and testing",
+      "order": 0
+    }
+  ],
+  "fields": [
+    {
+      "id": "installation_outcome",
+      "sectionId": "work",
+      "order": 0,
+      "type": "single_select",
+      "label": "Installation outcome",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of installation outcome; never infer an unstated outcome.",
+        "question": "What is the installation outcome?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "completed",
+          "label": "Completed"
+        },
+        {
+          "id": "partial",
+          "label": "Partial"
+        },
+        {
+          "id": "unable",
+          "label": "Unable"
+        }
+      ]
+    },
+    {
+      "id": "work_performed",
+      "sectionId": "work",
+      "order": 1,
+      "type": "long_text",
+      "label": "Work performed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of work performed; never infer an unstated outcome.",
+        "question": "What is the work performed?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "cable_installed",
+      "sectionId": "work",
+      "order": 2,
+      "type": "quantity",
+      "label": "Cable installed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of cable installed; never infer an unstated outcome.",
+        "question": "How many metres of cable did you install?",
+        "synonyms": []
+      },
+      "units": {
+        "allowed": [
+          "m"
+        ],
+        "canonical": "m"
+      },
+      "constraints": {
+        "min": 0,
+        "max": 1000,
+        "precision": 1
+      }
+    },
+    {
+      "id": "ont_serial",
+      "sectionId": "work",
+      "order": 3,
+      "type": "short_text",
+      "label": "ONT serial number",
+      "required": true,
+      "voice": {
+        "enabled": false,
+        "description": "Explicit engineer report of ont serial number; never infer an unstated outcome.",
+        "question": "What is the ont serial number?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "completed"
+      }
+    },
+    {
+      "id": "optical_reading",
+      "sectionId": "work",
+      "order": 4,
+      "type": "decimal",
+      "label": "Optical reading (dBm)",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of optical reading (dbm); never infer an unstated outcome.",
+        "question": "What is the optical reading (dbm)?",
+        "synonyms": []
+      },
+      "constraints": {
+        "min": -60,
+        "max": 10,
+        "precision": 2
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "equals",
+        "value": "completed"
+      }
+    },
+    {
+      "id": "connectivity_test",
+      "sectionId": "work",
+      "order": 5,
+      "type": "single_select",
+      "label": "Connectivity test",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of connectivity test; never infer an unstated outcome.",
+        "question": "What is the connectivity test?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "passed",
+          "label": "Passed"
+        },
+        {
+          "id": "failed",
+          "label": "Failed"
+        },
+        {
+          "id": "not_tested",
+          "label": "Not tested"
+        }
+      ]
+    },
+    {
+      "id": "exception_reason",
+      "sectionId": "work",
+      "order": 6,
+      "type": "long_text",
+      "label": "Exception reason",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of exception reason; never infer an unstated outcome.",
+        "question": "What is the exception reason?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "partial",
+          "unable"
+        ]
+      }
+    },
+    {
+      "id": "site_access",
+      "sectionId": "work",
+      "order": 7,
+      "type": "single_select",
+      "label": "Site access status",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of site access status; never infer an unstated outcome.",
+        "question": "What is the site access status?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "available",
+          "label": "Available"
+        },
+        {
+          "id": "restricted",
+          "label": "Restricted"
+        },
+        {
+          "id": "unavailable",
+          "label": "Unavailable"
+        }
+      ]
+    }
+  ]
+}

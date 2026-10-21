@@ -1,0 +1,9 @@
+/* CSS media queries keep the first server/client render identical and let
+   reduced-motion users see the complete hero before hydration. */
+.copy>:not(h1){animation:arrive .7s cubic-bezier(.22,1,.36,1) .2s both}
+.copy>:first-child{animation-delay:0s}
+.line{animation:arrive .8s cubic-bezier(.22,1,.36,1) .06s both}
+.line:nth-child(2){animation-delay:.18s}
+.scene{animation:arrive .95s cubic-bezier(.22,1,.36,1) .1s both}
+@keyframes arrive{from{opacity:.4;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.copy>:not(h1),.line,.scene{animation:none}}

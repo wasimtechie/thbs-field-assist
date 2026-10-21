@@ -1,0 +1,13 @@
+{
+  "name": "@field-assist/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./access": "./src/access.ts",
+    "./workspace": "./src/workspace.ts",
+    "./ai": "./src/ai.ts",
+    "./field-values": "./src/field-values.ts"
+  }
+}

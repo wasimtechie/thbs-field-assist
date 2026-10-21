@@ -1,0 +1,37 @@
+{
+  "name": "thbs-field-assist-product-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 3001",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "studio": "remotion studio src/remotion.ts --port 3010",
+    "render": "node scripts/render.mjs",
+    "stills": "node scripts/stills.mjs",
+    "verify:video": "node scripts/verify-video.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.536",
+    "@remotion/cli": "4.0.536",
+    "@remotion/google-fonts": "^4.0.536",
+    "@remotion/player": "4.0.536",
+    "@remotion/renderer": "4.0.536",
+    "@tailwindcss/vite": "4.1.18",
+    "culori": "^4.0.2",
+    "lucide-react": "0.468.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.536",
+    "tailwindcss": "4.1.18",
+    "vite": "7.3.7"
+  },
+  "devDependencies": {
+    "@types/culori": "^4.0.1",
+    "@types/node": "22.19.0",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}

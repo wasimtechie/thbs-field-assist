@@ -1,0 +1,374 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model Organization {
+  id String @id @default(uuid()) @db.Uuid
+  name String
+}
+model User {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  email String @unique
+  name String
+  passwordHash String
+  role String
+  disabledAt DateTime?
+  removedAt DateTime?
+  employeeCode String @default("")
+  department String @default("")
+  jobTitle String @default("")
+  phone String @default("")
+  baseLocation String @default("")
+  teamId String? @db.Uuid
+  avatarId String @default("")
+  revision Int @default(1)
+  createdAt DateTime @default(now())
+  @@index([organizationId, role])
+  @@index([teamId])
+}
+model Session {
+  id String @id @default(uuid()) @db.Uuid
+  tokenHash String @unique
+  userId String @db.Uuid
+  audience String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  revokedAt DateTime?
+  @@index([userId])
+}
+model LoginAttempt {
+  key String @id
+  count Int
+  windowStart DateTime
+}
+model EngineerType {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  slug String
+  name String
+  description String @default("")
+  defaultTemplateId String? @db.Uuid
+  archivedAt DateTime?
+  revision Int @default(1)
+  createdAt DateTime @default(now())
+  @@unique([organizationId, slug])
+}
+model EngineerAssignment {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  typeId String @db.Uuid
+  revision Int
+  validFrom DateTime @default(now())
+  validTo DateTime?
+  @@unique([userId, revision])
+  @@index([userId, validTo])
+}
+model Device {
+  id String @id @db.Uuid
+  userId String @db.Uuid
+  organizationId String @db.Uuid
+  platform String
+  appVersion String
+  osVersion String
+  model String @default("Unknown device")
+  lastSeenAt DateTime @default(now())
+  readiness Json
+  packageVersion String?
+  schemaVersion String?
+  @@index([organizationId, lastSeenAt, id])
+}
+model OfflineEntitlement {
+  id String @id @default(uuid()) @db.Uuid
+  userId String @db.Uuid
+  organizationId String @db.Uuid
+  deviceId String @db.Uuid
+  typeId String @db.Uuid
+  assignmentRevision Int
+  allowedTemplates String[]
+  issuedAt DateTime
+  expiresAt DateTime
+  token String
+  @@index([userId, deviceId])
+}
+model Template {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  typeId String @db.Uuid
+  name String
+  currentPublishedVersionId String? @db.Uuid
+  archivedAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([organizationId, createdAt, id])
+}
+model TemplateDraft {
+  templateId String @id @db.Uuid
+  revision Int @default(1)
+  schema Json
+  updatedBy String @db.Uuid
+  updatedAt DateTime @updatedAt
+}
+model TemplateVersion {
+  id String @id @default(uuid()) @db.Uuid
+  templateId String @db.Uuid
+  organizationId String @db.Uuid
+  versionNumber Int
+  schema Json
+  canonicalSchema String
+  schemaHash String
+  publishedBy String @db.Uuid
+  publishedAt DateTime @default(now())
+  disabledAt DateTime?
+  @@unique([templateId, versionNumber])
+}
+model SubmissionAttempt {
+  id String @id @default(uuid()) @db.Uuid
+  attemptId String @db.Uuid
+  organizationId String @db.Uuid
+  clientReportId String @db.Uuid
+  userId String @db.Uuid
+  payloadHash String
+  status String
+  receiptId String? @db.Uuid
+  createdAt DateTime @default(now())
+  @@unique([organizationId, userId, attemptId])
+}
+model Report {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  clientReportId String @db.Uuid
+  userId String @db.Uuid
+  typeId String @db.Uuid
+  templateVersionId String @db.Uuid
+  schemaHash String
+  values Json
+  location Json?
+  workOrderId String? @db.Uuid
+  workOrderAssignmentRevision Int?
+  teamId String? @db.Uuid
+  confirmedAt DateTime
+  originatingTimezone String
+  receivedAt DateTime @default(now())
+  demo Boolean @default(false)
+  @@unique([organizationId, clientReportId])
+  @@index([organizationId, receivedAt, id])
+  @@index([workOrderId])
+}
+model WorkOrder {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  title String
+  site String
+  instructions String @default("")
+  assetReference String @default("")
+  assigneeId String @db.Uuid
+  typeId String @db.Uuid
+  priority String @default("normal")
+  status String @default("assigned")
+  dueAt DateTime
+  teamId String? @db.Uuid
+  clientId String? @db.Uuid
+  boardId String? @db.Uuid
+  assignedById String? @db.Uuid
+  assignmentRevision Int @default(1)
+  responseStatus String @default("pending")
+  responseNote String @default("")
+  respondedAt DateTime?
+  latestReportId String? @db.Uuid
+  reviewNote String @default("")
+  createdBy String @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  revision Int @default(1)
+  @@index([organizationId, status, dueAt, id])
+  @@index([assigneeId, updatedAt, id])
+  @@index([organizationId, assetReference])
+}
+model ReportReview {
+  reportId String @id @db.Uuid
+  organizationId String @db.Uuid
+  decision String
+  note String @default("")
+  reviewerId String @db.Uuid
+  reviewedAt DateTime @default(now())
+  @@index([organizationId, reviewedAt])
+}
+model Receipt {
+  id String @id @default(uuid()) @db.Uuid
+  reportId String @unique @db.Uuid
+  acceptedAt DateTime @default(now())
+}
+model AuditEvent {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  actorId String @db.Uuid
+  action String
+  entityId String
+  metadata Json
+  createdAt DateTime @default(now())
+  @@index([organizationId, createdAt, id])
+}
+
+model Team {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  name String
+  department String
+  description String @default("")
+  leadId String @db.Uuid
+  archivedAt DateTime?
+  revision Int @default(1)
+  createdAt DateTime @default(now())
+  @@index([organizationId, leadId])
+}
+model Client {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  name String
+  contactName String @default("")
+  email String @default("")
+  phone String @default("")
+  address String @default("")
+  notes String @default("")
+  teamId String? @db.Uuid
+  status String @default("active")
+  createdBy String @db.Uuid
+  revision Int @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([organizationId, teamId, createdAt])
+}
+model AssignmentResponse {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  workOrderId String @db.Uuid
+  userId String @db.Uuid
+  requestId String @db.Uuid
+  assignmentRevision Int
+  decision String
+  note String
+  brief Json?
+  respondedAt DateTime @default(now())
+  @@unique([userId, requestId])
+  @@unique([workOrderId, assignmentRevision])
+}
+model Conversation {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  kind String
+  directKey String?
+  teamId String? @unique @db.Uuid
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  @@unique([organizationId, directKey])
+  @@index([organizationId, updatedAt])
+}
+model ConversationMember {
+  conversationId String @db.Uuid
+  userId String @db.Uuid
+  lastReadSequence BigInt @default(0)
+  @@id([conversationId, userId])
+  @@index([userId])
+}
+model Message {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  conversationId String @db.Uuid
+  senderId String @db.Uuid
+  clientMessageId String @db.Uuid
+  sequence BigInt @unique @default(autoincrement())
+  text String
+  createdAt DateTime @default(now())
+  @@unique([conversationId, senderId, clientMessageId])
+  @@index([conversationId, sequence])
+}
+model Notification {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  userId String @db.Uuid
+  kind String
+  resourceId String @db.Uuid
+  title String
+  body String
+  deliveryKey String
+  readAt DateTime?
+  createdAt DateTime @default(now())
+  @@unique([userId, deliveryKey])
+  @@index([userId, createdAt, id])
+}
+
+model JobBoard {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  teamId String @db.Uuid
+  clientId String? @db.Uuid
+  name String
+  description String @default("")
+  createdBy String @db.Uuid
+  createdAt DateTime @default(now())
+  revision Int @default(1)
+  @@index([organizationId, teamId])
+}
+model TimeVisit {
+  id String @id @db.Uuid
+  organizationId String @db.Uuid
+  userId String @db.Uuid
+  workOrderId String @db.Uuid
+  teamId String? @db.Uuid
+  assignmentRevision Int
+  startedAt DateTime
+  endedAt DateTime?
+  lastOccurredAt DateTime
+  state String
+  sequence Int
+  @@index([organizationId, startedAt, id])
+  @@index([userId, endedAt])
+}
+model TimeEvent {
+  id String @id @default(uuid()) @db.Uuid
+  requestId String @db.Uuid
+  visitId String @db.Uuid
+  organizationId String @db.Uuid
+  userId String @db.Uuid
+  sequence Int
+  action String
+  occurredAt DateTime
+  receivedAt DateTime @default(now())
+  location Json?
+  note String @default("")
+  payloadHash String
+  @@unique([userId, requestId])
+  @@unique([visitId, sequence])
+}
+
+model AiGeneration {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  userId String @db.Uuid
+  kind String
+  cacheKey String @unique
+  sourceHash String
+  model String
+  status String
+  leaseId String @db.Uuid
+  result Json?
+  usage Json?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([organizationId, userId, createdAt])
+}
+model AiRequest {
+  id String @id @db.Uuid
+  organizationId String @db.Uuid
+  userId String @db.Uuid
+  generationId String @db.Uuid
+  status String
+  errorCode String?
+  createdAt DateTime @default(now())
+  @@index([organizationId, createdAt])
+  @@index([userId, createdAt])
+}

@@ -1,0 +1,6 @@
+import {z} from 'zod';
+export const teamInputSchema=z.object({name:z.string().trim().min(2).max(100),department:z.string().trim().min(2).max(100),leadId:z.uuid(),description:z.string().trim().max(500).default('')}).strict();
+export const clientInputSchema=z.object({name:z.string().trim().min(2).max(160),contactName:z.string().trim().max(100).default(''),email:z.union([z.literal(''),z.email().max(254)]).default(''),phone:z.string().trim().max(30).default(''),address:z.string().trim().max(300).default(''),notes:z.string().trim().max(2000).default(''),teamId:z.uuid().nullable().default(null),status:z.enum(['prospect','active','paused']).default('active')}).strict();
+export const assignmentResponseSchema=z.object({requestId:z.uuid(),assignmentRevision:z.number().int().min(1),decision:z.enum(['accepted','declined']),note:z.string().trim().max(1000).default('')}).strict().superRefine((v,ctx)=>{if(v.decision==='declined'&&!v.note)ctx.addIssue({code:'custom',path:['note'],message:'Give your team lead a reason for declining.'});});
+export const messageInputSchema=z.object({clientMessageId:z.uuid(),text:z.string().trim().min(1).max(4000)}).strict();
+export const conversationInputSchema=z.union([z.object({recipientId:z.uuid()}).strict(),z.object({teamId:z.uuid()}).strict()]);

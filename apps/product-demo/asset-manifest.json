@@ -1,0 +1,98 @@
+[
+  {
+    "file": "screens/board.png",
+    "source": "docs/evidence/connected-demo-board.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "fb417b517bcb8a08cbd460f66a8a79b6e3e8d01a38f834b393e421c718ae2f0a"
+  },
+  {
+    "file": "screens/job.png",
+    "source": "docs/evidence/connected-demo-job.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "713363d0ebb701c0a44a461a59a8301988ba9ed135b403daa9cb7c9cb0cceb3a"
+  },
+  {
+    "file": "screens/home.png",
+    "source": "docs/evidence/workspace-redesign-light-home.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "39e09c5b27118842fd0f2c284eddb86bd64df4a0d2bfe0e8e90173e71ed66387"
+  },
+  {
+    "file": "screens/jobs.png",
+    "source": "docs/evidence/workspace-redesign-light-jobs.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "37268562dcd7f2b3222b717e4a924c505a2906c3f50930b0273228c5e73ef6ef"
+  },
+  {
+    "file": "screens/voice.png",
+    "source": "docs/evidence/workspace-redesign-dark-voice-saved.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "48a04c3d90f3afb60991c41804616564f73c6e5c40ed732ec6b0c01f06b5ebbd"
+  },
+  {
+    "file": "screens/scan.png",
+    "source": "docs/evidence/cable-scan-review-dark.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "caa91f167a1d3d23da583cfec7ffafcab03eebd5a85e352408177e30b4408e8d"
+  },
+  {
+    "file": "screens/receipt.png",
+    "source": "docs/evidence/workspace-redesign-light-receipt.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "529a28a654353791ef25ced2d9539f052a74b17403cdd12b5bcaed8d5c7a7da3"
+  },
+  {
+    "file": "screens/queue.png",
+    "source": "docs/evidence/mobile-refresh-light-queue.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "4056108105fbadb616bc58437e8b130db5d3d156b560f122f7ae6f02bbb24de8"
+  },
+  {
+    "file": "screens/organisation.png",
+    "source": "docs/evidence/organisation-overview-desktop.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "f9b66c83099b36888198c0858131af01719742d853750ff40e2f077472c92aea"
+  },
+  {
+    "file": "screens/review.png",
+    "source": "docs/evidence/operations-review-desktop.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "6a6d780e0052eecd81ea69ea7951fa503a3b5fe30ba6a960355fb11918bd472c"
+  },
+  {
+    "file": "screens/clients.png",
+    "source": "docs/evidence/collaboration-clients-desktop.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "7c9aa46089bf7dc9e86205fc5b6eb010dac9ae3ebddb9fe09445efb91f34ba45"
+  },
+  {
+    "file": "screens/conversation.png",
+    "source": "docs/evidence/workspace-redesign-dark-conversation.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "f08fe614976ed0d1a60478b6ea6ab8a677b5ef5d25ed9bdf6bdca9b71efb9c51"
+  },
+  {
+    "file": "screens/template.png",
+    "source": "docs/evidence/template-editor.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "29e26b5ec14bf9a3f478274209b54a1dbd223c090f90358d2a73bcc7e6436c65"
+  },
+  {
+    "file": "screens/assistant.png",
+    "source": "docs/evidence/connected-demo-ai.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "eb16a49bc9ade4d4e123ed3ad85498e1a74eebb9373c0325e10507086c49e0a4"
+  },
+  {
+    "file": "screens/overview.png",
+    "source": "docs/evidence/dashboard-desktop.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "e59530e6cb19aaba359b896ff8ff31c4077dfd90ec2abfea9ab7354fbcdc881b"
+  },
+  {
+    "file": "screens/ai-review.png",
+    "source": "docs/evidence/ai-report-review.png",
+    "kind": "Existing product screenshot; synthetic demo records",
+    "sha256": "72b91b2392b4cd1d0d7b52462110522034e6a57a61cdbd590f5ed0bf33073f49"
+  }
+]

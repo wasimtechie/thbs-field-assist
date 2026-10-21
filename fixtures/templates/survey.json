@@ -1,0 +1,166 @@
+{
+  "schemaFormatVersion": 1,
+  "templateId": "40000000-0000-4000-8000-000000000004",
+  "engineerTypeId": "30000000-0000-4000-8000-000000000004",
+  "title": "Site survey report",
+  "sections": [
+    {
+      "id": "work",
+      "label": "Work and testing",
+      "order": 0
+    }
+  ],
+  "fields": [
+    {
+      "id": "access_available",
+      "sectionId": "work",
+      "order": 0,
+      "type": "boolean",
+      "label": "Site access available",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of site access available; never infer an unstated outcome.",
+        "question": "What is the site access available?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "survey_outcome",
+      "sectionId": "work",
+      "order": 1,
+      "type": "single_select",
+      "label": "Survey outcome",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of survey outcome; never infer an unstated outcome.",
+        "question": "What is the survey outcome?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "feasible",
+          "label": "Feasible"
+        },
+        {
+          "id": "further_survey",
+          "label": "Further survey"
+        },
+        {
+          "id": "unable_to_assess",
+          "label": "Unable to assess"
+        }
+      ]
+    },
+    {
+      "id": "estimated_route",
+      "sectionId": "work",
+      "order": 2,
+      "type": "quantity",
+      "label": "Estimated route length",
+      "required": false,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of estimated route length; never infer an unstated outcome.",
+        "question": "What is the estimated route length?",
+        "synonyms": []
+      },
+      "units": {
+        "allowed": [
+          "m"
+        ],
+        "canonical": "m"
+      },
+      "constraints": {
+        "min": 0,
+        "max": 1000,
+        "precision": 1
+      }
+    },
+    {
+      "id": "equipment_notes",
+      "sectionId": "work",
+      "order": 3,
+      "type": "long_text",
+      "label": "Equipment notes",
+      "required": false,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of equipment notes; never infer an unstated outcome.",
+        "question": "What is the equipment notes?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "power_available",
+      "sectionId": "work",
+      "order": 4,
+      "type": "boolean",
+      "label": "Power available",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of power available; never infer an unstated outcome.",
+        "question": "What is the power available?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "constraints",
+      "sectionId": "work",
+      "order": 5,
+      "type": "long_text",
+      "label": "Site constraints",
+      "required": false,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of site constraints; never infer an unstated outcome.",
+        "question": "What is the site constraints?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      }
+    },
+    {
+      "id": "follow_up",
+      "sectionId": "work",
+      "order": 6,
+      "type": "boolean",
+      "label": "Follow-up required",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of follow-up required; never infer an unstated outcome.",
+        "question": "What is the follow-up required?",
+        "synonyms": []
+      }
+    },
+    {
+      "id": "follow_up_details",
+      "sectionId": "work",
+      "order": 7,
+      "type": "long_text",
+      "label": "Follow-up details",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Explicit engineer report of follow-up details; never infer an unstated outcome.",
+        "question": "What is the follow-up details?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 500
+      },
+      "condition": {
+        "fieldId": "follow_up",
+        "operator": "equals",
+        "value": true
+      }
+    }
+  ]
+}

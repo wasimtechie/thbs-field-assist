@@ -1,0 +1,28 @@
+.mascot{position:relative;display:inline-block;width:var(--mascot-size);max-width:100%;aspect-ratio:1;isolation:isolate;vertical-align:middle;user-select:none;flex-shrink:0}
+.inline{position:relative}
+.bottom-left,.bottom-right{position:fixed;bottom:max(12px,env(safe-area-inset-bottom));z-index:15;max-width:min(240px,34vw)}
+.bottom-left{left:max(12px,env(safe-area-inset-left))}
+.bottom-right{right:max(12px,env(safe-area-inset-right))}
+.shadow{position:absolute;left:23%;right:23%;bottom:5%;height:7%;border-radius:50%;background:var(--mascot-halo);filter:blur(9px);opacity:.65;pointer-events:none}
+.breathe,.face{position:absolute;inset:0;transform-origin:50% 89%;pointer-events:none}
+.face{transform:rotate(var(--mascot-tilt,0deg))}
+.body{display:block;width:100%;height:100%;object-fit:contain;filter:hue-rotate(var(--mascot-hue));pointer-events:none}
+.eye{position:absolute;top:30%;width:21%;height:16.8%;overflow:visible;transform-origin:50% 50%;pointer-events:none}
+.left{left:30%}.right{left:53%}
+.eyeGlow,.eyeLight,.eyeHighlight{fill:none;stroke-linecap:round}
+.eyeGlow{stroke:var(--mascot-glow);stroke-width:17;filter:blur(6px);opacity:.85}
+.eyeLight{stroke:var(--mascot-eyes);stroke-width:10;filter:drop-shadow(0 0 3px var(--mascot-glow))}
+.eyeHighlight{stroke:#f0fff9;stroke-width:3;opacity:.8}
+.pause{position:absolute;right:7%;bottom:5%;display:grid;place-items:center;width:28px;height:28px;border:1px solid #e3ddec;border-radius:50%;background:#fffefbf2;color:#726182;box-shadow:0 2px 8px #6452770a;opacity:0;transition:opacity .18s,background .18s;cursor:pointer}
+.mascot:hover .pause,.mascot:focus-within .pause{opacity:1}
+.pause:hover{background:#eee8f8}.pause:focus-visible{outline:2px solid #6452c4;outline-offset:3px}
+.mascot[data-active=true] .breathe{animation:robot-breathe 4.8s ease-in-out infinite}
+.mascot[data-blinking=true] .eye{animation:robot-blink .19s ease-in-out both}
+@keyframes robot-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.006,1.014)}}
+@keyframes robot-blink{0%,100%{transform:scaleY(1)}45%,55%{transform:scaleY(.025)}}
+@media(hover:none){.pause{opacity:1}}
+@media(prefers-reduced-motion:reduce){.breathe,.eye{animation:none!important}.face{transform:none}.pause{display:none}}
+
+.landingSlot{position:absolute;left:-30px;bottom:4px;width:245px;z-index:3}
+@media(max-width:1150px) and (min-width:801px){.landingSlot{left:-22px;width:215px}}
+@media(max-width:800px){.landingScene{height:595px}.landingSlot{left:-12px;bottom:0;width:180px}.landingCaption{left:auto;right:0;bottom:22px;transform:none;max-width:170px;white-space:normal;line-height:1.8;text-align:right}}

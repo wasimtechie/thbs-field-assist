@@ -1,0 +1,176 @@
+1
+00:00:00,600 --> 00:00:03,800
+From the first client request to the final field report,
+
+2
+00:00:03,800 --> 00:00:07,633
+THBS Field Assist brings people, work, and evidence into
+
+3
+00:00:07,633 --> 00:00:08,600
+one connected journey.
+
+4
+00:00:12,600 --> 00:00:16,500
+Sales creates the client and
+routes the work to a squad. The
+
+5
+00:00:16,500 --> 00:00:20,400
+team lead assigns an engineer, with
+a clear brief, priority, and due
+
+6
+00:00:20,400 --> 00:00:22,367
+date. Named boards keep delivery organised.
+
+7
+00:00:24,367 --> 00:00:28,033
+The engineer sees their own assignments
+in the app, accepts the visit,
+
+8
+00:00:28,033 --> 00:00:31,700
+or declines with a reason. The dashboard
+shows that response, so everyone
+
+9
+00:00:31,700 --> 00:00:33,533
+knows who owns the next step.
+
+10
+00:00:35,533 --> 00:00:39,500
+At the site, the engineer checks
+in, records breaks, and checks out.
+
+11
+00:00:39,500 --> 00:00:43,467
+Arrival and departure location snapshots
+give the team lead context for time
+
+12
+00:00:43,467 --> 00:00:44,800
+spent on the visit.
+
+13
+00:00:46,833 --> 00:00:51,300
+Scan the cable or drum label to
+extract its printed identifiers. Review
+
+14
+00:00:51,300 --> 00:00:55,767
+and correct the suggested values before
+applying them to the report. Manual
+
+15
+00:00:55,767 --> 00:00:57,267
+entry is always available.
+
+16
+00:00:59,300 --> 00:01:03,300
+The voice assistant speaks first and
+guides the engineer through relevant
+
+17
+00:01:03,300 --> 00:01:07,700
+questions. Valid answers save into
+the form on the device. Local voice
+
+18
+00:01:07,700 --> 00:01:10,600
+and label recognition work offline after initial setup.
+
+19
+00:01:12,633 --> 00:01:16,633
+Drafts stay encrypted on the device.
+Review and confirm with location to
+
+20
+00:01:16,633 --> 00:01:20,633
+queue the report. When the server
+is reachable and the app is
+
+21
+00:01:20,633 --> 00:01:23,633
+open and unlocked, delivery retries and returns a receipt.
+
+22
+00:01:25,633 --> 00:01:29,633
+Need help on site? Find a colleague
+with fuzzy search, see their
+
+23
+00:01:29,633 --> 00:01:33,600
+department and lead, and open a direct
+or squad conversation. Engineers and
+
+24
+00:01:33,600 --> 00:01:36,600
+team leads can reply across the app and dashboard.
+
+25
+00:01:38,633 --> 00:01:43,200
+A received report is ready for human
+review. The supervisor inspects the
+
+26
+00:01:43,200 --> 00:01:47,733
+original answers and location, approves
+the work, or requests follow up. Asset
+
+27
+00:01:47,733 --> 00:01:50,033
+history connects each visit and decision.
+
+28
+00:01:52,033 --> 00:01:55,967
+Dashboard AI summarises priorities,
+drafts visit instructions, and highlights
+
+29
+00:01:55,967 --> 00:02:00,733
+gaps in report evidence, with links
+to source records. People review the
+
+30
+00:02:00,733 --> 00:02:03,867
+suggestions and keep control
+of every operational decision.
+
+31
+00:02:05,900 --> 00:02:10,467
+An organisation view makes departments,
+squads, and reporting lines easy to
+
+32
+00:02:10,467 --> 00:02:14,600
+understand. Role based access gives
+Sales, team leads, engineers, and
+
+33
+00:02:14,600 --> 00:02:18,333
+administrators the information and
+actions appropriate to their work.
+
+34
+00:02:20,367 --> 00:02:24,733
+Reusable forms, client boards, assignment
+alerts, editable profiles, and light
+
+35
+00:02:24,733 --> 00:02:29,567
+and dark themes bring the experience
+together. One workflow connects field
+
+36
+00:02:29,567 --> 00:02:31,333
+capture with operational visibility.
+
+37
+00:02:33,333 --> 00:02:37,933
+THBS Field Assist. Clear ownership.
+Connected teams. Field evidence
+
+38
+00:02:37,933 --> 00:02:40,633
+you can follow from capture to review.

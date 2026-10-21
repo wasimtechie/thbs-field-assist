@@ -1,0 +1,53 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright';
+import {project} from './project.mjs';
+import {createCaptionCues} from '../src/caption-cues.mjs';
+const executablePath=path.join(project,'node_modules/.remotion/chrome-headless-shell/mac-arm64/chrome-headless-shell-mac-arm64/chrome-headless-shell');
+const browser=await chromium.launch({headless:true,executablePath});
+const page=await browser.newPage({viewport:{width:1440,height:1100}});
+const errors=[];const failedAssets=[];
+page.on('pageerror',e=>errors.push(e.message));
+page.on('requestfailed',r=>failedAssets.push({url:r.url(),error:r.failure()?.errorText}));
+await page.goto('http://127.0.0.1:3001/',{waitUntil:'networkidle'});
+assert.equal(await page.title(),'THBS Field Assist · Product film');
+assert.equal(await page.locator('.chapter-grid button').count(),13);
+assert.equal(await page.locator('.demo-meta span').textContent(),'2:42 · 1080p · narrated');
+const labels=JSON.parse(fs.readFileSync(path.join(project,'src/story.json'),'utf8')).map(s=>s.label);
+const story=JSON.parse(fs.readFileSync(path.join(project,'src/story.json'),'utf8'));
+const timings=JSON.parse(fs.readFileSync(path.join(project,'src/narration-timings.json'),'utf8'));
+let captionCues=0;
+for(let i=0;i<labels.length;i++) {
+  const scene=story[i];
+  const cues=createCaptionCues(scene.narration,timings[scene.id].seconds,30);
+  captionCues+=cues.length;
+  assert.equal(cues.map(c=>c.text).join(' '),scene.narration.replace(/\bT H B S\b/g,'THBS').replace(/\bA I\b/g,'AI'));
+  assert.equal(cues[0].startFrame,18);
+  cues.forEach((cue,j)=>{assert.ok(cue.endFrame>cue.startFrame);assert.ok(cue.lines.length<=2);assert.ok(cue.lines.every(line=>line.length<=58));if(j)assert.equal(cues[j-1].endFrame,cue.startFrame);});
+  await page.locator('.chapter-grid button').nth(i).click();
+  await page.waitForFunction(label=>document.querySelector('.demo-tools')?.textContent?.includes(label),labels[i]);
+  const caption=page.locator('[data-demo-captions="visible"]');
+  await caption.waitFor({state:'visible',timeout:5000});
+  assert.equal((await caption.textContent()).replace(/\s+/g,' ').trim(),cues[0].text);
+  const captionBox=await caption.boundingBox();
+  const notes=page.locator('[data-demo-note]');
+  if(await notes.count()) {
+    const noteBox=await notes.first().boundingBox();
+    assert.ok(noteBox.y+noteBox.height<=captionBox.y+1,'Captions must stay below the scene note');
+  }
+}
+await page.locator('.chapter-grid button').nth(1).click();
+await page.waitForFunction(()=>document.querySelector('.demo-tools')?.textContent?.includes('Client to assignment'));
+await page.waitForTimeout(1600);
+fs.mkdirSync(path.join(project,'out'),{recursive:true});
+await page.screenshot({path:path.join(project,'out/player-desktop.png'),fullPage:true});
+await page.setViewportSize({width:390,height:844});
+await page.waitForFunction(()=>document.documentElement.scrollWidth<=window.innerWidth);
+await page.screenshot({path:path.join(project,'out/player-mobile.png'),fullPage:true});
+assert.deepEqual(errors,[]);
+assert.deepEqual(failedAssets,[]);
+const report={title:'THBS Field Assist product demo',chapters:13,allChapterButtonsNavigate:true,visibleCaptionsInEveryChapter:true,captionCues,captionTextComplete:true,captionTimingContinuousWithinEachChapter:true,captionsClearOfSceneNotes:true,responsiveViewportWidth:390,horizontalOverflow:false,pageErrors:errors,failedAssets,scope:'Standalone Player navigation, captions, asset loading and responsive layout; not a live app workflow test. Caption timing follows synthesized chapter duration, not forced word alignment.'};
+fs.writeFileSync(path.join(project,'out/player-check.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report));
+await browser.close();
