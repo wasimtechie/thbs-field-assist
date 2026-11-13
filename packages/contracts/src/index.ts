@@ -1,7 +1,9 @@
+import {closurePolicySchema,expressionSchema,dependencies,closureRequired} from './closure/policy';
 import {isVisible,isMissing} from './field-values';
 import { z } from 'zod';
 import { canonicalize } from 'json-canonicalize';
 import { createHash } from 'node:crypto';
+export * from './offline-access';
 
 export const fieldTypes = ['short_text','long_text','integer','decimal','quantity','boolean','single_select','date'] as const;
 export const cableScanTargets = ['cable_id','drum_id','manufacturer','batch','specification','fibre_count','declared_length','manufactured_date'] as const;
@@ -17,18 +19,29 @@ export const fieldSchema = z.object({
   options:z.array(z.object({id,label:z.string().trim().min(1).max(100)}).strict()).max(20).optional(),
   units:z.object({allowed:z.array(z.string().min(1)).min(1).max(10),canonical:z.string().min(1)}).strict().optional(),
   condition:condition.optional(),
+  activation:expressionSchema.optional(),capture:z.literal('evidence').optional(),evidenceStage:z.enum(['before','installation','test','blocker']).optional(),
   scan:z.object({kind:z.literal('cable_label'),target:z.enum(cableScanTargets)}).strict().optional(),
   voice:z.object({enabled:z.boolean(),description:z.string().max(500),question:z.string().max(300),synonyms:z.array(z.string().max(100)).max(20)}).strict(),
 }).strict();
 export const templateSchema = z.object({
   schemaFormatVersion:z.literal(1),templateId:z.uuid(),engineerTypeId:z.uuid(),title:z.string().trim().min(1).max(120),
   sections:z.array(z.object({id,label:z.string().trim().min(1).max(100),order:z.number().int().min(0)}).strict()).min(1).max(6),
-  fields:z.array(fieldSchema).max(30),
+  fields:z.array(fieldSchema).max(130),
+  closurePolicy:closurePolicySchema.optional(),
 }).strict().superRefine((schema,ctx)=>{
   const fail=(message:string,path:(string|number)[]=[])=>ctx.addIssue({code:'custom',message,path});
+  if(!schema.closurePolicy&&schema.fields.length>30)fail('Ordinary forms support at most 30 fields.');
   const ids=new Set(schema.fields.map(f=>f.id));
   if(ids.size!==schema.fields.length)fail('Field IDs must be unique.');
   if(new Set(schema.sections.map(s=>s.id)).size!==schema.sections.length)fail('Section IDs must be unique.');
+  if(schema.closurePolicy){
+    const policy=schema.closurePolicy,questions=policy.banks.flatMap(b=>b.questions);
+    if(new Set(policy.banks.map(b=>b.id)).size!==5||new Set(questions.map(q=>q.questionId)).size!==125)fail('Closure banks require five unique scenarios and 125 unique question IDs.');
+    for(const b of policy.banks)for(const q of b.questions)if(!new RegExp(`^${b.id}-Q(0[1-9]|1[0-9]|2[0-5])$`).test(q.questionId)||!ids.has(q.fieldId))fail('Closure question mapping is invalid.');
+    if(new Set(policy.rules.map(r=>r.id)).size!==policy.rules.length)fail('Closure rule IDs must be unique.');
+    const expressions=[...policy.rules.flatMap(r=>[r.when,r.assert]),...policy.dispositions.map(d=>d.when)];
+    if(expressions.flatMap(dependencies).some(id=>!ids.has(id))||policy.holdRequired.some(id=>!ids.has(id)))fail('Closure rules reference an unknown field.');
+  }
   const scanTargets=new Set<string>();
   for(const [i,f] of schema.fields.entries()){
     const at=['fields',i];
@@ -43,6 +56,11 @@ export const templateSchema = z.object({
     if(f.type==='quantity'&&(!f.units||!f.units.allowed.includes(f.units.canonical)))fail('Quantity fields need a canonical allowed unit.',at);
     if(f.voice.enabled&&(!f.voice.question.trim()||!f.voice.description.trim()))fail('Voice fields need a question and description.',at);
     if(f.constraints?.min!==undefined&&f.constraints.max!==undefined&&f.constraints.min>f.constraints.max)fail('Minimum exceeds maximum.',at);
+    if(f.activation){
+      for(const dependency of dependencies(f.activation))if(!ids.has(dependency)||dependency===f.id)fail('Invalid activation reference.',at);
+      const visit=(id:string,seen:Set<string>):boolean=>{if(seen.has(id))return false;const field=schema.fields.find(x=>x.id===id);return !field?.activation||dependencies(field.activation).every(d=>visit(d,new Set([...seen,id])));};
+      if(!visit(f.id,new Set()))fail('Activation expressions cannot cycle.',at);
+    }
     if(f.condition){
       const parent=schema.fields.find(p=>p.id===f.condition!.fieldId);
       if(!parent||parent.id===f.id)fail('Condition references an unknown field or itself.',at);
@@ -68,7 +86,7 @@ export function validateValues(schema:TemplateSchema,values:Values,required=true
   for(const f of schema.fields){
     if(!isVisible(f,values,schema.fields)){if(!isMissing(values[f.id]))excluded.push(f.id);continue;}
     let v=values[f.id];const err=(code:string,message:string)=>errors.push({fieldId:f.id,code,message});
-    if(isMissing(v)){if(required&&f.required)err('REQUIRED',`${f.label} is required.`);continue;}
+    if(isMissing(v)){if(required&&closureRequired(f,values,schema.closurePolicy))err('REQUIRED',`${f.label} is required.`);continue;}
     if(typeof v==='string')v=v.trim();
     let numeric:number|undefined;
     switch(f.type){
@@ -100,7 +118,7 @@ export function convertQuantity(value:{amount:number;unit:string},canonical:stri
   const factor=factors[`${value.unit}:${canonical}`];
   if(!factor)throw new Error('UNSUPPORTED_UNIT');return {amount:value.amount*factor,unit:canonical};
 }
-export function schemaBytes(s:TemplateSchema){return canonicalize({schemaFormatVersion:s.schemaFormatVersion,templateId:s.templateId,engineerTypeId:s.engineerTypeId,title:s.title,sections:s.sections,fields:s.fields});}
+export function schemaBytes(s:TemplateSchema){return canonicalize({schemaFormatVersion:s.schemaFormatVersion,templateId:s.templateId,engineerTypeId:s.engineerTypeId,title:s.title,sections:s.sections,fields:s.fields,...(s.closurePolicy?{closurePolicy:s.closurePolicy}:{})});}
 export function sha256(bytes:string|Buffer){return createHash('sha256').update(bytes).digest('hex');}
 export function schemaHash(s:TemplateSchema){return sha256(schemaBytes(s));}
 export const reportLocationSchema=z.object({
@@ -111,11 +129,32 @@ export const reportLocationSchema=z.object({
   isMocked:z.boolean(),
 }).strict();
 export type ReportLocation=z.infer<typeof reportLocationSchema>;
+export {FTTP_TEMPLATE_ID,fttpIssues} from './fttp';
+export * from './closure/policy';
+export const reportEvidenceSchema=z.object({
+ id:z.uuid(),stage:z.enum(['before','installation','test','blocker']),caption:z.string().trim().min(1).max(200),
+ mimeType:z.enum(['image/jpeg','image/png']),data:z.string().min(1).max(160000).regex(/^[A-Za-z0-9+/]+={0,2}$/),
+ sha256:z.string().regex(/^[a-f0-9]{64}$/),capturedAt:z.iso.datetime(),synthetic:z.boolean(),
+}).strict().superRefine((a,ctx)=>{
+ const bytes=Buffer.from(a.data,'base64');
+ const signature=a.mimeType==='image/png'?bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])):bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+ if(bytes.length>120000||!signature||bytes.toString('base64')!==a.data||sha256(bytes)!==a.sha256)ctx.addIssue({code:'custom',message:'Evidence must be a valid, hash-verified JPEG or PNG of at most 120 KB.'});
+});
+export const closureReviewSchema=z.object({
+ policyId:z.literal('fttp-closure-mvp'),policyVersion:z.number().int().min(1).max(100),humanConfirmed:z.literal(true),
+ transcript:z.string().max(4000),transcriptHistory:z.array(z.string().max(4000)).max(8).default([]),
+ candidates:z.array(z.object({questionId:id,fieldId:id,evidenceId:z.uuid().nullable().optional(),value:z.union([z.string(),z.number().finite(),z.boolean(),z.null()]),sourceSpan:z.string().min(1).max(4000),sourceType:z.enum(['speech','text','job_pack','manual','demo_example']),confidence:z.number().min(0).max(1).nullable(),verificationStatus:z.enum(['candidate','accepted','rejected']),ambiguityReason:z.string().max(300)}).strict()).max(130),
+ questionStates:z.record(z.string(),z.enum(['NOT_SHOWN','ACTIVE_UNANSWERED','ANSWERED_UNVERIFIED','VERIFIED','NOT_APPLICABLE'])),
+ branchEvents:z.array(z.object({at:z.iso.datetime(),fieldId:id,from:z.string(),to:z.string()}).strict()).max(200),
+ metrics:z.object({startedAt:z.iso.datetime(),reviewedAt:z.iso.datetime(),elapsedMs:z.number().min(0),extractionMs:z.number().min(0),promptsShown:z.number().int().min(0),corrections:z.number().int().min(0)}).strict(),
+}).strict();
 export const frozenReportSchema=z.object({
   clientReportId:z.uuid(),submissionAttemptId:z.uuid(),revision:z.number().int().min(1),templateId:z.uuid(),versionId:z.uuid(),schemaHash:z.string().regex(/^[a-f0-9]{64}$/),
   entitlementId:z.uuid(),values:z.record(z.string(),z.unknown()),confirmedAt:z.iso.datetime(),originatingTimezone:z.string().min(1).max(100),
   // Older installed apps and already frozen queues have no location metadata.
   location:reportLocationSchema.optional(),
+  evidence:z.array(reportEvidenceSchema).max(4).optional(),
+  closureReview:closureReviewSchema.optional(),
   workOrderId:z.uuid().optional(),
   workOrderAssignmentRevision:z.number().int().min(1).optional(),
 }).strict().superRefine((report,ctx)=>{

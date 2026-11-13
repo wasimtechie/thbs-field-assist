@@ -1,0 +1,107 @@
+1
+00:00:00,333 --> 00:00:01,967
+Your engineer knows the work.
+
+2
+00:00:01,967 --> 00:00:03,700
+Let the record catch up.
+
+3
+00:00:06,333 --> 00:00:09,500
+Field Assist. Voice-guided reporting, designed for the
+
+4
+00:00:09,500 --> 00:00:11,867
+applications your engineers already use.
+
+5
+00:00:14,333 --> 00:00:17,267
+ENGINEER: I installed the ONT in the living
+
+6
+00:00:17,267 --> 00:00:19,767
+ENGINEER: room. I used the existing duct.
+
+7
+00:00:19,767 --> 00:00:21,867
+ENGINEER: Optical receive was −18.2 dBm.
+
+8
+00:00:21,867 --> 00:00:23,533
+ENGINEER: The service test passed.
+
+9
+00:00:23,533 --> 00:00:25,300
+ENGINEER: The job is complete.
+
+10
+00:00:30,333 --> 00:00:32,600
+ASSISTANT: Is any follow-up work required?
+
+11
+00:00:33,067 --> 00:00:34,933
+ENGINEER: No further work required.
+
+12
+00:00:35,533 --> 00:00:37,000
+Ready for your review.
+
+13
+00:00:40,333 --> 00:00:42,733
+ENGINEER: The reading is 18.2.
+
+14
+00:00:42,733 --> 00:00:47,000
+ENGINEER: No, sorry. The reading is −18.19 dBm.
+
+15
+00:00:50,333 --> 00:00:53,067
+Early synthetic tests measured short-answer recognition at
+
+16
+00:00:53,067 --> 00:00:55,533
+about zero point four five seconds.
+
+17
+00:01:00,333 --> 00:01:02,033
+Capture offline after setup.
+
+18
+00:01:02,033 --> 00:01:03,700
+Save on the phone.
+
+19
+00:01:03,700 --> 00:01:05,900
+Sync confirmed records when connected.
+
+20
+00:01:08,333 --> 00:01:10,967
+Bring voice into your existing application, through
+
+21
+00:01:10,967 --> 00:01:13,300
+agreed interfaces and your approved rules.
+
+22
+00:01:16,333 --> 00:01:18,500
+Configure forms, terminology and voices.
+
+23
+00:01:18,500 --> 00:01:21,533
+For deeper adaptation, fine-tuning can be scoped
+
+24
+00:01:21,533 --> 00:01:25,533
+around approved engineer recordings and validated against your requirements.
+
+25
+00:01:28,333 --> 00:01:30,567
+Speak the visit. Complete the record.
+
+26
+00:01:30,567 --> 00:01:32,033
+Start with one workflow.
+
+27
+00:01:32,033 --> 00:01:33,967
+Prove it with your engineers.

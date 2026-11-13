@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:field_voice/field_voice.dart';
+import 'package:flutter/services.dart';
 import 'package:field_assist/core/contracts.dart';
 import 'package:field_assist/features/voice/voice_audio.dart';
 
@@ -12,6 +13,14 @@ final schema = FormDefinition.fromJson(
           as Json)['fibre']['schema']
       as Json,
 );
+
+/// Keep speech journey tests on their fake engine; real packs are integrity
+/// checked separately. This avoids real asset I/O racing the virtual test clock.
+class TestQuestionAssets extends CachingAssetBundle {
+  @override
+  Future<ByteData> load(String key) async =>
+      ByteData.sublistView(Uint8List.fromList(utf8.encode('{}')));
+}
 
 class TestEngine extends FieldVoice {
   TestEngine(this.events);

@@ -1,0 +1,1683 @@
+{
+  "model": "kokoro-int8-en-v0_19",
+  "voice": "bm_george",
+  "settings": {
+    "model": "kokoro-int8-en-v0_19",
+    "voice": "bm_george",
+    "speakerId": 9,
+    "speed": 1.05,
+    "runtime": "1.13.8",
+    "backgroundAudio": false,
+    "modelSha256": "e0530c5031c03c5dc957edfc6d72582c2246e9b4566643ff67eeb03610c11641",
+    "voicesSha256": "a372c67b056ef0b695c375d39b99630d23fb07ad4c8d87aa32a19a62fca523ad"
+  },
+  "prompts": {
+    "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b": {
+      "fieldId": "assistant_greeting",
+      "text": "Hi. Talk me through this visit. I will fill in the details and ask if anything is missing.",
+      "file": "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b.wav",
+      "sha256": "ddbbd4d9d4bcd6e786ad162e2043bf10605ecbce63995d116ea291710a201c96"
+    },
+    "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c": {
+      "fieldId": "assistant_greeting_2",
+      "text": "Hello. How did this visit go? Tell me about the work, the tests, and anything left to do.",
+      "file": "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c.wav",
+      "sha256": "2f453170ebd12bd35e7a2d3e45208a91bf3a2cc22bd35b1abba4a67dde365617"
+    },
+    "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3": {
+      "fieldId": "assistant_greeting_3",
+      "text": "Ready when you are. Tell me what you got done, and we will put the visit report together.",
+      "file": "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3.wav",
+      "sha256": "04e5d5d24668d6e9595442bd88e0fa93d654f62d674f38b740532cfb86cda652"
+    },
+    "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f": {
+      "fieldId": "assistant_welcome_back",
+      "text": "Welcome back. Your answers are saved. Let us pick up with the details still missing.",
+      "file": "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f.wav",
+      "sha256": "57a967de3aac4c7e17b6bcad8b64b209280958351a39e9d2967ae7dab1dadca9"
+    },
+    "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb": {
+      "fieldId": "assistant_welcome_back_2",
+      "text": "Let us finish this report. I will just ask about the details we still need.",
+      "file": "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb.wav",
+      "sha256": "00ef21570eb8a7e7f5c9d2545bce96bc78438f3d4f63773995af9f6842b78e4c"
+    },
+    "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375": {
+      "fieldId": "assistant_welcome_back_3",
+      "text": "Your report is already started. We can carry on from where you left off.",
+      "file": "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375.wav",
+      "sha256": "19af3f89b10c1a1183c7c7632808eb2240cd447a9dfa07f3909861e50636b09c"
+    },
+    "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27": {
+      "fieldId": "assistant_summary_invite",
+      "text": "Tell me what you did, what you tested, and what still needs attention.",
+      "file": "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27.wav",
+      "sha256": "9d2d73e1ba1db136f7c1bc0316a05dbbd1ae3b36e81faa94188aab21f766d104"
+    },
+    "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290": {
+      "fieldId": "assistant_narrative_saved",
+      "text": "Summary added. I will ask for the remaining details.",
+      "file": "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290.wav",
+      "sha256": "5a99b44162cbb8affdb35892b48693cb7219bd71d54eb4222ea608f3f8e497d4"
+    },
+    "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b": {
+      "fieldId": "assistant_answer_saved",
+      "text": "Added to the form.",
+      "file": "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b.wav",
+      "sha256": "b70685c663cb675030d63f46aa338386324f9694b4ddd029f0f97928be85218b"
+    },
+    "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9": {
+      "fieldId": "assistant_unclear",
+      "text": "Please give a clear answer, or choose an option. Say repeat to hear the question again.",
+      "file": "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9.wav",
+      "sha256": "d120686507ebb1eaab58e1cbd7f084ddf8803d0c18bfee164b3fbd586b8e0bfd"
+    },
+    "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f": {
+      "fieldId": "assistant_complete",
+      "text": "Voice capture complete. Say open draft to review your answers.",
+      "file": "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f.wav",
+      "sha256": "23894cfd1304cfe3dcae2b343ad1351aa4326e38e606a2c8289b9cfd7a91ceae"
+    },
+    "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f": {
+      "fieldId": "assistant_anything_else",
+      "text": "Anything else?",
+      "file": "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f.wav",
+      "sha256": "171f346e32a418af2e36f49708d1b8eaa7c11c7d9f88d34b877733510cc2071c"
+    },
+    "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284": {
+      "fieldId": "assistant_guided_start",
+      "text": "Let me ask you the details one at a time.",
+      "file": "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284.wav",
+      "sha256": "6299390d257d7f9342ced962db0e8d0bfa523c62f0b3dd340979f88878dd3a39"
+    },
+    "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d": {
+      "fieldId": "assistant_summary_complete",
+      "text": "Your visit summary is ready. Review the answers, then press submit.",
+      "file": "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d.wav",
+      "sha256": "5356cbcd95e52c6a9d399eae17339465ee3282cf72971de0ed390505a408f525"
+    },
+    "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a": {
+      "fieldId": "assistant_paused",
+      "text": "Paused. Say resume to continue, or open draft to review.",
+      "file": "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a.wav",
+      "sha256": "4450b1d609322c493228acad2d09e0c9c389e7b76374abf91cce86fe8a2565ea"
+    },
+    "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489": {
+      "fieldId": "assistant_no_speech",
+      "text": "Ready for your answer. Say repeat, skip, pause, or open draft if needed.",
+      "file": "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489.wav",
+      "sha256": "16e7ec643ffda44af9191446e9530c7fdad00b326221910409d69e706e39e278"
+    },
+    "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3": {
+      "fieldId": "assistant_save_failed",
+      "text": "The answer could not be saved. Say retry to try again.",
+      "file": "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3.wav",
+      "sha256": "820366656fdabff79a78665f148b0d88574efe2f844301fa7ecbd62578709b22"
+    },
+    "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda": {
+      "fieldId": "voice_preview",
+      "text": "Hi. I am your Field Assist voice. Tell me what you did, and I will help finish your report.",
+      "file": "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda.wav",
+      "sha256": "917dff0399a3ce6fcab07daad8367bd4f863a27a3f14c6982c39b2224a362448"
+    },
+    "4e259d98f186c4316b9198b5e41e4f183e98108747efb451484acc53fa078947": {
+      "fieldId": "identity_verified",
+      "text": "Have you verified the work order and the premises? Say yes or no.",
+      "file": "4e259d98f186c4316b9198b5e41e4f183e98108747efb451484acc53fa078947.wav",
+      "sha256": "039af352a5c29b9d36c8eb86ca476971924d1e6fe9a174b506f2b37ae11aec3c"
+    },
+    "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede": {
+      "fieldId": "claimed_outcome",
+      "text": "What is the outcome for this work order? Say completed, partial, blocked, on hold, referral, stage completed, or network ready.",
+      "file": "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede.wav",
+      "sha256": "bd954e7838af6a0f270b16e09f42982a5b687ed2517acab2a80c0449b5a09655"
+    },
+    "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03": {
+      "fieldId": "actual_work",
+      "text": "What work did you complete on this visit?",
+      "file": "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03.wav",
+      "sha256": "4250eab726b98ee3e249050db64141376fd7ac86ac8e5de1c724412111ac1d20"
+    },
+    "75c03dcf1291662962158d0e056b8d5472fb46bbc2f0f7299ffaa912cf47178d": {
+      "fieldId": "safety_hazard",
+      "text": "Any safety hazard or incident? Say yes or no.",
+      "file": "75c03dcf1291662962158d0e056b8d5472fb46bbc2f0f7299ffaa912cf47178d.wav",
+      "sha256": "598097e2a918aafa3e2e3fcffc9c7b17d8ca245ad3b1a513d8695c6a4f6611f0"
+    },
+    "6e1b75b0c8577264377424a26c76a6ea23cbb6e0e0d0f7df5ca1a496309d5db3": {
+      "fieldId": "access_permission",
+      "text": "Were access / permissions adequate? Say yes or no.",
+      "file": "6e1b75b0c8577264377424a26c76a6ea23cbb6e0e0d0f7df5ca1a496309d5db3.wav",
+      "sha256": "90e8888a4db891608eed1b466edeba4c4f5fc6c5af8d55b66019e71544404f0b"
+    },
+    "b51adbfc6443104b27588af32ea22bf01a9fbc2a9e06f47329a2ce5a260d1ad9": {
+      "fieldId": "evidence_sufficient",
+      "text": "Is attached evidence sufficient and linked to work order? Say yes or no.",
+      "file": "b51adbfc6443104b27588af32ea22bf01a9fbc2a9e06f47329a2ce5a260d1ad9.wav",
+      "sha256": "76d08719fab8fde43baf94741ba8cc6b287f5a73dc74eb4a39bd4a1b15a016c7"
+    },
+    "ce99c1b47677bb58e8c1b4dd845892aacd22f4f3d3d445c928838ed8aac20fb6": {
+      "fieldId": "work_outstanding",
+      "text": "Any work outstanding for THIS work order? Say yes or no.",
+      "file": "ce99c1b47677bb58e8c1b4dd845892aacd22f4f3d3d445c928838ed8aac20fb6.wav",
+      "sha256": "ab373dc1f6a8223864674104217f0fdb082e9d66381fe1a0eafe5fcb6517a02d"
+    },
+    "b9e94a0a552b72d148b68399ee9fc36142660c11451a06ba4fa87258e8944bad": {
+      "fieldId": "affected_party_informed",
+      "text": "Was affected customer or next team informed? Say yes or no.",
+      "file": "b9e94a0a552b72d148b68399ee9fc36142660c11451a06ba4fa87258e8944bad.wav",
+      "sha256": "fb66d7bcebb3d885e73d6af9288d24d1ceb54df31454b2e59dacbf40d9293dc8"
+    },
+    "fbd6cb7faf6ca1f93f5ef71b82ed5ea165bd09222d5b1a6110b4d811dde990d6": {
+      "fieldId": "site_handover_safe",
+      "text": "Is the site safe and tidy or properly handed over? Say yes or no.",
+      "file": "fbd6cb7faf6ca1f93f5ef71b82ed5ea165bd09222d5b1a6110b4d811dde990d6.wav",
+      "sha256": "2d981a7584e9e1bc3d9a89f4ae082f926e784896a8505e2ed0e2427ddf01a759"
+    },
+    "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac": {
+      "fieldId": "serving_asset",
+      "text": "What is the reference of the serving C B T, pole or chamber?",
+      "file": "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac.wav",
+      "sha256": "89e5b6a7530fde24af5a676e3ffdc6d5fb9db5d3f0b9e378e3b8d39be21eef7e"
+    },
+    "9427d7d9197098b576ac7ead6518ca8a6e467efd04e4a7d0b7d67fb1ffe7ec9c": {
+      "fieldId": "drop_route",
+      "text": "Drop route type? Overhead, Underground, Existing route.",
+      "file": "9427d7d9197098b576ac7ead6518ca8a6e467efd04e4a7d0b7d67fb1ffe7ec9c.wav",
+      "sha256": "8edb4c062d0cdc8ff823bbb5b26462424bf4a96373f168c082dd4e159babc904"
+    },
+    "1884a552e911cf11ab5a974980517e8cd340fe7c62b4b9ed7c2251ff45e483c0": {
+      "fieldId": "route_obstructed",
+      "text": "Is the route obstructed? Say yes or no.",
+      "file": "1884a552e911cf11ab5a974980517e8cd340fe7c62b4b9ed7c2251ff45e483c0.wav",
+      "sha256": "d4d4f7707e8fe99c9b59265a686ab2b7f96058ee1d4690ba6f6816a8410ea18b"
+    },
+    "6df16c3fe972ecdbf868ce4d1c83e419dff34b6903bde3c44ca017f27e3ebf25": {
+      "fieldId": "location_agreed",
+      "text": "Customer approved cable and O N T location? Say yes or no.",
+      "file": "6df16c3fe972ecdbf868ce4d1c83e419dff34b6903bde3c44ca017f27e3ebf25.wav",
+      "sha256": "e337ab6c59c21cc651a55c5aa3ea83528110e1f33d90268ac427d943c401a34c"
+    },
+    "400fa15a35e4963713ab1798d5d2ffceebc00f5229fbdff4525d3164feaf3f4b": {
+      "fieldId": "drilling_consent",
+      "text": "Entry / drilling consent obtained? Say yes or no.",
+      "file": "400fa15a35e4963713ab1798d5d2ffceebc00f5229fbdff4525d3164feaf3f4b.wav",
+      "sha256": "353b589e2a03783ad8b2192b8f7082efe18e1927119ef71c47f2c5707992fdea"
+    },
+    "e30aa8830d435eb115797a5720b2111c07d222ada55ae948a5f75d21423f552d": {
+      "fieldId": "external_connection",
+      "text": "External fibre and connection point installed? Say yes or no.",
+      "file": "e30aa8830d435eb115797a5720b2111c07d222ada55ae948a5f75d21423f552d.wav",
+      "sha256": "7378a6aa88452a5ee79ea2110a0fad918707626868c3acb25244c65b5360bc29"
+    },
+    "f087713110dd2bdbbc6b9e996751940ddeb8d59919284637b2959ff73bb00cd1": {
+      "fieldId": "internal_fibre",
+      "text": "Internal fibre fitted to O N T? Say yes or no.",
+      "file": "f087713110dd2bdbbc6b9e996751940ddeb8d59919284637b2959ff73bb00cd1.wav",
+      "sha256": "3787f7599a0e7bbf1f20e4d2f368db6a10f6ee1e4a88f15da3860b28b455aab1"
+    },
+    "f67e13885e2b1b8c852eedaf64a2a543272d8c4b6f6f103fe90203cf4578a7ae": {
+      "fieldId": "ont_serial",
+      "text": "Please read out the O N T serial number or identifier.",
+      "file": "f67e13885e2b1b8c852eedaf64a2a543272d8c4b6f6f103fe90203cf4578a7ae.wav",
+      "sha256": "ac5df18b6f1c2c816b86367cb1278d1e6cc0e731efa6bb910769c1830fe7bf3c"
+    },
+    "a5101f613a0eb43fbf88f7f1c8bd2d067c1393b3b212bcf3ff55f3a49a32aa9b": {
+      "fieldId": "ont_status_checked",
+      "text": "O N T power/status checked? Say yes or no.",
+      "file": "a5101f613a0eb43fbf88f7f1c8bd2d067c1393b3b212bcf3ff55f3a49a32aa9b.wav",
+      "sha256": "30442f6953b13b14d06d5c1f0d92c520fe24da3cc7d533994ea8c454e3fb1375"
+    },
+    "bc25b4676642f7539ea7d50c521508d4f46ec68894f403f49faa51c7d05a3b87": {
+      "fieldId": "optical_test",
+      "text": "Optical test evidence and result? Passed, Failed, Not tested.",
+      "file": "bc25b4676642f7539ea7d50c521508d4f46ec68894f403f49faa51c7d05a3b87.wav",
+      "sha256": "cb0bdaf10de0be90f467a87662056ec6377ca57ddeca0c11c3823b6ac0472652"
+    },
+    "466ff18b39385054db42887dc80f8f8728b5928a8164cc7739e6461d7f3839c3": {
+      "fieldId": "service_live",
+      "text": "Service operating / provider activation confirmed? Say yes or no.",
+      "file": "466ff18b39385054db42887dc80f8f8728b5928a8164cc7739e6461d7f3839c3.wav",
+      "sha256": "c919eb4e2ce37cb55d1435d86bab9c45e6489d67910a4a837a941c8d1ca32c2d"
+    },
+    "d116c11ebaf6420ce2ad36f0fe59c41e5f65ed8d7396a78f1715930381c953ba": {
+      "fieldId": "customer_handover",
+      "text": "Customer handover completed? Say yes or no.",
+      "file": "d116c11ebaf6420ce2ad36f0fe59c41e5f65ed8d7396a78f1715930381c953ba.wav",
+      "sha256": "95fac8471b94f1c1d4c99d770d6873acb8b7853d4abc4929c2d3ffa973b96b53"
+    },
+    "1d1bc5ae1a7e952ab46106d2a6bc529a22dba2683393952f0a52953fe98250ed": {
+      "fieldId": "property_damage",
+      "text": "Any surface/property damage? Say yes or no.",
+      "file": "1d1bc5ae1a7e952ab46106d2a6bc529a22dba2683393952f0a52953fe98250ed.wav",
+      "sha256": "29f4b56ac02b43863ce8d57fa16953d0d0b174be60fce4f16a09e5a03cc6a0db"
+    },
+    "908ee4d6fe27f9bb12b701e55a3146b1bdc132d0e141bbc234e03e3a2b871e80": {
+      "fieldId": "reinstatement_accepted",
+      "text": "Reinstatement accepted? Say yes or no.",
+      "file": "908ee4d6fe27f9bb12b701e55a3146b1bdc132d0e141bbc234e03e3a2b871e80.wav",
+      "sha256": "7f36373b09f65ee9d987a2c3082aeb232f7001b0d7a977f7f881c718a69a7229"
+    },
+    "9bee9d4d47b4522e4f45b99f297a32cb35511bf94cb0fad18dc46b5bd0ff414f": {
+      "fieldId": "underground_route",
+      "text": "Underground route confirmed? Say yes or no.",
+      "file": "9bee9d4d47b4522e4f45b99f297a32cb35511bf94cb0fad18dc46b5bd0ff414f.wav",
+      "sha256": "c89ede98af815ff35766f5be562fb47658bd7a25eae3aa125b59468c20b3e56c"
+    },
+    "291bcbc0072a4a0e4f60941547ba7c09676cdd57520ae742129da1be872603be": {
+      "fieldId": "obstruction_section",
+      "text": "Exact obstruction section / chamber IDs?",
+      "file": "291bcbc0072a4a0e4f60941547ba7c09676cdd57520ae742129da1be872603be.wav",
+      "sha256": "dc8560a58f3b0a310f3eba09f350d89e2a9fe9add0124057300156462ddc9437"
+    },
+    "6b0ff9a5da937c6788cd648809ad8bc48d82322d0cdacb752106366b65b2ff09": {
+      "fieldId": "safe_attempt",
+      "text": "Rod/rope/pull attempted safely? Say yes or no.",
+      "file": "6b0ff9a5da937c6788cd648809ad8bc48d82322d0cdacb752106366b65b2ff09.wav",
+      "sha256": "2ddb39284f611b5cc2f0b385b91d0b71f92510047f5d42dbc85207f7ad35b844"
+    },
+    "03721c90d0b31f5f221fe3d5de20e29808cccf14ef8775e38b1ba5cf1cf83538": {
+      "fieldId": "obstruction_type",
+      "text": "Type of obstruction suspected?",
+      "file": "03721c90d0b31f5f221fe3d5de20e29808cccf14ef8775e38b1ba5cf1cf83538.wav",
+      "sha256": "5253a8fc9572d995e1f9a5487a1ecff6f07a81d63881d62ab8efdc1e06c189b9"
+    },
+    "a91ab8b54c6fb218b22fa7599ea2a1fc26afb8600f14c0c2ad2d4299303428f9": {
+      "fieldId": "blockage_distance",
+      "text": "How far along the route was the blockage, in metres?",
+      "file": "a91ab8b54c6fb218b22fa7599ea2a1fc26afb8600f14c0c2ad2d4299303428f9.wav",
+      "sha256": "c3d780e5c3d4b6a1387a22d4eb3ec05a0ccaee3d541f77f8bd50c43407f90bd0"
+    },
+    "616067355242f7f927fdaa7dc8f484e9b598f300088e43f7abac9478573a0119": {
+      "fieldId": "clearable_in_scope",
+      "text": "Can obstruction be safely cleared in scope? Say yes or no.",
+      "file": "616067355242f7f927fdaa7dc8f484e9b598f300088e43f7abac9478573a0119.wav",
+      "sha256": "e7d4366beadf57f763f78bb0da731b5e370c2fa628339e5a696a30277b36e996"
+    },
+    "dfb50ace03f6a399fb63f8da2e1e897605866029b60c64f79268c418c2aa0d34": {
+      "fieldId": "alternate_route_feasible",
+      "text": "Temporary mitigation or alternate route feasible? Say yes or no.",
+      "file": "dfb50ace03f6a399fb63f8da2e1e897605866029b60c64f79268c418c2aa0d34.wav",
+      "sha256": "23f9a5792c123f7ea3187c6516fb7101211b03e99b823adea415c6a0ce01fcd3"
+    },
+    "51ff01b8ed2f6feb80ce83458f60aca8bdcaa6f33356ee2be953f5255df76667": {
+      "fieldId": "civils_required",
+      "text": "Dig/civils work required? Say yes or no.",
+      "file": "51ff01b8ed2f6feb80ce83458f60aca8bdcaa6f33356ee2be953f5255df76667.wav",
+      "sha256": "df2508f0ae1200c8e97c377f47480d74f16a68a22742ab4e7e45a0a423e019ec"
+    },
+    "e75bd7c4c3844a70a659bc80ff331fbca9d4dba478b0401c2fae76d6538619ae": {
+      "fieldId": "permit_dependencies",
+      "text": "Dig category and permit dependencies?",
+      "file": "e75bd7c4c3844a70a659bc80ff331fbca9d4dba478b0401c2fae76d6538619ae.wav",
+      "sha256": "0d77e75d3afdc7c5a63ddd3b0c754c59a3fc4e0a6d777554dfe6afe376646ff1"
+    },
+    "511b50daadca34dbc407be474bb2579074d57af3d99eca5f5586c31b6afd9b8c": {
+      "fieldId": "follow_on_ref",
+      "text": "Please tell me: Civils task/reference created?",
+      "file": "511b50daadca34dbc407be474bb2579074d57af3d99eca5f5586c31b6afd9b8c.wav",
+      "sha256": "14894cb6ca9c026a7fe6fcb9d26ec53c204b97a8318085c88f9baabd174e863b"
+    },
+    "9602b3dcfda1e273b3a9ad38903db0e8f283527517ee41ddaa6ead5c56d83f1e": {
+      "fieldId": "next_owner",
+      "text": "Which team owns the next action, and what is the priority?",
+      "file": "9602b3dcfda1e273b3a9ad38903db0e8f283527517ee41ddaa6ead5c56d83f1e.wav",
+      "sha256": "b8fc2edebbf25bf01a7cfe6031899b60d5aeb8b721c6cb2db4881d36e15bf0c6"
+    },
+    "9daa460770bc6cd4c2db3a1fcdc49f6fd0b42430bdfc3ec86c8f7109995dc839": {
+      "fieldId": "other_premises_affected",
+      "text": "Other premises affected? Say yes or no.",
+      "file": "9daa460770bc6cd4c2db3a1fcdc49f6fd0b42430bdfc3ec86c8f7109995dc839.wav",
+      "sha256": "792d9a3b13bd6aa08b38027bda7efde5e4257356c4a43d6757d36995a2fe273c"
+    },
+    "30b17945a6845016f7e2a3e4465933f306452c39eb6c7b6d29fcc57dbf8b8297": {
+      "fieldId": "ont_fitted",
+      "text": "Was any O N T/C S P fitted before blockage found? Say yes or no.",
+      "file": "30b17945a6845016f7e2a3e4465933f306452c39eb6c7b6d29fcc57dbf8b8297.wav",
+      "sha256": "146e48ed0a5df973c5206c96a5017872011e82cf46e0ff26da34ba7b21617b7a"
+    },
+    "847b8bd2ce11c665a7be33814a8f002cf2b98ccc4534f998d69dd206d1b57726": {
+      "fieldId": "expected_cbt",
+      "text": "Expected C B T asset ID?",
+      "file": "847b8bd2ce11c665a7be33814a8f002cf2b98ccc4534f998d69dd206d1b57726.wav",
+      "sha256": "56d5339d68b53c427e4e4bb769b8006021f4e27a382c78d65291a2ad18b1e1b3"
+    },
+    "a3caac60d975bb0bcdbf0723aabf8c4fbc3918ef6b133dda0fa6f4c816ed884e": {
+      "fieldId": "observed_cbt",
+      "text": "Observed asset ID or not found?",
+      "file": "a3caac60d975bb0bcdbf0723aabf8c4fbc3918ef6b133dda0fa6f4c816ed884e.wav",
+      "sha256": "76c58eabc225e6888cda10ad1e20dd67fe8938b8d4bb3adf56ee66d9a98bd45c"
+    },
+    "00a2ebd33285983698db5dc2c6206948faebea320226460ea862e51cb7a54a0b": {
+      "fieldId": "serving_location_correct",
+      "text": "Correct serving pole/chamber? Say yes or no.",
+      "file": "00a2ebd33285983698db5dc2c6206948faebea320226460ea862e51cb7a54a0b.wav",
+      "sha256": "e6a69be05c06d3ecaef5856e6951d04f055f344d8eab0d7a790725267bfce0ce"
+    },
+    "210cc8a7678c1d8a600ef5779fbdbd56c3777cf11fc4b3b30e36bdb64222b31e": {
+      "fieldId": "cbt_present",
+      "text": "C B T physically present? Say yes or no.",
+      "file": "210cc8a7678c1d8a600ef5779fbdbd56c3777cf11fc4b3b30e36bdb64222b31e.wav",
+      "sha256": "6871b6ba21296d825da80559acc00040be212bcaf91e80e85657e428fa5549f1"
+    },
+    "6a8d825069a3fa62be1e91c893d35a4b0aae07aa78f46855827a4d84fae3d6f7": {
+      "fieldId": "cbt_safe_access",
+      "text": "C B T reachable and safe? Say yes or no.",
+      "file": "6a8d825069a3fa62be1e91c893d35a4b0aae07aa78f46855827a4d84fae3d6f7.wav",
+      "sha256": "ad83788030fdcf5678589c80b1596760a38d4566449ca2f0fae9ff3e5c8247da"
+    },
+    "5a74a87bde9eb6688608ec0a5e74009ca63d62e5ee9b32edf79c65bf8ed9ffe2": {
+      "fieldId": "cbt_port_verified",
+      "text": "C B T capacity/port available per verified record? Say yes or no.",
+      "file": "5a74a87bde9eb6688608ec0a5e74009ca63d62e5ee9b32edf79c65bf8ed9ffe2.wav",
+      "sha256": "bf14ba06f13d187f22c7114c7a4d4b11b425f15db0b41f1f8a20d853ae22ba98"
+    },
+    "55fc6cba6b88546f6d4c659f5a37c3f62b251437006ab604307a7b9c3e6ed813": {
+      "fieldId": "mapping_matches",
+      "text": "Asset-to-premises mapping match? Say yes or no.",
+      "file": "55fc6cba6b88546f6d4c659f5a37c3f62b251437006ab604307a7b9c3e6ed813.wav",
+      "sha256": "1e0fbed957a52f615d93340cfb5b4c0947689908acf823f9f23f69ffa84c93bc"
+    },
+    "94f05f3a31432b133865651374847a2157305c21e66737b938889bd4c60d629d": {
+      "fieldId": "alternative_cbt",
+      "text": "Possible alternative terminal identified?",
+      "file": "94f05f3a31432b133865651374847a2157305c21e66737b938889bd4c60d629d.wav",
+      "sha256": "69aa8151068ac07107fedcf912e61b27e2d147638e2427ab8a53dbe8c3dedf23"
+    },
+    "9fa2efdc5d3465268d2aa907f1ba9213a06197fc4ff9960a28abe567e0e507b3": {
+      "fieldId": "alternative_authorised",
+      "text": "Alternative approved for use? Say yes or no.",
+      "file": "9fa2efdc5d3465268d2aa907f1ba9213a06197fc4ff9960a28abe567e0e507b3.wav",
+      "sha256": "0dbbf45ec2910315e85db8dcf6e28c2479987eb2b736c074ec452ad06744fe78"
+    },
+    "b7567d356290577f07cd41d54ca017ec6463d6f219bd9749becab8a430e2687c": {
+      "fieldId": "records_correction",
+      "text": "Records correction requested? Say yes or no.",
+      "file": "b7567d356290577f07cd41d54ca017ec6463d6f219bd9749becab8a430e2687c.wav",
+      "sha256": "9fffeceecef990d420579ce9cc6319d0f420c5af1ec96372e5430e05fc2cc5cc"
+    },
+    "0c30da53c9c2f511d70b6e796ddb3d3d13630f390c80db3c20eef15410ca3fb3": {
+      "fieldId": "customer_service_affected",
+      "text": "Customer service affected? Say yes or no.",
+      "file": "0c30da53c9c2f511d70b6e796ddb3d3d13630f390c80db3c20eef15410ca3fb3.wav",
+      "sha256": "7656c40c0a41d73583cdbce4905f7e6b50ee73d984c4b5f11fdd23cbb2ead1ca"
+    },
+    "c8119936864650d8b55175a74e33e64d26ef837fa45006a1f17b32cfd2eb7204": {
+      "fieldId": "reappointment_held",
+      "text": "Is reappointment held pending readiness? Say yes or no.",
+      "file": "c8119936864650d8b55175a74e33e64d26ef837fa45006a1f17b32cfd2eb7204.wav",
+      "sha256": "bc7fc661f0ce1dcfe5fcb78795399c0156300a56aea4cb236d5d34010604f965"
+    },
+    "5d7f3df2b8adf9e433037568dd2dea9a50d74a3073fb2577c4965beed1bd208e": {
+      "fieldId": "fibre_connected",
+      "text": "External fibre actually connected end-to-end? Say yes or no.",
+      "file": "5d7f3df2b8adf9e433037568dd2dea9a50d74a3073fb2577c4965beed1bd208e.wav",
+      "sha256": "92ec01503dd54fbee64985f9b0c9fa0a387caaef1f4d8901734ccc8d117d8617"
+    },
+    "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb": {
+      "fieldId": "optical_rx_dbm",
+      "text": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative.",
+      "file": "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb.wav",
+      "sha256": "535fde8bf14293b8cb2efd6bf69f3eee2eb99cb60f0e60ceca28d489caa26a5d"
+    },
+    "5d6701410af2af727507e06842df647eeaf9811c2267610ffc80fe3411ed2db8": {
+      "fieldId": "activation_attempted",
+      "text": "Provisioning / authentication attempted? Say yes or no.",
+      "file": "5d6701410af2af727507e06842df647eeaf9811c2267610ffc80fe3411ed2db8.wav",
+      "sha256": "0a94636511430819242a4d7a057defdfafcfb4bc78dbc6a4b26ea9fd22ffad06"
+    },
+    "6ee622826c71a67b32b56fee33edfb679336cd08948080b120d7d0d3e8f38169": {
+      "fieldId": "issue_type",
+      "text": "Issue type isolated? No optical signal, Provider / provisioning activation, External fibre incomplete, Other technical issue.",
+      "file": "6ee622826c71a67b32b56fee33edfb679336cd08948080b120d7d0d3e8f38169.wav",
+      "sha256": "145e6e18666483cb4d6b10ed0f6f9c0fe8c705473b5c57222a24a5deb5b19971"
+    },
+    "6ce019121a244b09b49ad3a3708fa056cf636c87fe3cabbf06b0a9ef03acc679": {
+      "fieldId": "customer_not_live_informed",
+      "text": "Customer informed service NOT live? Say yes or no.",
+      "file": "6ce019121a244b09b49ad3a3708fa056cf636c87fe3cabbf06b0a9ef03acc679.wav",
+      "sha256": "39e999d08c5a64b8d1686d09f0aec4e6b75f5b83c58285cea88fc84e18223346"
+    },
+    "2a3a7fa3b421295e7bc1c6ad5ca325a06cf9ff082251647d2be0ebd5786d0b22": {
+      "fieldId": "survey_reference",
+      "text": "Network endpoint and survey reference?",
+      "file": "2a3a7fa3b421295e7bc1c6ad5ca325a06cf9ff082251647d2be0ebd5786d0b22.wav",
+      "sha256": "d3014acab6bd31c25e00590c46c05bbb73a0173fa88af3963b3d2988483bd591"
+    },
+    "f600d2e50d2b6fec559eccafc1b3e002c38b8eb37a06b76e603b4ca168d499af": {
+      "fieldId": "design_accepted",
+      "text": "Design version accepted? Say yes or no.",
+      "file": "f600d2e50d2b6fec559eccafc1b3e002c38b8eb37a06b76e603b4ca168d499af.wav",
+      "sha256": "70649af2c4345a65a98f611e0aa82d2edb2aa93c65fc079228b1fa626b1afcf4"
+    },
+    "06133fb9c12f2f4f383c550f233e6cc27b62e74054e14aff1700613f0786ba88": {
+      "fieldId": "route_distance",
+      "text": "What route distance did you measure, in metres?",
+      "file": "06133fb9c12f2f4f383c550f233e6cc27b62e74054e14aff1700613f0786ba88.wav",
+      "sha256": "b612f6bd62afe055a22f7ced1a9a2460d97a75dc6b311b9ef446301d70eb9135"
+    },
+    "d3b2b6e1351c825d79fe991906b3aafe9c91f2a187dbb64987913a66f2f79243": {
+      "fieldId": "wayleave_required",
+      "text": "Wayleave / access permission required? Say yes or no.",
+      "file": "d3b2b6e1351c825d79fe991906b3aafe9c91f2a187dbb64987913a66f2f79243.wav",
+      "sha256": "3af1f7e659b2bfb6a26f83532307cc17bdb8131f4793266f5d471f0abc22c57e"
+    },
+    "b5d546aa3aa9487368ae1b97a572285c706f652c63fa9d9f84e2ef6673a9d291": {
+      "fieldId": "wayleave_granted",
+      "text": "Wayleave/permit granted? Say yes or no.",
+      "file": "b5d546aa3aa9487368ae1b97a572285c706f652c63fa9d9f84e2ef6673a9d291.wav",
+      "sha256": "06a6ecb0d24c86078fc84a8a550370d3e04500992c2ad19e3888c8b0119898ae"
+    },
+    "e6adbd309d0fe58b4ec3977a680f00c31185e5e3017bb81623ef6b1b8959ac84": {
+      "fieldId": "civils_segments",
+      "text": "Please tell me: Civils segment(s) identified?",
+      "file": "e6adbd309d0fe58b4ec3977a680f00c31185e5e3017bb81623ef6b1b8959ac84.wav",
+      "sha256": "922043404f33db3d252011b38ece615197009d3e49d1cdfdd35ffd9f8159367b"
+    },
+    "102dc6dd8d675571e3d54001ddd26f60692ca58dbdb87f147732810fe5418e92": {
+      "fieldId": "civils_to_design",
+      "text": "Duct / chamber works completed to design? Say yes or no.",
+      "file": "102dc6dd8d675571e3d54001ddd26f60692ca58dbdb87f147732810fe5418e92.wav",
+      "sha256": "d3e8d3c7d37756ee742c190ddf3813d1fdc7ef94490706cc35495de0d665cd98"
+    },
+    "a51b4f93db76854f1a956804c4f6bb49c65981f5bfa2a04b48f0b0c49427a1ba": {
+      "fieldId": "fibre_placed_spliced",
+      "text": "Fibre cable placed and spliced? Say yes or no.",
+      "file": "a51b4f93db76854f1a956804c4f6bb49c65981f5bfa2a04b48f0b0c49427a1ba.wav",
+      "sha256": "715bf305b04cc4f97651cf26992f11e6d2abeb69ff2b48f3ec8683075aa3575c"
+    },
+    "17abcc522ffe591cb799eab2f0d9cf3645f1be5f2d01d5f3cdbd5cf591812a2c": {
+      "fieldId": "splice_tests_accepted",
+      "text": "Splice/segment test evidence accepted? Say yes or no.",
+      "file": "17abcc522ffe591cb799eab2f0d9cf3645f1be5f2d01d5f3cdbd5cf591812a2c.wav",
+      "sha256": "a17375112946c45eca5c3a594084b005a926b66837c31e1b4f65583e36d3d326"
+    },
+    "22cdb0edba595919f9e399fa9cbfce3ad1e5468cb092ef40620faddb235116e0": {
+      "fieldId": "terminal_available_mapped",
+      "text": "C B T/terminal available and mapped? Say yes or no.",
+      "file": "22cdb0edba595919f9e399fa9cbfce3ad1e5468cb092ef40620faddb235116e0.wav",
+      "sha256": "dc602d2b177adf602fac6eab1d59ec35b705e8656170c88afb4ea6510de25563"
+    },
+    "1d78040fd717ed3f913c182d586a14a0c204b465cfcdeed3d3861969514d05a7": {
+      "fieldId": "as_built_accepted",
+      "text": "As-built records accepted? Say yes or no.",
+      "file": "1d78040fd717ed3f913c182d586a14a0c204b465cfcdeed3d3861969514d05a7.wav",
+      "sha256": "92411ee370aba3d3426bbd12212738b6834a57db16bf4e304fe3acea1cd860fe"
+    },
+    "3a1ba41508b3a236d01c24e4ecc78f40dafebd4baa84b91f76db4131daa1bd80": {
+      "fieldId": "downstream_handoff",
+      "text": "Named downstream owner / handoff accepted? Say yes or no.",
+      "file": "3a1ba41508b3a236d01c24e4ecc78f40dafebd4baa84b91f76db4131daa1bd80.wav",
+      "sha256": "4cb37bc1b926d8317fa35dc5216664eb9cdd238b28becd9d2f6e70e5401ffc27"
+    },
+    "69e7d15e11977e1875da0b7e403964179236cfe718f76c28550a9903cd7e12d2": {
+      "fieldId": "premises_ready",
+      "text": "Premises marked ready for final provision? Say yes or no.",
+      "file": "69e7d15e11977e1875da0b7e403964179236cfe718f76c28550a9903cd7e12d2.wav",
+      "sha256": "65b1a2e1c88eee86763c0298e2ce3c189ab534a542fb90c96f8f8d6c8f8ce828"
+    },
+    "7e8d8b3a77b3d6fa97e92e624df5fccb9faf948df02cf6fab4979a02ef5f2d83": {
+      "fieldId": "customer_facing",
+      "text": "Is this a customer-facing work order? Say yes or no.",
+      "file": "7e8d8b3a77b3d6fa97e92e624df5fccb9faf948df02cf6fab4979a02ef5f2d83.wav",
+      "sha256": "40b4e6405f3f7aefe0e40d0a9af5c11c3d013490776311ce6a18de23c7fbdc13"
+    },
+    "288897fda00d1b8b718463415070ffb2ce9b2e45224bec4cfaeeeff8cae346cf": {
+      "fieldId": "physical_work_attempted",
+      "text": "Was physical work attempted? Say yes or no.",
+      "file": "288897fda00d1b8b718463415070ffb2ce9b2e45224bec4cfaeeeff8cae346cf.wav",
+      "sha256": "3eb230b975b3565bd71bcdc5e4f84744d590ed600eb633fe04d0410c9722d092"
+    },
+    "68d27f078f1e66f613c809fcb8c3a384e4e9b5a36d247d5543de1b90716c6b3f": {
+      "fieldId": "penetration_required",
+      "text": "Was new property penetration required? Say yes or no.",
+      "file": "68d27f078f1e66f613c809fcb8c3a384e4e9b5a36d247d5543de1b90716c6b3f.wav",
+      "sha256": "0dd4159d42e913653df65de156012b68b23b0a4f2f57ae09ff8cb632b35f8b25"
+    },
+    "52618613df610d8a0c5f14f8a6f1d0fe086d3fa3412e11d002215ac288972b55": {
+      "fieldId": "hazard_mitigated",
+      "text": "Has the recorded hazard been mitigated? Say yes or no.",
+      "file": "52618613df610d8a0c5f14f8a6f1d0fe086d3fa3412e11d002215ac288972b55.wav",
+      "sha256": "de3f0078d6c62ac1447c70150c14a0224e710147441ad23b9cd12375e57d6c6b"
+    },
+    "33b93788834c22b0e55f85e101e6233c655e34f50f8fa1633737d36aee90d59c": {
+      "fieldId": "safety_escalation",
+      "text": "Please tell me: Safety escalation reference?",
+      "file": "33b93788834c22b0e55f85e101e6233c655e34f50f8fa1633737d36aee90d59c.wav",
+      "sha256": "42a828ecf77f99c3cc498d0ce78bdcab1b155d8dd5f10fa6b8cf0ac5b4cb809f"
+    },
+    "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43": {
+      "fieldId": "next_action",
+      "text": "Next action and dependency status?",
+      "file": "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43.wav",
+      "sha256": "f83a3155dcc287756450a7655a77a7a491c12e1d7c6f916e052e34acb7ca8cf2"
+    },
+    "7f9a8479d08453dde389d7a80e1eb11307b1ed838d6cca9dc7432a9b27afa9b0": {
+      "fieldId": "excavation_performed",
+      "text": "Was excavation performed during THIS visit? Say yes or no.",
+      "file": "7f9a8479d08453dde389d7a80e1eb11307b1ed838d6cca9dc7432a9b27afa9b0.wav",
+      "sha256": "768626762107c1b6d122b243cde32300ff563cf5d18a83d2f7af914f80d9a758"
+    },
+    "4f67968aaa2e32534d986c2fd44340235e9b5cb8c55f2f2fb3375b14d7664ea1": {
+      "fieldId": "excavation_required",
+      "text": "Is excavation required? Say yes or no.",
+      "file": "4f67968aaa2e32534d986c2fd44340235e9b5cb8c55f2f2fb3375b14d7664ea1.wav",
+      "sha256": "995c977960a1cca817c0d2ac67fa692915068596a6f51a3595eafc82c6fd7c45"
+    },
+    "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193": {
+      "fieldId": "operational_test",
+      "text": "Recorded operational / activation test result? Passed, Failed, Not tested.",
+      "file": "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193.wav",
+      "sha256": "8188f914e1bca42e45f75515914bfc9cfbbf1afce8b37c0baaf23acfc6e07f97"
+    },
+    "d2c83786fc77c9fefda65b57b485b9f05c2ab77b1f41dc77dda617b5462ae39a": {
+      "fieldId": "tester_reference",
+      "text": "Test instrument / recorded result reference?",
+      "file": "d2c83786fc77c9fefda65b57b485b9f05c2ab77b1f41dc77dda617b5462ae39a.wav",
+      "sha256": "300d75c64a45a68ffd6f6acf12197f3c2c5ca13ac44dd290f9dea5d0e6185fba"
+    },
+    "9a6fb1cd1a158c559f386ce9dccfb9db6d08126829c93e20886b6717934dfbd0": {
+      "fieldId": "shared_duct",
+      "text": "Is this a shared duct? Say yes or no.",
+      "file": "9a6fb1cd1a158c559f386ce9dccfb9db6d08126829c93e20886b6717934dfbd0.wav",
+      "sha256": "fa8e1f3c1ce1e2af26554c44d719196955a038da641132518c023bf1a99bf386"
+    },
+    "10d2b07ea0896a540174f5d91799e945fd6dd1f7f9341713dc636690c7cef767": {
+      "fieldId": "route_constraints",
+      "text": "Survey route constraints and dependencies?",
+      "file": "10d2b07ea0896a540174f5d91799e945fd6dd1f7f9341713dc636690c7cef767.wav",
+      "sha256": "772484e8ce655372a606723f0ad03d8f5defefbb0393c8194ce2fc9df1373af1"
+    },
+    "f172a9e5ef9781651f2128eac2443988c455bd015d77ae686b04f9745ce36e06": {
+      "fieldId": "all_network_stages_accepted",
+      "text": "Have all prerequisite network stages been accepted? Say yes or no.",
+      "file": "f172a9e5ef9781651f2128eac2443988c455bd015d77ae686b04f9745ce36e06.wav",
+      "sha256": "d138447de0ba93d112143c78ae90b25f190e091fcc18615289f0ea2858ec297a"
+    }
+  },
+  "formatVersion": 2,
+  "voices": {
+    "bm_george": {
+      "model": "kokoro-int8-en-v0_19",
+      "voice": "bm_george",
+      "settings": {
+        "model": "kokoro-int8-en-v0_19",
+        "voice": "bm_george",
+        "speakerId": 9,
+        "speed": 1.05,
+        "runtime": "1.13.8",
+        "backgroundAudio": false,
+        "modelSha256": "e0530c5031c03c5dc957edfc6d72582c2246e9b4566643ff67eeb03610c11641",
+        "voicesSha256": "a372c67b056ef0b695c375d39b99630d23fb07ad4c8d87aa32a19a62fca523ad"
+      },
+      "prompts": {
+        "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b": {
+          "fieldId": "assistant_greeting",
+          "text": "Hi. Talk me through this visit. I will fill in the details and ask if anything is missing.",
+          "file": "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b.wav",
+          "sha256": "ddbbd4d9d4bcd6e786ad162e2043bf10605ecbce63995d116ea291710a201c96"
+        },
+        "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c": {
+          "fieldId": "assistant_greeting_2",
+          "text": "Hello. How did this visit go? Tell me about the work, the tests, and anything left to do.",
+          "file": "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c.wav",
+          "sha256": "2f453170ebd12bd35e7a2d3e45208a91bf3a2cc22bd35b1abba4a67dde365617"
+        },
+        "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3": {
+          "fieldId": "assistant_greeting_3",
+          "text": "Ready when you are. Tell me what you got done, and we will put the visit report together.",
+          "file": "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3.wav",
+          "sha256": "04e5d5d24668d6e9595442bd88e0fa93d654f62d674f38b740532cfb86cda652"
+        },
+        "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f": {
+          "fieldId": "assistant_welcome_back",
+          "text": "Welcome back. Your answers are saved. Let us pick up with the details still missing.",
+          "file": "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f.wav",
+          "sha256": "57a967de3aac4c7e17b6bcad8b64b209280958351a39e9d2967ae7dab1dadca9"
+        },
+        "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb": {
+          "fieldId": "assistant_welcome_back_2",
+          "text": "Let us finish this report. I will just ask about the details we still need.",
+          "file": "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb.wav",
+          "sha256": "00ef21570eb8a7e7f5c9d2545bce96bc78438f3d4f63773995af9f6842b78e4c"
+        },
+        "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375": {
+          "fieldId": "assistant_welcome_back_3",
+          "text": "Your report is already started. We can carry on from where you left off.",
+          "file": "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375.wav",
+          "sha256": "19af3f89b10c1a1183c7c7632808eb2240cd447a9dfa07f3909861e50636b09c"
+        },
+        "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27": {
+          "fieldId": "assistant_summary_invite",
+          "text": "Tell me what you did, what you tested, and what still needs attention.",
+          "file": "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27.wav",
+          "sha256": "9d2d73e1ba1db136f7c1bc0316a05dbbd1ae3b36e81faa94188aab21f766d104"
+        },
+        "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290": {
+          "fieldId": "assistant_narrative_saved",
+          "text": "Summary added. I will ask for the remaining details.",
+          "file": "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290.wav",
+          "sha256": "5a99b44162cbb8affdb35892b48693cb7219bd71d54eb4222ea608f3f8e497d4"
+        },
+        "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b": {
+          "fieldId": "assistant_answer_saved",
+          "text": "Added to the form.",
+          "file": "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b.wav",
+          "sha256": "b70685c663cb675030d63f46aa338386324f9694b4ddd029f0f97928be85218b"
+        },
+        "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9": {
+          "fieldId": "assistant_unclear",
+          "text": "Please give a clear answer, or choose an option. Say repeat to hear the question again.",
+          "file": "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9.wav",
+          "sha256": "d120686507ebb1eaab58e1cbd7f084ddf8803d0c18bfee164b3fbd586b8e0bfd"
+        },
+        "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f": {
+          "fieldId": "assistant_complete",
+          "text": "Voice capture complete. Say open draft to review your answers.",
+          "file": "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f.wav",
+          "sha256": "23894cfd1304cfe3dcae2b343ad1351aa4326e38e606a2c8289b9cfd7a91ceae"
+        },
+        "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f": {
+          "fieldId": "assistant_anything_else",
+          "text": "Anything else?",
+          "file": "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f.wav",
+          "sha256": "171f346e32a418af2e36f49708d1b8eaa7c11c7d9f88d34b877733510cc2071c"
+        },
+        "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284": {
+          "fieldId": "assistant_guided_start",
+          "text": "Let me ask you the details one at a time.",
+          "file": "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284.wav",
+          "sha256": "6299390d257d7f9342ced962db0e8d0bfa523c62f0b3dd340979f88878dd3a39"
+        },
+        "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d": {
+          "fieldId": "assistant_summary_complete",
+          "text": "Your visit summary is ready. Review the answers, then press submit.",
+          "file": "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d.wav",
+          "sha256": "5356cbcd95e52c6a9d399eae17339465ee3282cf72971de0ed390505a408f525"
+        },
+        "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a": {
+          "fieldId": "assistant_paused",
+          "text": "Paused. Say resume to continue, or open draft to review.",
+          "file": "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a.wav",
+          "sha256": "4450b1d609322c493228acad2d09e0c9c389e7b76374abf91cce86fe8a2565ea"
+        },
+        "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489": {
+          "fieldId": "assistant_no_speech",
+          "text": "Ready for your answer. Say repeat, skip, pause, or open draft if needed.",
+          "file": "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489.wav",
+          "sha256": "16e7ec643ffda44af9191446e9530c7fdad00b326221910409d69e706e39e278"
+        },
+        "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3": {
+          "fieldId": "assistant_save_failed",
+          "text": "The answer could not be saved. Say retry to try again.",
+          "file": "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3.wav",
+          "sha256": "820366656fdabff79a78665f148b0d88574efe2f844301fa7ecbd62578709b22"
+        },
+        "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda": {
+          "fieldId": "voice_preview",
+          "text": "Hi. I am your Field Assist voice. Tell me what you did, and I will help finish your report.",
+          "file": "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda.wav",
+          "sha256": "917dff0399a3ce6fcab07daad8367bd4f863a27a3f14c6982c39b2224a362448"
+        },
+        "4e259d98f186c4316b9198b5e41e4f183e98108747efb451484acc53fa078947": {
+          "fieldId": "identity_verified",
+          "text": "Have you verified the work order and the premises? Say yes or no.",
+          "file": "4e259d98f186c4316b9198b5e41e4f183e98108747efb451484acc53fa078947.wav",
+          "sha256": "039af352a5c29b9d36c8eb86ca476971924d1e6fe9a174b506f2b37ae11aec3c"
+        },
+        "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede": {
+          "fieldId": "claimed_outcome",
+          "text": "What is the outcome for this work order? Say completed, partial, blocked, on hold, referral, stage completed, or network ready.",
+          "file": "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede.wav",
+          "sha256": "bd954e7838af6a0f270b16e09f42982a5b687ed2517acab2a80c0449b5a09655"
+        },
+        "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03": {
+          "fieldId": "actual_work",
+          "text": "What work did you complete on this visit?",
+          "file": "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03.wav",
+          "sha256": "4250eab726b98ee3e249050db64141376fd7ac86ac8e5de1c724412111ac1d20"
+        },
+        "75c03dcf1291662962158d0e056b8d5472fb46bbc2f0f7299ffaa912cf47178d": {
+          "fieldId": "safety_hazard",
+          "text": "Any safety hazard or incident? Say yes or no.",
+          "file": "75c03dcf1291662962158d0e056b8d5472fb46bbc2f0f7299ffaa912cf47178d.wav",
+          "sha256": "598097e2a918aafa3e2e3fcffc9c7b17d8ca245ad3b1a513d8695c6a4f6611f0"
+        },
+        "6e1b75b0c8577264377424a26c76a6ea23cbb6e0e0d0f7df5ca1a496309d5db3": {
+          "fieldId": "access_permission",
+          "text": "Were access / permissions adequate? Say yes or no.",
+          "file": "6e1b75b0c8577264377424a26c76a6ea23cbb6e0e0d0f7df5ca1a496309d5db3.wav",
+          "sha256": "90e8888a4db891608eed1b466edeba4c4f5fc6c5af8d55b66019e71544404f0b"
+        },
+        "b51adbfc6443104b27588af32ea22bf01a9fbc2a9e06f47329a2ce5a260d1ad9": {
+          "fieldId": "evidence_sufficient",
+          "text": "Is attached evidence sufficient and linked to work order? Say yes or no.",
+          "file": "b51adbfc6443104b27588af32ea22bf01a9fbc2a9e06f47329a2ce5a260d1ad9.wav",
+          "sha256": "76d08719fab8fde43baf94741ba8cc6b287f5a73dc74eb4a39bd4a1b15a016c7"
+        },
+        "ce99c1b47677bb58e8c1b4dd845892aacd22f4f3d3d445c928838ed8aac20fb6": {
+          "fieldId": "work_outstanding",
+          "text": "Any work outstanding for THIS work order? Say yes or no.",
+          "file": "ce99c1b47677bb58e8c1b4dd845892aacd22f4f3d3d445c928838ed8aac20fb6.wav",
+          "sha256": "ab373dc1f6a8223864674104217f0fdb082e9d66381fe1a0eafe5fcb6517a02d"
+        },
+        "b9e94a0a552b72d148b68399ee9fc36142660c11451a06ba4fa87258e8944bad": {
+          "fieldId": "affected_party_informed",
+          "text": "Was affected customer or next team informed? Say yes or no.",
+          "file": "b9e94a0a552b72d148b68399ee9fc36142660c11451a06ba4fa87258e8944bad.wav",
+          "sha256": "fb66d7bcebb3d885e73d6af9288d24d1ceb54df31454b2e59dacbf40d9293dc8"
+        },
+        "fbd6cb7faf6ca1f93f5ef71b82ed5ea165bd09222d5b1a6110b4d811dde990d6": {
+          "fieldId": "site_handover_safe",
+          "text": "Is the site safe and tidy or properly handed over? Say yes or no.",
+          "file": "fbd6cb7faf6ca1f93f5ef71b82ed5ea165bd09222d5b1a6110b4d811dde990d6.wav",
+          "sha256": "2d981a7584e9e1bc3d9a89f4ae082f926e784896a8505e2ed0e2427ddf01a759"
+        },
+        "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac": {
+          "fieldId": "serving_asset",
+          "text": "What is the reference of the serving C B T, pole or chamber?",
+          "file": "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac.wav",
+          "sha256": "89e5b6a7530fde24af5a676e3ffdc6d5fb9db5d3f0b9e378e3b8d39be21eef7e"
+        },
+        "9427d7d9197098b576ac7ead6518ca8a6e467efd04e4a7d0b7d67fb1ffe7ec9c": {
+          "fieldId": "drop_route",
+          "text": "Drop route type? Overhead, Underground, Existing route.",
+          "file": "9427d7d9197098b576ac7ead6518ca8a6e467efd04e4a7d0b7d67fb1ffe7ec9c.wav",
+          "sha256": "8edb4c062d0cdc8ff823bbb5b26462424bf4a96373f168c082dd4e159babc904"
+        },
+        "1884a552e911cf11ab5a974980517e8cd340fe7c62b4b9ed7c2251ff45e483c0": {
+          "fieldId": "route_obstructed",
+          "text": "Is the route obstructed? Say yes or no.",
+          "file": "1884a552e911cf11ab5a974980517e8cd340fe7c62b4b9ed7c2251ff45e483c0.wav",
+          "sha256": "d4d4f7707e8fe99c9b59265a686ab2b7f96058ee1d4690ba6f6816a8410ea18b"
+        },
+        "6df16c3fe972ecdbf868ce4d1c83e419dff34b6903bde3c44ca017f27e3ebf25": {
+          "fieldId": "location_agreed",
+          "text": "Customer approved cable and O N T location? Say yes or no.",
+          "file": "6df16c3fe972ecdbf868ce4d1c83e419dff34b6903bde3c44ca017f27e3ebf25.wav",
+          "sha256": "e337ab6c59c21cc651a55c5aa3ea83528110e1f33d90268ac427d943c401a34c"
+        },
+        "400fa15a35e4963713ab1798d5d2ffceebc00f5229fbdff4525d3164feaf3f4b": {
+          "fieldId": "drilling_consent",
+          "text": "Entry / drilling consent obtained? Say yes or no.",
+          "file": "400fa15a35e4963713ab1798d5d2ffceebc00f5229fbdff4525d3164feaf3f4b.wav",
+          "sha256": "353b589e2a03783ad8b2192b8f7082efe18e1927119ef71c47f2c5707992fdea"
+        },
+        "e30aa8830d435eb115797a5720b2111c07d222ada55ae948a5f75d21423f552d": {
+          "fieldId": "external_connection",
+          "text": "External fibre and connection point installed? Say yes or no.",
+          "file": "e30aa8830d435eb115797a5720b2111c07d222ada55ae948a5f75d21423f552d.wav",
+          "sha256": "7378a6aa88452a5ee79ea2110a0fad918707626868c3acb25244c65b5360bc29"
+        },
+        "f087713110dd2bdbbc6b9e996751940ddeb8d59919284637b2959ff73bb00cd1": {
+          "fieldId": "internal_fibre",
+          "text": "Internal fibre fitted to O N T? Say yes or no.",
+          "file": "f087713110dd2bdbbc6b9e996751940ddeb8d59919284637b2959ff73bb00cd1.wav",
+          "sha256": "3787f7599a0e7bbf1f20e4d2f368db6a10f6ee1e4a88f15da3860b28b455aab1"
+        },
+        "f67e13885e2b1b8c852eedaf64a2a543272d8c4b6f6f103fe90203cf4578a7ae": {
+          "fieldId": "ont_serial",
+          "text": "Please read out the O N T serial number or identifier.",
+          "file": "f67e13885e2b1b8c852eedaf64a2a543272d8c4b6f6f103fe90203cf4578a7ae.wav",
+          "sha256": "ac5df18b6f1c2c816b86367cb1278d1e6cc0e731efa6bb910769c1830fe7bf3c"
+        },
+        "a5101f613a0eb43fbf88f7f1c8bd2d067c1393b3b212bcf3ff55f3a49a32aa9b": {
+          "fieldId": "ont_status_checked",
+          "text": "O N T power/status checked? Say yes or no.",
+          "file": "a5101f613a0eb43fbf88f7f1c8bd2d067c1393b3b212bcf3ff55f3a49a32aa9b.wav",
+          "sha256": "30442f6953b13b14d06d5c1f0d92c520fe24da3cc7d533994ea8c454e3fb1375"
+        },
+        "bc25b4676642f7539ea7d50c521508d4f46ec68894f403f49faa51c7d05a3b87": {
+          "fieldId": "optical_test",
+          "text": "Optical test evidence and result? Passed, Failed, Not tested.",
+          "file": "bc25b4676642f7539ea7d50c521508d4f46ec68894f403f49faa51c7d05a3b87.wav",
+          "sha256": "cb0bdaf10de0be90f467a87662056ec6377ca57ddeca0c11c3823b6ac0472652"
+        },
+        "466ff18b39385054db42887dc80f8f8728b5928a8164cc7739e6461d7f3839c3": {
+          "fieldId": "service_live",
+          "text": "Service operating / provider activation confirmed? Say yes or no.",
+          "file": "466ff18b39385054db42887dc80f8f8728b5928a8164cc7739e6461d7f3839c3.wav",
+          "sha256": "c919eb4e2ce37cb55d1435d86bab9c45e6489d67910a4a837a941c8d1ca32c2d"
+        },
+        "d116c11ebaf6420ce2ad36f0fe59c41e5f65ed8d7396a78f1715930381c953ba": {
+          "fieldId": "customer_handover",
+          "text": "Customer handover completed? Say yes or no.",
+          "file": "d116c11ebaf6420ce2ad36f0fe59c41e5f65ed8d7396a78f1715930381c953ba.wav",
+          "sha256": "95fac8471b94f1c1d4c99d770d6873acb8b7853d4abc4929c2d3ffa973b96b53"
+        },
+        "1d1bc5ae1a7e952ab46106d2a6bc529a22dba2683393952f0a52953fe98250ed": {
+          "fieldId": "property_damage",
+          "text": "Any surface/property damage? Say yes or no.",
+          "file": "1d1bc5ae1a7e952ab46106d2a6bc529a22dba2683393952f0a52953fe98250ed.wav",
+          "sha256": "29f4b56ac02b43863ce8d57fa16953d0d0b174be60fce4f16a09e5a03cc6a0db"
+        },
+        "908ee4d6fe27f9bb12b701e55a3146b1bdc132d0e141bbc234e03e3a2b871e80": {
+          "fieldId": "reinstatement_accepted",
+          "text": "Reinstatement accepted? Say yes or no.",
+          "file": "908ee4d6fe27f9bb12b701e55a3146b1bdc132d0e141bbc234e03e3a2b871e80.wav",
+          "sha256": "7f36373b09f65ee9d987a2c3082aeb232f7001b0d7a977f7f881c718a69a7229"
+        },
+        "9bee9d4d47b4522e4f45b99f297a32cb35511bf94cb0fad18dc46b5bd0ff414f": {
+          "fieldId": "underground_route",
+          "text": "Underground route confirmed? Say yes or no.",
+          "file": "9bee9d4d47b4522e4f45b99f297a32cb35511bf94cb0fad18dc46b5bd0ff414f.wav",
+          "sha256": "c89ede98af815ff35766f5be562fb47658bd7a25eae3aa125b59468c20b3e56c"
+        },
+        "291bcbc0072a4a0e4f60941547ba7c09676cdd57520ae742129da1be872603be": {
+          "fieldId": "obstruction_section",
+          "text": "Exact obstruction section / chamber IDs?",
+          "file": "291bcbc0072a4a0e4f60941547ba7c09676cdd57520ae742129da1be872603be.wav",
+          "sha256": "dc8560a58f3b0a310f3eba09f350d89e2a9fe9add0124057300156462ddc9437"
+        },
+        "6b0ff9a5da937c6788cd648809ad8bc48d82322d0cdacb752106366b65b2ff09": {
+          "fieldId": "safe_attempt",
+          "text": "Rod/rope/pull attempted safely? Say yes or no.",
+          "file": "6b0ff9a5da937c6788cd648809ad8bc48d82322d0cdacb752106366b65b2ff09.wav",
+          "sha256": "2ddb39284f611b5cc2f0b385b91d0b71f92510047f5d42dbc85207f7ad35b844"
+        },
+        "03721c90d0b31f5f221fe3d5de20e29808cccf14ef8775e38b1ba5cf1cf83538": {
+          "fieldId": "obstruction_type",
+          "text": "Type of obstruction suspected?",
+          "file": "03721c90d0b31f5f221fe3d5de20e29808cccf14ef8775e38b1ba5cf1cf83538.wav",
+          "sha256": "5253a8fc9572d995e1f9a5487a1ecff6f07a81d63881d62ab8efdc1e06c189b9"
+        },
+        "a91ab8b54c6fb218b22fa7599ea2a1fc26afb8600f14c0c2ad2d4299303428f9": {
+          "fieldId": "blockage_distance",
+          "text": "How far along the route was the blockage, in metres?",
+          "file": "a91ab8b54c6fb218b22fa7599ea2a1fc26afb8600f14c0c2ad2d4299303428f9.wav",
+          "sha256": "c3d780e5c3d4b6a1387a22d4eb3ec05a0ccaee3d541f77f8bd50c43407f90bd0"
+        },
+        "616067355242f7f927fdaa7dc8f484e9b598f300088e43f7abac9478573a0119": {
+          "fieldId": "clearable_in_scope",
+          "text": "Can obstruction be safely cleared in scope? Say yes or no.",
+          "file": "616067355242f7f927fdaa7dc8f484e9b598f300088e43f7abac9478573a0119.wav",
+          "sha256": "e7d4366beadf57f763f78bb0da731b5e370c2fa628339e5a696a30277b36e996"
+        },
+        "dfb50ace03f6a399fb63f8da2e1e897605866029b60c64f79268c418c2aa0d34": {
+          "fieldId": "alternate_route_feasible",
+          "text": "Temporary mitigation or alternate route feasible? Say yes or no.",
+          "file": "dfb50ace03f6a399fb63f8da2e1e897605866029b60c64f79268c418c2aa0d34.wav",
+          "sha256": "23f9a5792c123f7ea3187c6516fb7101211b03e99b823adea415c6a0ce01fcd3"
+        },
+        "51ff01b8ed2f6feb80ce83458f60aca8bdcaa6f33356ee2be953f5255df76667": {
+          "fieldId": "civils_required",
+          "text": "Dig/civils work required? Say yes or no.",
+          "file": "51ff01b8ed2f6feb80ce83458f60aca8bdcaa6f33356ee2be953f5255df76667.wav",
+          "sha256": "df2508f0ae1200c8e97c377f47480d74f16a68a22742ab4e7e45a0a423e019ec"
+        },
+        "e75bd7c4c3844a70a659bc80ff331fbca9d4dba478b0401c2fae76d6538619ae": {
+          "fieldId": "permit_dependencies",
+          "text": "Dig category and permit dependencies?",
+          "file": "e75bd7c4c3844a70a659bc80ff331fbca9d4dba478b0401c2fae76d6538619ae.wav",
+          "sha256": "0d77e75d3afdc7c5a63ddd3b0c754c59a3fc4e0a6d777554dfe6afe376646ff1"
+        },
+        "511b50daadca34dbc407be474bb2579074d57af3d99eca5f5586c31b6afd9b8c": {
+          "fieldId": "follow_on_ref",
+          "text": "Please tell me: Civils task/reference created?",
+          "file": "511b50daadca34dbc407be474bb2579074d57af3d99eca5f5586c31b6afd9b8c.wav",
+          "sha256": "14894cb6ca9c026a7fe6fcb9d26ec53c204b97a8318085c88f9baabd174e863b"
+        },
+        "9602b3dcfda1e273b3a9ad38903db0e8f283527517ee41ddaa6ead5c56d83f1e": {
+          "fieldId": "next_owner",
+          "text": "Which team owns the next action, and what is the priority?",
+          "file": "9602b3dcfda1e273b3a9ad38903db0e8f283527517ee41ddaa6ead5c56d83f1e.wav",
+          "sha256": "b8fc2edebbf25bf01a7cfe6031899b60d5aeb8b721c6cb2db4881d36e15bf0c6"
+        },
+        "9daa460770bc6cd4c2db3a1fcdc49f6fd0b42430bdfc3ec86c8f7109995dc839": {
+          "fieldId": "other_premises_affected",
+          "text": "Other premises affected? Say yes or no.",
+          "file": "9daa460770bc6cd4c2db3a1fcdc49f6fd0b42430bdfc3ec86c8f7109995dc839.wav",
+          "sha256": "792d9a3b13bd6aa08b38027bda7efde5e4257356c4a43d6757d36995a2fe273c"
+        },
+        "30b17945a6845016f7e2a3e4465933f306452c39eb6c7b6d29fcc57dbf8b8297": {
+          "fieldId": "ont_fitted",
+          "text": "Was any O N T/C S P fitted before blockage found? Say yes or no.",
+          "file": "30b17945a6845016f7e2a3e4465933f306452c39eb6c7b6d29fcc57dbf8b8297.wav",
+          "sha256": "146e48ed0a5df973c5206c96a5017872011e82cf46e0ff26da34ba7b21617b7a"
+        },
+        "847b8bd2ce11c665a7be33814a8f002cf2b98ccc4534f998d69dd206d1b57726": {
+          "fieldId": "expected_cbt",
+          "text": "Expected C B T asset ID?",
+          "file": "847b8bd2ce11c665a7be33814a8f002cf2b98ccc4534f998d69dd206d1b57726.wav",
+          "sha256": "56d5339d68b53c427e4e4bb769b8006021f4e27a382c78d65291a2ad18b1e1b3"
+        },
+        "a3caac60d975bb0bcdbf0723aabf8c4fbc3918ef6b133dda0fa6f4c816ed884e": {
+          "fieldId": "observed_cbt",
+          "text": "Observed asset ID or not found?",
+          "file": "a3caac60d975bb0bcdbf0723aabf8c4fbc3918ef6b133dda0fa6f4c816ed884e.wav",
+          "sha256": "76c58eabc225e6888cda10ad1e20dd67fe8938b8d4bb3adf56ee66d9a98bd45c"
+        },
+        "00a2ebd33285983698db5dc2c6206948faebea320226460ea862e51cb7a54a0b": {
+          "fieldId": "serving_location_correct",
+          "text": "Correct serving pole/chamber? Say yes or no.",
+          "file": "00a2ebd33285983698db5dc2c6206948faebea320226460ea862e51cb7a54a0b.wav",
+          "sha256": "e6a69be05c06d3ecaef5856e6951d04f055f344d8eab0d7a790725267bfce0ce"
+        },
+        "210cc8a7678c1d8a600ef5779fbdbd56c3777cf11fc4b3b30e36bdb64222b31e": {
+          "fieldId": "cbt_present",
+          "text": "C B T physically present? Say yes or no.",
+          "file": "210cc8a7678c1d8a600ef5779fbdbd56c3777cf11fc4b3b30e36bdb64222b31e.wav",
+          "sha256": "6871b6ba21296d825da80559acc00040be212bcaf91e80e85657e428fa5549f1"
+        },
+        "6a8d825069a3fa62be1e91c893d35a4b0aae07aa78f46855827a4d84fae3d6f7": {
+          "fieldId": "cbt_safe_access",
+          "text": "C B T reachable and safe? Say yes or no.",
+          "file": "6a8d825069a3fa62be1e91c893d35a4b0aae07aa78f46855827a4d84fae3d6f7.wav",
+          "sha256": "ad83788030fdcf5678589c80b1596760a38d4566449ca2f0fae9ff3e5c8247da"
+        },
+        "5a74a87bde9eb6688608ec0a5e74009ca63d62e5ee9b32edf79c65bf8ed9ffe2": {
+          "fieldId": "cbt_port_verified",
+          "text": "C B T capacity/port available per verified record? Say yes or no.",
+          "file": "5a74a87bde9eb6688608ec0a5e74009ca63d62e5ee9b32edf79c65bf8ed9ffe2.wav",
+          "sha256": "bf14ba06f13d187f22c7114c7a4d4b11b425f15db0b41f1f8a20d853ae22ba98"
+        },
+        "55fc6cba6b88546f6d4c659f5a37c3f62b251437006ab604307a7b9c3e6ed813": {
+          "fieldId": "mapping_matches",
+          "text": "Asset-to-premises mapping match? Say yes or no.",
+          "file": "55fc6cba6b88546f6d4c659f5a37c3f62b251437006ab604307a7b9c3e6ed813.wav",
+          "sha256": "1e0fbed957a52f615d93340cfb5b4c0947689908acf823f9f23f69ffa84c93bc"
+        },
+        "94f05f3a31432b133865651374847a2157305c21e66737b938889bd4c60d629d": {
+          "fieldId": "alternative_cbt",
+          "text": "Possible alternative terminal identified?",
+          "file": "94f05f3a31432b133865651374847a2157305c21e66737b938889bd4c60d629d.wav",
+          "sha256": "69aa8151068ac07107fedcf912e61b27e2d147638e2427ab8a53dbe8c3dedf23"
+        },
+        "9fa2efdc5d3465268d2aa907f1ba9213a06197fc4ff9960a28abe567e0e507b3": {
+          "fieldId": "alternative_authorised",
+          "text": "Alternative approved for use? Say yes or no.",
+          "file": "9fa2efdc5d3465268d2aa907f1ba9213a06197fc4ff9960a28abe567e0e507b3.wav",
+          "sha256": "0dbbf45ec2910315e85db8dcf6e28c2479987eb2b736c074ec452ad06744fe78"
+        },
+        "b7567d356290577f07cd41d54ca017ec6463d6f219bd9749becab8a430e2687c": {
+          "fieldId": "records_correction",
+          "text": "Records correction requested? Say yes or no.",
+          "file": "b7567d356290577f07cd41d54ca017ec6463d6f219bd9749becab8a430e2687c.wav",
+          "sha256": "9fffeceecef990d420579ce9cc6319d0f420c5af1ec96372e5430e05fc2cc5cc"
+        },
+        "0c30da53c9c2f511d70b6e796ddb3d3d13630f390c80db3c20eef15410ca3fb3": {
+          "fieldId": "customer_service_affected",
+          "text": "Customer service affected? Say yes or no.",
+          "file": "0c30da53c9c2f511d70b6e796ddb3d3d13630f390c80db3c20eef15410ca3fb3.wav",
+          "sha256": "7656c40c0a41d73583cdbce4905f7e6b50ee73d984c4b5f11fdd23cbb2ead1ca"
+        },
+        "c8119936864650d8b55175a74e33e64d26ef837fa45006a1f17b32cfd2eb7204": {
+          "fieldId": "reappointment_held",
+          "text": "Is reappointment held pending readiness? Say yes or no.",
+          "file": "c8119936864650d8b55175a74e33e64d26ef837fa45006a1f17b32cfd2eb7204.wav",
+          "sha256": "bc7fc661f0ce1dcfe5fcb78795399c0156300a56aea4cb236d5d34010604f965"
+        },
+        "5d7f3df2b8adf9e433037568dd2dea9a50d74a3073fb2577c4965beed1bd208e": {
+          "fieldId": "fibre_connected",
+          "text": "External fibre actually connected end-to-end? Say yes or no.",
+          "file": "5d7f3df2b8adf9e433037568dd2dea9a50d74a3073fb2577c4965beed1bd208e.wav",
+          "sha256": "92ec01503dd54fbee64985f9b0c9fa0a387caaef1f4d8901734ccc8d117d8617"
+        },
+        "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb": {
+          "fieldId": "optical_rx_dbm",
+          "text": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative.",
+          "file": "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb.wav",
+          "sha256": "535fde8bf14293b8cb2efd6bf69f3eee2eb99cb60f0e60ceca28d489caa26a5d"
+        },
+        "5d6701410af2af727507e06842df647eeaf9811c2267610ffc80fe3411ed2db8": {
+          "fieldId": "activation_attempted",
+          "text": "Provisioning / authentication attempted? Say yes or no.",
+          "file": "5d6701410af2af727507e06842df647eeaf9811c2267610ffc80fe3411ed2db8.wav",
+          "sha256": "0a94636511430819242a4d7a057defdfafcfb4bc78dbc6a4b26ea9fd22ffad06"
+        },
+        "6ee622826c71a67b32b56fee33edfb679336cd08948080b120d7d0d3e8f38169": {
+          "fieldId": "issue_type",
+          "text": "Issue type isolated? No optical signal, Provider / provisioning activation, External fibre incomplete, Other technical issue.",
+          "file": "6ee622826c71a67b32b56fee33edfb679336cd08948080b120d7d0d3e8f38169.wav",
+          "sha256": "145e6e18666483cb4d6b10ed0f6f9c0fe8c705473b5c57222a24a5deb5b19971"
+        },
+        "6ce019121a244b09b49ad3a3708fa056cf636c87fe3cabbf06b0a9ef03acc679": {
+          "fieldId": "customer_not_live_informed",
+          "text": "Customer informed service NOT live? Say yes or no.",
+          "file": "6ce019121a244b09b49ad3a3708fa056cf636c87fe3cabbf06b0a9ef03acc679.wav",
+          "sha256": "39e999d08c5a64b8d1686d09f0aec4e6b75f5b83c58285cea88fc84e18223346"
+        },
+        "2a3a7fa3b421295e7bc1c6ad5ca325a06cf9ff082251647d2be0ebd5786d0b22": {
+          "fieldId": "survey_reference",
+          "text": "Network endpoint and survey reference?",
+          "file": "2a3a7fa3b421295e7bc1c6ad5ca325a06cf9ff082251647d2be0ebd5786d0b22.wav",
+          "sha256": "d3014acab6bd31c25e00590c46c05bbb73a0173fa88af3963b3d2988483bd591"
+        },
+        "f600d2e50d2b6fec559eccafc1b3e002c38b8eb37a06b76e603b4ca168d499af": {
+          "fieldId": "design_accepted",
+          "text": "Design version accepted? Say yes or no.",
+          "file": "f600d2e50d2b6fec559eccafc1b3e002c38b8eb37a06b76e603b4ca168d499af.wav",
+          "sha256": "70649af2c4345a65a98f611e0aa82d2edb2aa93c65fc079228b1fa626b1afcf4"
+        },
+        "06133fb9c12f2f4f383c550f233e6cc27b62e74054e14aff1700613f0786ba88": {
+          "fieldId": "route_distance",
+          "text": "What route distance did you measure, in metres?",
+          "file": "06133fb9c12f2f4f383c550f233e6cc27b62e74054e14aff1700613f0786ba88.wav",
+          "sha256": "b612f6bd62afe055a22f7ced1a9a2460d97a75dc6b311b9ef446301d70eb9135"
+        },
+        "d3b2b6e1351c825d79fe991906b3aafe9c91f2a187dbb64987913a66f2f79243": {
+          "fieldId": "wayleave_required",
+          "text": "Wayleave / access permission required? Say yes or no.",
+          "file": "d3b2b6e1351c825d79fe991906b3aafe9c91f2a187dbb64987913a66f2f79243.wav",
+          "sha256": "3af1f7e659b2bfb6a26f83532307cc17bdb8131f4793266f5d471f0abc22c57e"
+        },
+        "b5d546aa3aa9487368ae1b97a572285c706f652c63fa9d9f84e2ef6673a9d291": {
+          "fieldId": "wayleave_granted",
+          "text": "Wayleave/permit granted? Say yes or no.",
+          "file": "b5d546aa3aa9487368ae1b97a572285c706f652c63fa9d9f84e2ef6673a9d291.wav",
+          "sha256": "06a6ecb0d24c86078fc84a8a550370d3e04500992c2ad19e3888c8b0119898ae"
+        },
+        "e6adbd309d0fe58b4ec3977a680f00c31185e5e3017bb81623ef6b1b8959ac84": {
+          "fieldId": "civils_segments",
+          "text": "Please tell me: Civils segment(s) identified?",
+          "file": "e6adbd309d0fe58b4ec3977a680f00c31185e5e3017bb81623ef6b1b8959ac84.wav",
+          "sha256": "922043404f33db3d252011b38ece615197009d3e49d1cdfdd35ffd9f8159367b"
+        },
+        "102dc6dd8d675571e3d54001ddd26f60692ca58dbdb87f147732810fe5418e92": {
+          "fieldId": "civils_to_design",
+          "text": "Duct / chamber works completed to design? Say yes or no.",
+          "file": "102dc6dd8d675571e3d54001ddd26f60692ca58dbdb87f147732810fe5418e92.wav",
+          "sha256": "d3e8d3c7d37756ee742c190ddf3813d1fdc7ef94490706cc35495de0d665cd98"
+        },
+        "a51b4f93db76854f1a956804c4f6bb49c65981f5bfa2a04b48f0b0c49427a1ba": {
+          "fieldId": "fibre_placed_spliced",
+          "text": "Fibre cable placed and spliced? Say yes or no.",
+          "file": "a51b4f93db76854f1a956804c4f6bb49c65981f5bfa2a04b48f0b0c49427a1ba.wav",
+          "sha256": "715bf305b04cc4f97651cf26992f11e6d2abeb69ff2b48f3ec8683075aa3575c"
+        },
+        "17abcc522ffe591cb799eab2f0d9cf3645f1be5f2d01d5f3cdbd5cf591812a2c": {
+          "fieldId": "splice_tests_accepted",
+          "text": "Splice/segment test evidence accepted? Say yes or no.",
+          "file": "17abcc522ffe591cb799eab2f0d9cf3645f1be5f2d01d5f3cdbd5cf591812a2c.wav",
+          "sha256": "a17375112946c45eca5c3a594084b005a926b66837c31e1b4f65583e36d3d326"
+        },
+        "22cdb0edba595919f9e399fa9cbfce3ad1e5468cb092ef40620faddb235116e0": {
+          "fieldId": "terminal_available_mapped",
+          "text": "C B T/terminal available and mapped? Say yes or no.",
+          "file": "22cdb0edba595919f9e399fa9cbfce3ad1e5468cb092ef40620faddb235116e0.wav",
+          "sha256": "dc602d2b177adf602fac6eab1d59ec35b705e8656170c88afb4ea6510de25563"
+        },
+        "1d78040fd717ed3f913c182d586a14a0c204b465cfcdeed3d3861969514d05a7": {
+          "fieldId": "as_built_accepted",
+          "text": "As-built records accepted? Say yes or no.",
+          "file": "1d78040fd717ed3f913c182d586a14a0c204b465cfcdeed3d3861969514d05a7.wav",
+          "sha256": "92411ee370aba3d3426bbd12212738b6834a57db16bf4e304fe3acea1cd860fe"
+        },
+        "3a1ba41508b3a236d01c24e4ecc78f40dafebd4baa84b91f76db4131daa1bd80": {
+          "fieldId": "downstream_handoff",
+          "text": "Named downstream owner / handoff accepted? Say yes or no.",
+          "file": "3a1ba41508b3a236d01c24e4ecc78f40dafebd4baa84b91f76db4131daa1bd80.wav",
+          "sha256": "4cb37bc1b926d8317fa35dc5216664eb9cdd238b28becd9d2f6e70e5401ffc27"
+        },
+        "69e7d15e11977e1875da0b7e403964179236cfe718f76c28550a9903cd7e12d2": {
+          "fieldId": "premises_ready",
+          "text": "Premises marked ready for final provision? Say yes or no.",
+          "file": "69e7d15e11977e1875da0b7e403964179236cfe718f76c28550a9903cd7e12d2.wav",
+          "sha256": "65b1a2e1c88eee86763c0298e2ce3c189ab534a542fb90c96f8f8d6c8f8ce828"
+        },
+        "7e8d8b3a77b3d6fa97e92e624df5fccb9faf948df02cf6fab4979a02ef5f2d83": {
+          "fieldId": "customer_facing",
+          "text": "Is this a customer-facing work order? Say yes or no.",
+          "file": "7e8d8b3a77b3d6fa97e92e624df5fccb9faf948df02cf6fab4979a02ef5f2d83.wav",
+          "sha256": "40b4e6405f3f7aefe0e40d0a9af5c11c3d013490776311ce6a18de23c7fbdc13"
+        },
+        "288897fda00d1b8b718463415070ffb2ce9b2e45224bec4cfaeeeff8cae346cf": {
+          "fieldId": "physical_work_attempted",
+          "text": "Was physical work attempted? Say yes or no.",
+          "file": "288897fda00d1b8b718463415070ffb2ce9b2e45224bec4cfaeeeff8cae346cf.wav",
+          "sha256": "3eb230b975b3565bd71bcdc5e4f84744d590ed600eb633fe04d0410c9722d092"
+        },
+        "68d27f078f1e66f613c809fcb8c3a384e4e9b5a36d247d5543de1b90716c6b3f": {
+          "fieldId": "penetration_required",
+          "text": "Was new property penetration required? Say yes or no.",
+          "file": "68d27f078f1e66f613c809fcb8c3a384e4e9b5a36d247d5543de1b90716c6b3f.wav",
+          "sha256": "0dd4159d42e913653df65de156012b68b23b0a4f2f57ae09ff8cb632b35f8b25"
+        },
+        "52618613df610d8a0c5f14f8a6f1d0fe086d3fa3412e11d002215ac288972b55": {
+          "fieldId": "hazard_mitigated",
+          "text": "Has the recorded hazard been mitigated? Say yes or no.",
+          "file": "52618613df610d8a0c5f14f8a6f1d0fe086d3fa3412e11d002215ac288972b55.wav",
+          "sha256": "de3f0078d6c62ac1447c70150c14a0224e710147441ad23b9cd12375e57d6c6b"
+        },
+        "33b93788834c22b0e55f85e101e6233c655e34f50f8fa1633737d36aee90d59c": {
+          "fieldId": "safety_escalation",
+          "text": "Please tell me: Safety escalation reference?",
+          "file": "33b93788834c22b0e55f85e101e6233c655e34f50f8fa1633737d36aee90d59c.wav",
+          "sha256": "42a828ecf77f99c3cc498d0ce78bdcab1b155d8dd5f10fa6b8cf0ac5b4cb809f"
+        },
+        "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43": {
+          "fieldId": "next_action",
+          "text": "Next action and dependency status?",
+          "file": "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43.wav",
+          "sha256": "f83a3155dcc287756450a7655a77a7a491c12e1d7c6f916e052e34acb7ca8cf2"
+        },
+        "7f9a8479d08453dde389d7a80e1eb11307b1ed838d6cca9dc7432a9b27afa9b0": {
+          "fieldId": "excavation_performed",
+          "text": "Was excavation performed during THIS visit? Say yes or no.",
+          "file": "7f9a8479d08453dde389d7a80e1eb11307b1ed838d6cca9dc7432a9b27afa9b0.wav",
+          "sha256": "768626762107c1b6d122b243cde32300ff563cf5d18a83d2f7af914f80d9a758"
+        },
+        "4f67968aaa2e32534d986c2fd44340235e9b5cb8c55f2f2fb3375b14d7664ea1": {
+          "fieldId": "excavation_required",
+          "text": "Is excavation required? Say yes or no.",
+          "file": "4f67968aaa2e32534d986c2fd44340235e9b5cb8c55f2f2fb3375b14d7664ea1.wav",
+          "sha256": "995c977960a1cca817c0d2ac67fa692915068596a6f51a3595eafc82c6fd7c45"
+        },
+        "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193": {
+          "fieldId": "operational_test",
+          "text": "Recorded operational / activation test result? Passed, Failed, Not tested.",
+          "file": "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193.wav",
+          "sha256": "8188f914e1bca42e45f75515914bfc9cfbbf1afce8b37c0baaf23acfc6e07f97"
+        },
+        "d2c83786fc77c9fefda65b57b485b9f05c2ab77b1f41dc77dda617b5462ae39a": {
+          "fieldId": "tester_reference",
+          "text": "Test instrument / recorded result reference?",
+          "file": "d2c83786fc77c9fefda65b57b485b9f05c2ab77b1f41dc77dda617b5462ae39a.wav",
+          "sha256": "300d75c64a45a68ffd6f6acf12197f3c2c5ca13ac44dd290f9dea5d0e6185fba"
+        },
+        "9a6fb1cd1a158c559f386ce9dccfb9db6d08126829c93e20886b6717934dfbd0": {
+          "fieldId": "shared_duct",
+          "text": "Is this a shared duct? Say yes or no.",
+          "file": "9a6fb1cd1a158c559f386ce9dccfb9db6d08126829c93e20886b6717934dfbd0.wav",
+          "sha256": "fa8e1f3c1ce1e2af26554c44d719196955a038da641132518c023bf1a99bf386"
+        },
+        "10d2b07ea0896a540174f5d91799e945fd6dd1f7f9341713dc636690c7cef767": {
+          "fieldId": "route_constraints",
+          "text": "Survey route constraints and dependencies?",
+          "file": "10d2b07ea0896a540174f5d91799e945fd6dd1f7f9341713dc636690c7cef767.wav",
+          "sha256": "772484e8ce655372a606723f0ad03d8f5defefbb0393c8194ce2fc9df1373af1"
+        },
+        "f172a9e5ef9781651f2128eac2443988c455bd015d77ae686b04f9745ce36e06": {
+          "fieldId": "all_network_stages_accepted",
+          "text": "Have all prerequisite network stages been accepted? Say yes or no.",
+          "file": "f172a9e5ef9781651f2128eac2443988c455bd015d77ae686b04f9745ce36e06.wav",
+          "sha256": "d138447de0ba93d112143c78ae90b25f190e091fcc18615289f0ea2858ec297a"
+        }
+      }
+    },
+    "bf_emma": {
+      "model": "kokoro-int8-en-v0_19",
+      "voice": "bf_emma",
+      "settings": {
+        "model": "kokoro-int8-en-v0_19",
+        "voice": "bf_emma",
+        "speakerId": 7,
+        "speed": 1.05,
+        "runtime": "1.13.8",
+        "backgroundAudio": false,
+        "modelSha256": "e0530c5031c03c5dc957edfc6d72582c2246e9b4566643ff67eeb03610c11641",
+        "voicesSha256": "a372c67b056ef0b695c375d39b99630d23fb07ad4c8d87aa32a19a62fca523ad"
+      },
+      "prompts": {
+        "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b": {
+          "fieldId": "assistant_greeting",
+          "text": "Hi. Talk me through this visit. I will fill in the details and ask if anything is missing.",
+          "file": "bf_emma-8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b.wav",
+          "sha256": "c4f05505781004f779c1568cb5eb574e0cb2f62b3c4032ee7e2497545bd8c5d0"
+        },
+        "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c": {
+          "fieldId": "assistant_greeting_2",
+          "text": "Hello. How did this visit go? Tell me about the work, the tests, and anything left to do.",
+          "file": "bf_emma-cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c.wav",
+          "sha256": "7c36e880c3988a7c706b036cea5a234b84d303716bec0094db03e709063c2d79"
+        },
+        "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3": {
+          "fieldId": "assistant_greeting_3",
+          "text": "Ready when you are. Tell me what you got done, and we will put the visit report together.",
+          "file": "bf_emma-2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3.wav",
+          "sha256": "ad5d16c7157435ab2246350a116d1e05a18fa609bd18416eb949d44bef3c7655"
+        },
+        "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f": {
+          "fieldId": "assistant_welcome_back",
+          "text": "Welcome back. Your answers are saved. Let us pick up with the details still missing.",
+          "file": "bf_emma-8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f.wav",
+          "sha256": "8dfd641901db234e88b7562fe13f99a1115b01e0b24c6d0ced236ad3848ef110"
+        },
+        "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb": {
+          "fieldId": "assistant_welcome_back_2",
+          "text": "Let us finish this report. I will just ask about the details we still need.",
+          "file": "bf_emma-c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb.wav",
+          "sha256": "587094e2da13669884e6f89093291892698740fbbb2fac17997dd0b354a5425b"
+        },
+        "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375": {
+          "fieldId": "assistant_welcome_back_3",
+          "text": "Your report is already started. We can carry on from where you left off.",
+          "file": "bf_emma-50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375.wav",
+          "sha256": "d42909cd4d3142565850942fe6fd3d8f16c6d8f82a7c0ea98b70bfe91a66ff2e"
+        },
+        "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27": {
+          "fieldId": "assistant_summary_invite",
+          "text": "Tell me what you did, what you tested, and what still needs attention.",
+          "file": "bf_emma-2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27.wav",
+          "sha256": "13756952496a2a778ebcc99810afcbe635d18d7bb7b36145e8ba717fd686041b"
+        },
+        "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290": {
+          "fieldId": "assistant_narrative_saved",
+          "text": "Summary added. I will ask for the remaining details.",
+          "file": "bf_emma-64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290.wav",
+          "sha256": "c640f69f493c8dc2f43b2555a4c09faacb11a68c9937562e026ede83937b8bb1"
+        },
+        "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b": {
+          "fieldId": "assistant_answer_saved",
+          "text": "Added to the form.",
+          "file": "bf_emma-0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b.wav",
+          "sha256": "e5d6c69e826e5d30aadced17ad1a05fd8791936b142e3760559e86de2bb1ebd6"
+        },
+        "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9": {
+          "fieldId": "assistant_unclear",
+          "text": "Please give a clear answer, or choose an option. Say repeat to hear the question again.",
+          "file": "bf_emma-f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9.wav",
+          "sha256": "a7739d15107a2f380cc0da4a83f335ace05b8b096a4138270e8c20e5446eb4ad"
+        },
+        "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f": {
+          "fieldId": "assistant_complete",
+          "text": "Voice capture complete. Say open draft to review your answers.",
+          "file": "bf_emma-2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f.wav",
+          "sha256": "016d5bfc72154f38b6af39ed6fc6d95d6a2698ffb81576bfd56039c0ce982be6"
+        },
+        "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f": {
+          "fieldId": "assistant_anything_else",
+          "text": "Anything else?",
+          "file": "bf_emma-554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f.wav",
+          "sha256": "e715483d6c97b52ac32a3e3c6b3e67e3d2f13cb317bee36234936bcc671922a5"
+        },
+        "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284": {
+          "fieldId": "assistant_guided_start",
+          "text": "Let me ask you the details one at a time.",
+          "file": "bf_emma-3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284.wav",
+          "sha256": "faf1ba9574ae77c3578a0cd02bd9eb91123cd845f576bfee1b9fef1ca184c08f"
+        },
+        "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d": {
+          "fieldId": "assistant_summary_complete",
+          "text": "Your visit summary is ready. Review the answers, then press submit.",
+          "file": "bf_emma-4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d.wav",
+          "sha256": "e06aa4fbaf3d815d8d43c6d4a637ec458f511a6e97dd266f35a453bff34c8f4b"
+        },
+        "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a": {
+          "fieldId": "assistant_paused",
+          "text": "Paused. Say resume to continue, or open draft to review.",
+          "file": "bf_emma-ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a.wav",
+          "sha256": "1d1bf14285044adb7a46b98e88a2030eccafdfd9e58a277f617648dbb2630fcb"
+        },
+        "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489": {
+          "fieldId": "assistant_no_speech",
+          "text": "Ready for your answer. Say repeat, skip, pause, or open draft if needed.",
+          "file": "bf_emma-ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489.wav",
+          "sha256": "fe42f280c158a75491e212de64c29d4c25b464a72044383fb5d63d6cccf132ec"
+        },
+        "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3": {
+          "fieldId": "assistant_save_failed",
+          "text": "The answer could not be saved. Say retry to try again.",
+          "file": "bf_emma-94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3.wav",
+          "sha256": "359e97bb10e9c8cb7b4f5e01d0ce184824ca20397ce3db50e2354002d785d346"
+        },
+        "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda": {
+          "fieldId": "voice_preview",
+          "text": "Hi. I am your Field Assist voice. Tell me what you did, and I will help finish your report.",
+          "file": "bf_emma-8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda.wav",
+          "sha256": "cfd65592d2ce7cd43c9d7d99afc0d5bebcaabe90a4772cb6d57e824d86d7386c"
+        },
+        "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede": {
+          "fieldId": "claimed_outcome",
+          "text": "What is the outcome for this work order? Say completed, partial, blocked, on hold, referral, stage completed, or network ready.",
+          "file": "bf_emma-f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede.wav",
+          "sha256": "b52cbeee092ec8aba0addc601ee88d5e7a24e6e126dd20919c324a9c6740a9a3"
+        },
+        "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03": {
+          "fieldId": "actual_work",
+          "text": "What work did you complete on this visit?",
+          "file": "bf_emma-b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03.wav",
+          "sha256": "d529311fc71d3db6512f2859119c9bad7e4a2f16f0cf6b41aa659d473e827c45"
+        },
+        "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac": {
+          "fieldId": "serving_asset",
+          "text": "What is the reference of the serving C B T, pole or chamber?",
+          "file": "bf_emma-28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac.wav",
+          "sha256": "c97c9a24a3734256d59ecdeb6d18080ef3bbd8af6909e1de6892da94cce8aa82"
+        },
+        "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb": {
+          "fieldId": "optical_rx_dbm",
+          "text": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative.",
+          "file": "bf_emma-1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb.wav",
+          "sha256": "4cb319f97b873c4eac8455c73636df93d943fa1a00a25ba71c0cdf9a5d78bbe5"
+        },
+        "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43": {
+          "fieldId": "next_action",
+          "text": "Next action and dependency status?",
+          "file": "bf_emma-9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43.wav",
+          "sha256": "89767019676311a5a8e3435a1df8d528081756ce017ece9cc24fa6f60c1af47d"
+        },
+        "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193": {
+          "fieldId": "operational_test",
+          "text": "Recorded operational / activation test result? Passed, Failed, Not tested.",
+          "file": "bf_emma-6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193.wav",
+          "sha256": "fffc9605d3164f03f753edf79e58ef6828884ba48f334d59d7a7b2c7572a4c40"
+        }
+      }
+    },
+    "am_michael": {
+      "model": "kokoro-int8-en-v0_19",
+      "voice": "am_michael",
+      "settings": {
+        "model": "kokoro-int8-en-v0_19",
+        "voice": "am_michael",
+        "speakerId": 6,
+        "speed": 1.05,
+        "runtime": "1.13.8",
+        "backgroundAudio": false,
+        "modelSha256": "e0530c5031c03c5dc957edfc6d72582c2246e9b4566643ff67eeb03610c11641",
+        "voicesSha256": "a372c67b056ef0b695c375d39b99630d23fb07ad4c8d87aa32a19a62fca523ad"
+      },
+      "prompts": {
+        "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b": {
+          "fieldId": "assistant_greeting",
+          "text": "Hi. Talk me through this visit. I will fill in the details and ask if anything is missing.",
+          "file": "am_michael-8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b.wav",
+          "sha256": "0130bbab7d33b0043378a08343f9cd58fd9f6b03be67e329838c5f6f00e8ed70"
+        },
+        "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c": {
+          "fieldId": "assistant_greeting_2",
+          "text": "Hello. How did this visit go? Tell me about the work, the tests, and anything left to do.",
+          "file": "am_michael-cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c.wav",
+          "sha256": "c7f5e01a0908049db0fe98b16d874ce2cdf218457f14128395badba420534d73"
+        },
+        "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3": {
+          "fieldId": "assistant_greeting_3",
+          "text": "Ready when you are. Tell me what you got done, and we will put the visit report together.",
+          "file": "am_michael-2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3.wav",
+          "sha256": "209789c2274e54722f66f178a80c63edbe7aaba21c19a01bfa3e5d45a4c91de9"
+        },
+        "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f": {
+          "fieldId": "assistant_welcome_back",
+          "text": "Welcome back. Your answers are saved. Let us pick up with the details still missing.",
+          "file": "am_michael-8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f.wav",
+          "sha256": "e2971295bfbc384980a6e992de845d86948d0805660c5038fa7b49f563e42387"
+        },
+        "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb": {
+          "fieldId": "assistant_welcome_back_2",
+          "text": "Let us finish this report. I will just ask about the details we still need.",
+          "file": "am_michael-c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb.wav",
+          "sha256": "779ac5b85965af9e6e4276dafe66a4478ea80c9d6f1118694cd696d2d69a8010"
+        },
+        "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375": {
+          "fieldId": "assistant_welcome_back_3",
+          "text": "Your report is already started. We can carry on from where you left off.",
+          "file": "am_michael-50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375.wav",
+          "sha256": "7856013ca5507cba190e2db70d05288b51d55ad6832dc6520416a59a1408fd42"
+        },
+        "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27": {
+          "fieldId": "assistant_summary_invite",
+          "text": "Tell me what you did, what you tested, and what still needs attention.",
+          "file": "am_michael-2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27.wav",
+          "sha256": "96e0bd85d2f171530666f8a555d3e19d9776fb9a2ab896ca819362d56e7303b7"
+        },
+        "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290": {
+          "fieldId": "assistant_narrative_saved",
+          "text": "Summary added. I will ask for the remaining details.",
+          "file": "am_michael-64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290.wav",
+          "sha256": "7859ab8d8383a09523c76e9cf9f58bf3a5ab110514c04ec09789ec2bd6e186f6"
+        },
+        "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b": {
+          "fieldId": "assistant_answer_saved",
+          "text": "Added to the form.",
+          "file": "am_michael-0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b.wav",
+          "sha256": "eaec6b01fb9b4c4d69b2e13d9325d773dc2e8897b1e016918c2f2fd23130d182"
+        },
+        "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9": {
+          "fieldId": "assistant_unclear",
+          "text": "Please give a clear answer, or choose an option. Say repeat to hear the question again.",
+          "file": "am_michael-f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9.wav",
+          "sha256": "ac7fb1ee89f316fa14882fcb1c96c4db713fc11e8baa143729a08ad3255ce971"
+        },
+        "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f": {
+          "fieldId": "assistant_complete",
+          "text": "Voice capture complete. Say open draft to review your answers.",
+          "file": "am_michael-2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f.wav",
+          "sha256": "8c9cb9808a8b1811c051dfba58dbdae2b2761762cd6235174f1953067c2b43c2"
+        },
+        "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f": {
+          "fieldId": "assistant_anything_else",
+          "text": "Anything else?",
+          "file": "am_michael-554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f.wav",
+          "sha256": "7f712ae3bb7f811c7be35b8911a0376e1e7ec09aa7839f90a3cab5a9281d76ea"
+        },
+        "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284": {
+          "fieldId": "assistant_guided_start",
+          "text": "Let me ask you the details one at a time.",
+          "file": "am_michael-3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284.wav",
+          "sha256": "8bc6fa4dacc51a520aaac40a6ea7c2ff45e4940fa26bb9d4e2c9b105ad94601d"
+        },
+        "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d": {
+          "fieldId": "assistant_summary_complete",
+          "text": "Your visit summary is ready. Review the answers, then press submit.",
+          "file": "am_michael-4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d.wav",
+          "sha256": "0feb09a971fa0471436492c6b557a7ebe110d86acb5c7aee33ba1d30bc6afa25"
+        },
+        "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a": {
+          "fieldId": "assistant_paused",
+          "text": "Paused. Say resume to continue, or open draft to review.",
+          "file": "am_michael-ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a.wav",
+          "sha256": "003808c91aadaf5b21c0415300e0edd040b08d9e2261416dcb2fe3caff97aae9"
+        },
+        "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489": {
+          "fieldId": "assistant_no_speech",
+          "text": "Ready for your answer. Say repeat, skip, pause, or open draft if needed.",
+          "file": "am_michael-ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489.wav",
+          "sha256": "0722d37b917ce139c0faa8618c7636fe054f50e87ca39830cb570559b12efe5d"
+        },
+        "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3": {
+          "fieldId": "assistant_save_failed",
+          "text": "The answer could not be saved. Say retry to try again.",
+          "file": "am_michael-94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3.wav",
+          "sha256": "58142dd22f54510450ea2f7dc6ea390d00d0761a5ce9328be01877ffc755e662"
+        },
+        "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda": {
+          "fieldId": "voice_preview",
+          "text": "Hi. I am your Field Assist voice. Tell me what you did, and I will help finish your report.",
+          "file": "am_michael-8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda.wav",
+          "sha256": "66a8f125ef1375fb242a5ac59eb61e528392dc44f11dd567bce3f5e5ea063551"
+        },
+        "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede": {
+          "fieldId": "claimed_outcome",
+          "text": "What is the outcome for this work order? Say completed, partial, blocked, on hold, referral, stage completed, or network ready.",
+          "file": "am_michael-f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede.wav",
+          "sha256": "19e8f000eb75a75fde1f71c315b2ed31971cebefb29863f553774617ee5e097f"
+        },
+        "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03": {
+          "fieldId": "actual_work",
+          "text": "What work did you complete on this visit?",
+          "file": "am_michael-b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03.wav",
+          "sha256": "1dd42e89149e51bd6910248058f84fd8dd05d6d40231ee06acf9609eda50cb76"
+        },
+        "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac": {
+          "fieldId": "serving_asset",
+          "text": "What is the reference of the serving C B T, pole or chamber?",
+          "file": "am_michael-28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac.wav",
+          "sha256": "9401ef9a84f8b17f3fe9e03e2db27890889965611fcb02bd0e63a8d0a84db4c8"
+        },
+        "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb": {
+          "fieldId": "optical_rx_dbm",
+          "text": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative.",
+          "file": "am_michael-1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb.wav",
+          "sha256": "512039bc45766b03698272745091e1543d689de80afd3349b265ca071b73d083"
+        },
+        "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43": {
+          "fieldId": "next_action",
+          "text": "Next action and dependency status?",
+          "file": "am_michael-9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43.wav",
+          "sha256": "8a2ec459dafb8640919da5895512e0c06b86aa44ce3ce3dd188d46d31dd81d8c"
+        },
+        "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193": {
+          "fieldId": "operational_test",
+          "text": "Recorded operational / activation test result? Passed, Failed, Not tested.",
+          "file": "am_michael-6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193.wav",
+          "sha256": "deb3a28e1514e23f5e4ce7b9b614abcb6ef108b847ddae27ece4f8da40b37d6f"
+        }
+      }
+    },
+    "af_sarah": {
+      "model": "kokoro-int8-en-v0_19",
+      "voice": "af_sarah",
+      "settings": {
+        "model": "kokoro-int8-en-v0_19",
+        "voice": "af_sarah",
+        "speakerId": 3,
+        "speed": 1.05,
+        "runtime": "1.13.8",
+        "backgroundAudio": false,
+        "modelSha256": "e0530c5031c03c5dc957edfc6d72582c2246e9b4566643ff67eeb03610c11641",
+        "voicesSha256": "a372c67b056ef0b695c375d39b99630d23fb07ad4c8d87aa32a19a62fca523ad"
+      },
+      "prompts": {
+        "8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b": {
+          "fieldId": "assistant_greeting",
+          "text": "Hi. Talk me through this visit. I will fill in the details and ask if anything is missing.",
+          "file": "af_sarah-8839775491376a47764903f5b6b76bffd1d2efdd4bb8a3f9fc1df53b0986de6b.wav",
+          "sha256": "9d00d5f10175b5e5eefb42412982e7b3935fb1295051322a3fbc92b0dae69433"
+        },
+        "cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c": {
+          "fieldId": "assistant_greeting_2",
+          "text": "Hello. How did this visit go? Tell me about the work, the tests, and anything left to do.",
+          "file": "af_sarah-cde0f693e01fe26f56d570062a216fb952ea8b6b0383fea36841468ee7451f4c.wav",
+          "sha256": "0aeb04be4738c5366dff86d9f5f95a88e50e4dec155bf06730e889269fe6b443"
+        },
+        "2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3": {
+          "fieldId": "assistant_greeting_3",
+          "text": "Ready when you are. Tell me what you got done, and we will put the visit report together.",
+          "file": "af_sarah-2b41ce757b882d4e9775bb492d61bd9bc6dab1be2eb80ca6553e84da936920e3.wav",
+          "sha256": "1f24097cbcc6660a75e6d9dbc90290b3b3acd10eda21bdfa8bb58b4fabce5320"
+        },
+        "8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f": {
+          "fieldId": "assistant_welcome_back",
+          "text": "Welcome back. Your answers are saved. Let us pick up with the details still missing.",
+          "file": "af_sarah-8199a70d0bc5822fcb8850543141a6415bf39cc4d4d36faebc8f1abec3fa002f.wav",
+          "sha256": "0c1842ec257a2e98f9f396c674d93a3c897d9df1d6b59c2aaca78915494048af"
+        },
+        "c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb": {
+          "fieldId": "assistant_welcome_back_2",
+          "text": "Let us finish this report. I will just ask about the details we still need.",
+          "file": "af_sarah-c246002e16b8aabdff86e871a50d8ee516c3cc9065ea50d60345b57b4f6246bb.wav",
+          "sha256": "52d94393e2b22a29cdb5f636e2d4cce53d1f61c763e6fd4bae9223c6f382a73b"
+        },
+        "50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375": {
+          "fieldId": "assistant_welcome_back_3",
+          "text": "Your report is already started. We can carry on from where you left off.",
+          "file": "af_sarah-50c887a56f99a015e92a8949c441825a0230c4ebb26ce9f13bdfd4387d04f375.wav",
+          "sha256": "58b41ae9861c7aef5f5810a43c2e8b8412f813ba190a2cfe0930e4becbfd8ae4"
+        },
+        "2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27": {
+          "fieldId": "assistant_summary_invite",
+          "text": "Tell me what you did, what you tested, and what still needs attention.",
+          "file": "af_sarah-2137ca2e6addbd5e4be76b2307b9da678683e3adfc9863ba39b9c3f084881b27.wav",
+          "sha256": "a0fa1174636f3ea8e27376c22f10e2d2d5cf94ef48ba5e2b28bd7d4cfaeb7cf7"
+        },
+        "64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290": {
+          "fieldId": "assistant_narrative_saved",
+          "text": "Summary added. I will ask for the remaining details.",
+          "file": "af_sarah-64cce97710c4711d0a3456fd8043b8f900517b2b53f93cc3b5627e6808a7b290.wav",
+          "sha256": "0fbfc4b700a0067ddd3be3de4b6779f217ef4be8cd1c6d9c7d839852d2d60199"
+        },
+        "0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b": {
+          "fieldId": "assistant_answer_saved",
+          "text": "Added to the form.",
+          "file": "af_sarah-0d462edf239b53bcdbd7226fc202c322c46af67e4a3c14b12f35970c82696b0b.wav",
+          "sha256": "6fec01df322f25d82a46d20f605aa39b98cd3adad495b011d395f9ff1cad277d"
+        },
+        "f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9": {
+          "fieldId": "assistant_unclear",
+          "text": "Please give a clear answer, or choose an option. Say repeat to hear the question again.",
+          "file": "af_sarah-f7ffa1f8c9006fc44e9921c00ee8c6816cc840d5ed659d036f56537c573569e9.wav",
+          "sha256": "184efc2d92057c69b14f5868fa5e7dc09ab5ab03dc99ef702bed742bb9577448"
+        },
+        "2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f": {
+          "fieldId": "assistant_complete",
+          "text": "Voice capture complete. Say open draft to review your answers.",
+          "file": "af_sarah-2dc6bb44170578a330e9ac69f6735f41264a0552d0fb6660900359d918930b8f.wav",
+          "sha256": "9fcd36d6457a7d3c94daa5eb664d5b320811f7bbc5a8b5c894fc1f8ffbaf3055"
+        },
+        "554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f": {
+          "fieldId": "assistant_anything_else",
+          "text": "Anything else?",
+          "file": "af_sarah-554e6ec0bec97ecc209b48546b45280204074b5fb33144fa949856ab16fada6f.wav",
+          "sha256": "ce428b25438ec8c5cc5d85ff0fbb79e70a6504bbd02459a2c4161649b412a19d"
+        },
+        "3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284": {
+          "fieldId": "assistant_guided_start",
+          "text": "Let me ask you the details one at a time.",
+          "file": "af_sarah-3d99ea8a6122705e3bf56e8ee17d4d0d833a2d575b5d1501d968e153b35a6284.wav",
+          "sha256": "8d5c9590feec8c6445958ba4c89f95f7a2d56715fc23ac054179b6d9743e62ab"
+        },
+        "4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d": {
+          "fieldId": "assistant_summary_complete",
+          "text": "Your visit summary is ready. Review the answers, then press submit.",
+          "file": "af_sarah-4a41d9f60fcc5e6bf38cc0c8a93c53980df68e6450f17acd613fc87811ea9c8d.wav",
+          "sha256": "811f41757273444290abc556e760e12d576ba17191bc7d363daca6f52e087561"
+        },
+        "ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a": {
+          "fieldId": "assistant_paused",
+          "text": "Paused. Say resume to continue, or open draft to review.",
+          "file": "af_sarah-ebda28b77d0844ff7c1026e4cb91e55129e054a8bbb7da4e07c9a1e26cf1b95a.wav",
+          "sha256": "df4c0294746d6637000c1e4c16bf1037b7d55cb8d247b836d5d27a2c6c8689dc"
+        },
+        "ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489": {
+          "fieldId": "assistant_no_speech",
+          "text": "Ready for your answer. Say repeat, skip, pause, or open draft if needed.",
+          "file": "af_sarah-ff58dab9a5785ced6325f16652d25be86faa714586d6bbd584302686c4353489.wav",
+          "sha256": "84508c58cf196144eb213b6abdb657c52ecca07ede29138abec23a240ae7657a"
+        },
+        "94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3": {
+          "fieldId": "assistant_save_failed",
+          "text": "The answer could not be saved. Say retry to try again.",
+          "file": "af_sarah-94a94333d5307dc11d9f905bff8400b9093c0c036d7c43923f6905f6da8fd9c3.wav",
+          "sha256": "12b2213397bf9c4a3dd1d15469fa9ab80e68d007010ea85fc78c32d40f8bea53"
+        },
+        "8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda": {
+          "fieldId": "voice_preview",
+          "text": "Hi. I am your Field Assist voice. Tell me what you did, and I will help finish your report.",
+          "file": "af_sarah-8c240bd4a13c5abde5259abd1c143ce034b89e2f30c734a75bc0a7c7b82fdfda.wav",
+          "sha256": "8d43bfd162aadc819d69b26b84e8c327d86e9e86af613b2e12018614698c0b2d"
+        },
+        "f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede": {
+          "fieldId": "claimed_outcome",
+          "text": "What is the outcome for this work order? Say completed, partial, blocked, on hold, referral, stage completed, or network ready.",
+          "file": "af_sarah-f385c1b2bc7161d1160692629ec5f9dd5b05f17f35316d7ba7eba127af879ede.wav",
+          "sha256": "6a054c1c696b7d445f17e79bf7804999435601bdf6db26d00ebee00aba5ea3a7"
+        },
+        "b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03": {
+          "fieldId": "actual_work",
+          "text": "What work did you complete on this visit?",
+          "file": "af_sarah-b881015f6b4c908746b2b30f1387310a35dd82b9d0a3692b8879dfa941f2ab03.wav",
+          "sha256": "f1c662f1c072acd0efd1fe377e714788b9744f28abe563a3bf4c416d5270c7f1"
+        },
+        "28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac": {
+          "fieldId": "serving_asset",
+          "text": "What is the reference of the serving C B T, pole or chamber?",
+          "file": "af_sarah-28d44d98ef7e7a6780ae3f9a38cc93100144cf30eaf332bd3fbdff77ebf4b4ac.wav",
+          "sha256": "559ed35e9fa7c38536f57b13c9d41b02e4263c7263905827c0f76397a781ff19"
+        },
+        "1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb": {
+          "fieldId": "optical_rx_dbm",
+          "text": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative.",
+          "file": "af_sarah-1d9a05f88a20fa904e175513f03c02d31b736230c461a80841ef5f516e25addb.wav",
+          "sha256": "a99c8620a8eccfac3f818646b9d32d204068c46fa3fa4dcba7050e87934970ad"
+        },
+        "9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43": {
+          "fieldId": "next_action",
+          "text": "Next action and dependency status?",
+          "file": "af_sarah-9654bcb4d39fe32f7105fce7cc58514de10b472eedf62b93f113ab9a1e955f43.wav",
+          "sha256": "08cf9d3b7bc1ee438fe6453f7ab4a4c6550e17864c2aa42864b17b3ddd093841"
+        },
+        "6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193": {
+          "fieldId": "operational_test",
+          "text": "Recorded operational / activation test result? Passed, Failed, Not tested.",
+          "file": "af_sarah-6abed765572040b5d87947b98a954a5a866621b6df582af3ebcb77ff0b26e193.wav",
+          "sha256": "7b089ab10644782b7b55043edea85b359c7c247b58d524a8a043262fccbe6c45"
+        }
+      }
+    }
+  },
+  "revision": "c9f0dd393615805b0bab050c340834d5e684e732aec91c0e860cd30e982c08bd",
+  "source": "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kokoro-int8-en-v0_19.tar.bz2",
+  "runtimeVersion": "1.13.8",
+  "disclosure": "Speech-only offline Kokoro prompts. Speaker IDs and level processing match local fallback. No background audio is mixed."
+}

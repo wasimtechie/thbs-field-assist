@@ -1,3 +1,8 @@
+import '../closure/closure_screen.dart';
+import '../sync/queue_screen.dart' show LocalReceiptScreen;
+import 'dart:convert';
+import '../fttp/fttp_widgets.dart';
+import '../fttp/fttp_workflow.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,6 +39,7 @@ class _FormScreenState extends ConsumerState<FormScreen>
   String error = '', saveStatus = 'Loading…';
   int voiceRevision = 0, _saveSequence = 0;
   bool scanOpening = false;
+  int fttpStep = 0;
   Future<void> _tail = Future.value();
   Answers? undo;
   VoiceCoordinator? coordinator;
@@ -53,8 +59,17 @@ class _FormScreenState extends ConsumerState<FormScreen>
           .read(appProvider.notifier)
           .repository
           .get(widget.reportId);
+      final stage = r.schema.templateId == fttpTemplateId
+          ? await ref
+                        .read(appProvider.notifier)
+                        .repository
+                        .metadata('fttp-step:${r.id}')
+                    as int? ??
+                0
+          : 0;
       if (mounted) {
         setState(() {
+          fttpStep = stage.clamp(0, r.schema.sections.length - 1);
           report = r;
           values = {...r.values};
           voiceRevision++;
@@ -63,6 +78,53 @@ class _FormScreenState extends ConsumerState<FormScreen>
       }
     } catch (e) {
       if (mounted) setState(() => error = e.toString());
+    }
+  }
+
+  Future<void> _openFttpStep(int step) async {
+    try {
+      await _tail;
+      final app = ref.read(appProvider.notifier);
+      await app.assertAccess();
+      await app.repository.get(widget.reportId);
+      await app.repository.setMetadata('fttp-step:${widget.reportId}', step);
+      if (mounted) {
+        setState(() => fttpStep = step);
+        if (scroll.hasClients) {
+          scroll.jumpTo(0);
+        }
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(
+          () => error =
+              'Could not save your stage. Your answers remain saved; unlock and retry.',
+        );
+      }
+    }
+  }
+
+  Future<void> _focusField(String? fieldId) async {
+    if (!mounted || fieldId == null) return;
+    final schema = report?.schema;
+    if (schema?.templateId == fttpTemplateId) {
+      final field = schema!.fields.where((f) => f.id == fieldId).firstOrNull;
+      final step = schema.sections.indexWhere((s) => s.id == field?.sectionId);
+      if (step >= 0) {
+        await _openFttpStep(step);
+        await WidgetsBinding.instance.endOfFrame;
+      }
+    }
+    if (!mounted) return;
+    final target = fieldKeys[fieldId]?.currentContext;
+    if (target != null && target.mounted) {
+      await Scrollable.ensureVisible(
+        target,
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 250),
+        alignment: .15,
+      );
     }
   }
 
@@ -87,6 +149,9 @@ class _FormScreenState extends ConsumerState<FormScreen>
           snapshot,
           source: source,
         );
+        if (saved.schema.templateId == fttpTemplateId) {
+          await app.reloadReports();
+        }
         if (mounted) {
           setState(() {
             report = saved;
@@ -191,6 +256,12 @@ class _FormScreenState extends ConsumerState<FormScreen>
               )
             : const Center(child: CircularProgressIndicator()),
       );
+    }
+    if (r.state != ReportState.draft) {
+      return LocalReceiptScreen(reportId: r.id);
+    }
+    if (r.schema.source['closurePolicy'] != null) {
+      return ClosureScreen(reportId: r.id);
     }
     final validation = validate(r.schema, values);
     final job = app.workOrders.where((j) => j.id == r.workOrderId).firstOrNull;
@@ -311,9 +382,88 @@ class _FormScreenState extends ConsumerState<FormScreen>
                       'This report is frozen. Manage its receipt or safe reopen from the queue.',
                       isInfo: true,
                     ),
-                  for (final section in r.schema.sections) ...[
+                  if (r.schema.templateId == fttpTemplateId) ...[
+                    const ErrorNotice(
+                      'Synthetic FTTP demonstration · procedures require Openreach validation.',
+                      isInfo: true,
+                    ),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: [
+                        for (final (index, section)
+                            in r.schema.sections.indexed)
+                          ChoiceChip(
+                            label: Text('${index + 1}. ${section.label}'),
+                            selected: fttpStep == index,
+                            onSelected: (_) => _openFttpStep(index),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    PopupMenuButton<bool>(
+                      enabled: r.state == ReportState.draft,
+                      onSelected: (blocked) async {
+                        final replace = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Load synthetic example?'),
+                            content: const Text(
+                              'This replaces this draft’s answers with labelled demonstration values. Photos are kept; review their categories before confirming.',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('Cancel'),
+                              ),
+                              FilledButton(
+                                onPressed: () => Navigator.pop(context, true),
+                                child: const Text('Load example'),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (replace != true || !mounted) return;
+                        final next = fttpExample(blocked);
+                        try {
+                          await _save(next, source: 'demo_example');
+                          await _openFttpStep(0);
+                          if (mounted) {
+                            setState(() {
+                              values = next;
+                              voiceRevision++;
+                            });
+                          }
+                        } catch (_) {
+                          // _save already presents a recovery message.
+                        }
+                      },
+                      itemBuilder: (_) => const [
+                        PopupMenuItem(
+                          value: false,
+                          child: Text('Successful installation example'),
+                        ),
+                        PopupMenuItem(
+                          value: true,
+                          child: Text('Blocked duct handover example'),
+                        ),
+                      ],
+                      child: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Text('Load synthetic example answers ▾'),
+                      ),
+                    ),
+                  ],
+                  for (final section in r.schema.sections.where(
+                    (section) =>
+                        r.schema.templateId != fttpTemplateId ||
+                        section.id == r.schema.sections[fttpStep].id,
+                  )) ...[
                     const SizedBox(height: 6),
                     WorkspaceSection(section.label),
+                    if (r.schema.templateId == fttpTemplateId &&
+                        section.id == 'evidence')
+                      FttpEvidencePanel(key: ValueKey(r.id), report: r),
                     const SizedBox(height: 4),
                     if (scannableFields(
                       r.schema,
@@ -455,6 +605,15 @@ class _FormScreenState extends ConsumerState<FormScreen>
                         ),
                       ),
                   ],
+                  if (r.schema.templateId == fttpTemplateId &&
+                      fttpStep < r.schema.sections.length - 1)
+                    FilledButton.icon(
+                      onPressed: () => _openFttpStep(fttpStep + 1),
+                      icon: const Icon(Icons.arrow_forward),
+                      label: Text(
+                        'Next: ${r.schema.sections[fttpStep + 1].label}',
+                      ),
+                    ),
                   if (undo != null)
                     OutlinedButton.icon(
                       onPressed: () async {
@@ -546,23 +705,7 @@ class _FormScreenState extends ConsumerState<FormScreen>
                                       final field = await context.push<String>(
                                         '/review/${r.id}',
                                       );
-                                      if (field != null &&
-                                          context.mounted &&
-                                          fieldKeys[field]?.currentContext !=
-                                              null) {
-                                        Scrollable.ensureVisible(
-                                          fieldKeys[field]!.currentContext!,
-                                          duration:
-                                              MediaQuery.disableAnimationsOf(
-                                                context,
-                                              )
-                                              ? Duration.zero
-                                              : const Duration(
-                                                  milliseconds: 250,
-                                                ),
-                                          alignment: .15,
-                                        );
-                                      }
+                                      await _focusField(field);
                                     } catch (_) {}
                                   },
                             icon: const MotionIcon(
@@ -701,17 +844,7 @@ class _FormScreenState extends ConsumerState<FormScreen>
     await ref.read(appProvider.notifier).reloadReports();
     if (review == true && mounted) {
       final field = await context.push<String>('/review/${report!.id}');
-      if (mounted &&
-          field != null &&
-          fieldKeys[field]?.currentContext != null) {
-        await Scrollable.ensureVisible(
-          fieldKeys[field]!.currentContext!,
-          duration: MediaQuery.disableAnimationsOf(context)
-              ? Duration.zero
-              : const Duration(milliseconds: 250),
-          alignment: .15,
-        );
-      }
+      await _focusField(field);
     }
   }
 
@@ -892,6 +1025,8 @@ class ReviewScreen extends ConsumerStatefulWidget {
 
 class _ReviewScreenState extends ConsumerState<ReviewScreen> {
   LocalReport? report;
+  List<Json> evidence = [];
+  Json? closureCapture;
   bool confirmed = false, busy = false;
   String error = '';
   LocationCaptureFailure? locationError;
@@ -903,8 +1038,30 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
         .read(appProvider.notifier)
         .repository
         .get(widget.reportId)
-        .then((r) {
-          if (mounted) setState(() => report = r);
+        .then((r) async {
+          final photos =
+              r.schema.templateId == fttpTemplateId ||
+                  r.schema.source['closurePolicy'] != null
+              ? await ref.read(appProvider.notifier).repository.evidence(r.id)
+              : <Json>[];
+          final capture = r.schema.source['closurePolicy'] == null
+              ? null
+              : await ref
+                        .read(appProvider.notifier)
+                        .repository
+                        .metadata('closure-capture:${r.id}')
+                    as Json?;
+          if (mounted && r.state != ReportState.draft) {
+            context.go('/receipt/${r.id}');
+            return;
+          }
+          if (mounted) {
+            setState(() {
+              closureCapture = capture;
+              report = r;
+              evidence = photos;
+            });
+          }
         })
         .catchError((Object e) {
           if (mounted) setState(() => error = e.toString());
@@ -926,6 +1083,14 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
       );
     }
     final result = validate(r.schema, r.values);
+    final readiness = [
+      ...fttpIssues(r.schema.templateId, r.values, evidence),
+      ...checkClosure(
+        r.schema.source,
+        encodeAnswers(result.values),
+        evidence,
+      ).issues,
+    ];
     return Scaffold(
       appBar: AppBar(title: const Text('Review your report')),
       body: SafeArea(
@@ -966,6 +1131,54 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                       : 'Open app permissions',
                 ),
               ),
+            if (r.schema.source['closurePolicy'] != null) ...[
+              const ErrorNotice(
+                'Review the source facts and THIS work order’s disposition. A stage handoff does not mean the customer service is live. Your final confirmation verifies the applicable answers.',
+                isInfo: true,
+              ),
+              if (closureCapture != null)
+                ExpansionTile(
+                  title: const Text('Original narrative & candidate sources'),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        closureCapture!['transcript'] as String? ??
+                            'Answered manually.',
+                      ),
+                    ),
+                    for (final c
+                        in closureCapture!['candidates'] as List? ?? [])
+                      ListTile(
+                        title: Text(
+                          '${c['fieldId']}: ${c['value'] ?? 'Unresolved'}',
+                        ),
+                        subtitle: Text(
+                          '${c['sourceType']} · ${c['verificationStatus']}\n${c['sourceSpan']}',
+                        ),
+                      ),
+                  ],
+                ),
+            ],
+            if (readiness.isNotEmpty) ErrorNotice(readiness.join('\n')),
+            if (evidence.isNotEmpty) ...[
+              const WorkspaceSection('Visit evidence'),
+              for (final photo in evidence)
+                ListTile(
+                  leading: Image.memory(
+                    base64Decode(photo['data'] as String),
+                    width: 64,
+                    height: 64,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(photo['caption'] as String),
+                  subtitle: Text(
+                    photo['synthetic'] == true
+                        ? 'Synthetic demo illustration'
+                        : 'Site photograph',
+                  ),
+                ),
+            ],
             if (!result.valid)
               ErrorNotice(
                 '${result.issues.length} fields need your attention before this report can be confirmed.',
@@ -1017,6 +1230,8 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                                   'voice' =>
                                     'Added by voice · Check before confirming',
                                   'undo' => 'Restored with undo',
+                                  'demo_example' =>
+                                    'Synthetic demo example · verify before confirming',
                                   _ => 'Entered by touch',
                                 },
                                 style: TextStyle(
@@ -1069,7 +1284,8 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
             ),
             const SizedBox(height: 20),
             FilledButton.icon(
-              onPressed: !confirmed || !result.valid || busy
+              onPressed:
+                  !confirmed || !result.valid || readiness.isNotEmpty || busy
                   ? null
                   : () async {
                       setState(() {

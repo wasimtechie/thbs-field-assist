@@ -54,6 +54,10 @@ if (kokoro/'LICENSE').exists():shutil.copyfile(kokoro/'LICENSE',ROOT/'docs/licen
 assets=[]
 for file in sorted(STORE.rglob('*')):
  if not file.is_file():continue
+ # Historical benchmarks may leave other models in the same developer cache.
+ # Stage only the base package here; streaming STT is added by its own script.
+ rel=str(file.relative_to(STORE))
+ if rel not in ['needle3.cact','whistle.cact'] and not rel.startswith('kokoro/'):continue
  rel=str(file.relative_to(STORE));sha=digest(file);purpose='needle3' if rel=='needle3.cact' else 'whistle' if rel=='whistle.cact' else 'kokoro' if rel.endswith('.onnx') else 'voices' if rel.endswith('voices.bin') else 'tokenizer' if rel.endswith('tokens.txt') else 'phonemizer'
  licence='GPL-3.0; see docs/licenses/espeak-ng-COPYING' if rel.startswith('kokoro/espeak-ng-data/') else 'Apache-2.0; see docs/licenses'
  assets.append(dict(id=sha,purpose=purpose,relativePath=rel,sha256=sha,bytes=file.stat().st_size,source=f'/api/v1/assets/{sha}',minimumAppVersion='0.1.0',runtimeVersion='needle3-pinned' if purpose in ['needle3','whistle'] else 'sherpa_onnx-1.13.8',licence=licence))

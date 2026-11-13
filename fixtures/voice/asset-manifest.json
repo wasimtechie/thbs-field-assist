@@ -1,6 +1,6 @@
 {
   "manifestVersion": 1,
-  "packageVersion": "field-voice-2026-10-15",
+  "packageVersion": "fv-ndl-20261023",
   "ready": false,
   "assets": [
     {
@@ -3975,19 +3975,96 @@
       "licence": "Apache-2.0; see docs/licenses"
     },
     {
-      "id": "b6e02f048568ac5d01a2042556c658061e699acbc0aa2a1439f52f3d461dffeb",
-      "purpose": "whistle",
-      "relativePath": "whistle.cact",
-      "sha256": "b6e02f048568ac5d01a2042556c658061e699acbc0aa2a1439f52f3d461dffeb",
-      "bytes": 16919407,
-      "source": "/api/v1/assets/b6e02f048568ac5d01a2042556c658061e699acbc0aa2a1439f52f3d461dffeb",
-      "minimumAppVersion": "0.1.0",
-      "runtimeVersion": "needle3-pinned",
-      "licence": "Apache-2.0; see docs/licenses"
+      "id": "c665f742364febad597cc9ac1e0b341ffbee0e24a1466e2f3bde95e6e4771762",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/adapter.ort",
+      "sha256": "c665f742364febad597cc9ac1e0b341ffbee0e24a1466e2f3bde95e6e4771762",
+      "bytes": 2870368,
+      "source": "/api/v1/assets/c665f742364febad597cc9ac1e0b341ffbee0e24a1466e2f3bde95e6e4771762",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "e2d3417144e9514055ebfefe8dcc4c0a55a55adcb8530435844c75c53e352bf6",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/cross_kv.ort",
+      "sha256": "e2d3417144e9514055ebfefe8dcc4c0a55a55adcb8530435844c75c53e352bf6",
+      "bytes": 5356536,
+      "source": "/api/v1/assets/e2d3417144e9514055ebfefe8dcc4c0a55a55adcb8530435844c75c53e352bf6",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "1a05465b1dd955858dfcbee039c0020fb5dd982b0f5094c34e61735d518d771b",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/decoder_kv.ort",
+      "sha256": "1a05465b1dd955858dfcbee039c0020fb5dd982b0f5094c34e61735d518d771b",
+      "bytes": 81878600,
+      "source": "/api/v1/assets/1a05465b1dd955858dfcbee039c0020fb5dd982b0f5094c34e61735d518d771b",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "2d4d973e91e8aca08c51e7e7efa28a46ab265b63d809d5294d18b86bcd85b993",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/encoder.ort",
+      "sha256": "2d4d973e91e8aca08c51e7e7efa28a46ab265b63d809d5294d18b86bcd85b993",
+      "bytes": 44148576,
+      "source": "/api/v1/assets/2d4d973e91e8aca08c51e7e7efa28a46ab265b63d809d5294d18b86bcd85b993",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "09b1210ae30dc5f0f3e45f0ebab914c254741323114f53fbbe5ae62cca35058f",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/frontend.model.ort",
+      "sha256": "09b1210ae30dc5f0f3e45f0ebab914c254741323114f53fbbe5ae62cca35058f",
+      "bytes": 26944,
+      "source": "/api/v1/assets/09b1210ae30dc5f0f3e45f0ebab914c254741323114f53fbbe5ae62cca35058f",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "7ef97521bd4bad3928f5bb6808586f4fcc6e92bd5990394112eed7d4052ec338",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/frontend.weights.ort",
+      "sha256": "7ef97521bd4bad3928f5bb6808586f4fcc6e92bd5990394112eed7d4052ec338",
+      "bytes": 7769464,
+      "source": "/api/v1/assets/7ef97521bd4bad3928f5bb6808586f4fcc6e92bd5990394112eed7d4052ec338",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "26f02b6afb22d60871a5efd85c3d38e569cc0ddb6c5eb6e93d3260152ae8a47a",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/streaming_config.json",
+      "sha256": "26f02b6afb22d60871a5efd85c3d38e569cc0ddb6c5eb6e93d3260152ae8a47a",
+      "bytes": 512,
+      "source": "/api/v1/assets/26f02b6afb22d60871a5efd85c3d38e569cc0ddb6c5eb6e93d3260152ae8a47a",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
+    },
+    {
+      "id": "6884b35fd6377d4c4d32336a0bc152f36b64d1e45b6503683cdc238250a8472d",
+      "purpose": "moonshine",
+      "relativePath": "moonshine-small-streaming/tokenizer.bin",
+      "sha256": "6884b35fd6377d4c4d32336a0bc152f36b64d1e45b6503683cdc238250a8472d",
+      "bytes": 249974,
+      "source": "/api/v1/assets/6884b35fd6377d4c4d32336a0bc152f36b64d1e45b6503683cdc238250a8472d",
+      "minimumAppVersion": "0.2.0",
+      "runtimeVersion": "moonshine-voice-0.1.5",
+      "licence": "MIT; see docs/licenses/moonshine-LICENSE"
     }
   ],
   "requiredPurposes": [
-    "whistle",
+    "moonshine",
     "needle3",
     "kokoro",
     "voices",
@@ -3997,11 +4074,11 @@
   "platforms": {
     "ios-arm64": {
       "verified": false,
-      "runtime": "needle3:93e88ede867e4311c39151285e74df513e4b835b; sherpa_onnx:1.13.8"
+      "runtime": "moonshine:0.1.5 (Small Streaming + Silero); needle3; sherpa_onnx:1.13.8"
     },
     "android-arm64-v8a": {
       "verified": false,
-      "runtime": "needle3:93e88ede867e4311c39151285e74df513e4b835b; sherpa_onnx:1.13.8"
+      "runtime": "moonshine:0.1.5 (Small Streaming + Silero); needle3; sherpa_onnx:1.13.8"
     }
   }
 }

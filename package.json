@@ -11,6 +11,8 @@
     "demo": "npm --prefix apps/product-demo run dev",
     "demo:studio": "npm --prefix apps/product-demo run studio",
     "demo:render": "npm --prefix apps/product-demo run render",
+    "promo:render": "npm --prefix apps/product-demo run promo:render",
+    "promo:verify": "npm --prefix apps/product-demo run promo:verify",
     "dev": "npm run dev -w @field-assist/admin",
     "build": "npm run build -w @field-assist/admin",
     "typecheck": "tsc --noEmit -p apps/admin/tsconfig.json",
@@ -23,7 +25,11 @@
     "db:migrate": "prisma migrate deploy --schema packages/database/prisma/schema.prisma",
     "db:seed": "tsx packages/database/seed.ts",
     "db:reset": "node scripts/reset.mjs",
-    "test:api": "tsx scripts/smoke.ts"
+    "test:api": "tsx scripts/smoke.ts",
+    "demo:closure": "tsx scripts/seed-closure-demo.ts",
+    "demo:fttp": "tsx scripts/seed-fttp-demo.ts",
+    "test:closure": "tsx scripts/check-closure-demo.ts",
+    "test:fttp": "tsx scripts/check-fttp-demo.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

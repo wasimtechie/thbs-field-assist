@@ -8,6 +8,8 @@
     "./access": "./src/access.ts",
     "./workspace": "./src/workspace.ts",
     "./ai": "./src/ai.ts",
-    "./field-values": "./src/field-values.ts"
+    "./field-values": "./src/field-values.ts",
+    "./fttp": "./src/fttp.ts",
+    "./closure": "./src/closure/policy.ts"
   }
 }

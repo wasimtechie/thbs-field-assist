@@ -80,6 +80,12 @@ num? spokenNumber(String text) {
   if (point < 0) return sign * whole;
   final fraction = words.sublist(point + 1);
   if (fraction.isEmpty) return null;
+  // Some engineers say "point nineteen" rather than "point one nine".
+  // Accept one explicit two-digit group; mixed groups remain ambiguous.
+  final fractionalGroup = _under100(fraction);
+  if (fractionalGroup != null && fractionalGroup >= 10) {
+    return sign * num.parse('$whole.$fractionalGroup');
+  }
   final digits = <int>[];
   for (final word in fraction) {
     final n = _small[word] ?? int.tryParse(word);
@@ -147,6 +153,10 @@ int? _under1000(List<String> words) {
 }
 
 int? _integerWords(List<String> words) {
+  if (words.length == 1) {
+    final literal = int.tryParse(words.single);
+    if (literal != null && literal >= 0) return literal;
+  }
   final thousand = words.indexOf('thousand');
   if (thousand < 0) return _under1000(words);
   final leading = _under1000(words.sublist(0, thousand));

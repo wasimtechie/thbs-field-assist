@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:jose/jose.dart';
 import '../../core/contracts.dart';
 
@@ -17,7 +18,9 @@ class OfflineLease {
   final String id, userId, organizationId, deviceId, typeId;
   final List<String> allowedTemplates;
   final int assignmentRevision;
-  final DateTime issuedAt, expiresAt;
+  final DateTime issuedAt;
+  final DateTime? expiresAt;
+  bool get nonExpiringDemo => expiresAt == null;
   static Future<OfflineLease> verify(
     String token,
     Json publicJwk, {
@@ -26,6 +29,7 @@ class OfflineLease {
     DateTime? lastObserved,
     String? userId,
     String? deviceId,
+    String? nonExpiringDemoEmail,
   }) async {
     final parts = token.split('.');
     if (parts.length != 3) {
@@ -64,11 +68,39 @@ class OfflineLease {
         'Offline entitlement does not match this account and device',
       );
     }
-    final issued = DateTime.parse(j['issuedAt'] as String),
-        expiry = DateTime.parse(j['expiresAt'] as String);
-    if ((j['exp'] as num).toInt() != expiry.millisecondsSinceEpoch ~/ 1000 ||
+    final issued = DateTime.parse(j['issuedAt'] as String);
+    final expiry = j['expiresAt'] is String
+        ? DateTime.parse(j['expiresAt'] as String)
+        : null;
+    // Only an explicitly configured synthetic debug build may accept a signed
+    // grant without expiry. Missing expiry is invalid for ordinary accounts.
+    final demoWithoutExpiry =
+        kDebugMode &&
+        nonExpiringDemoEmail == 'closure@fieldassist.demo' &&
+        userId != null &&
+        deviceId != null &&
+        j['offlineAccess'] == 'non-expiring-synthetic-demo' &&
+        j['demoAccount'] == nonExpiringDemoEmail &&
+        j['organizationId'] == '10000000-0000-4000-8000-000000000001' &&
+        j.containsKey('expiresAt') &&
+        j['expiresAt'] == null &&
+        !j.containsKey('exp') &&
+        j['allowedTemplateIds'] is List &&
+        (j['allowedTemplateIds'] as List).length == 1 &&
+        (j['allowedTemplateIds'] as List).single ==
+            '40000000-0000-4000-8000-000000000006';
+    if (expiry == null && !demoWithoutExpiry) {
+      throw const FormatException(
+        'Offline expiry is missing or not authorised',
+      );
+    }
+    if (expiry != null &&
+            (j['exp'] is! num ||
+                (j['exp'] as num).toInt() !=
+                    expiry.millisecondsSinceEpoch ~/ 1000 ||
+                now.isAfter(expiry)) ||
+        j['iat'] is! num ||
         (j['iat'] as num).toInt() != issued.millisecondsSinceEpoch ~/ 1000 ||
-        now.isAfter(expiry) ||
         now.isBefore(issued.subtract(const Duration(minutes: 2))) ||
         lastObserved != null &&
             now.isBefore(lastObserved.subtract(const Duration(minutes: 2)))) {

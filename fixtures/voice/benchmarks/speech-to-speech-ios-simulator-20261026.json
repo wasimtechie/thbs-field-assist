@@ -1,0 +1,2589 @@
+{
+  "measuredAt": "2026-10-26T18:24:13.958121+00:00",
+  "scope": "iOS simulator debug. All 25 current-app paced PCM/native playback timing samples completed before a post-run assertion rejected a blocked background auth/login attempt. No actual network transport is possible through the rejecting adapter. Native output cursor, not acoustic speaker measurement.",
+  "inputFrameMs": 20,
+  "voicedRmsThreshold": 0.004,
+  "outputPollMs": 10,
+  "modelsResidentBeforeTurns": true,
+  "defaultVoice": "bm_george",
+  "speechRate": 1,
+  "samples": [
+    {
+      "case": "short-optical",
+      "iteration": 1,
+      "speechEndToVoicedReplyMs": 1210,
+      "eventsMs": {
+        "captureStopRequested": 965,
+        "saveStarted": 1038,
+        "saveCompleted": 1068,
+        "playRequested": 1118,
+        "firstVoicedPlaybackCursor": 1210
+      },
+      "accessChecksMs": [
+        19,
+        9,
+        10,
+        9,
+        10,
+        9,
+        29
+      ],
+      "durableSavesMs": [
+        29
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Recorded operational / activation test result? Passed, Failed, Not tested.",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Passed",
+        "Failed",
+        "Not tested",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "minus 18.2 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+        }
+      }
+    },
+    {
+      "case": "short-choice",
+      "iteration": 1,
+      "speechEndToVoicedReplyMs": 1227,
+      "eventsMs": {
+        "captureStopRequested": 984,
+        "saveStarted": 1039,
+        "saveCompleted": 1066,
+        "playRequested": 1136,
+        "firstVoicedPlaybackCursor": 1227
+      },
+      "accessChecksMs": [
+        14,
+        10,
+        10,
+        9,
+        24,
+        10,
+        28
+      ],
+      "durableSavesMs": [
+        26
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "sourceType": "manual",
+          "sourceSpan": "-18.2"
+        },
+        "operational_test": {
+          "sourceType": "speech",
+          "sourceSpan": "Past.",
+          "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+        }
+      }
+    },
+    {
+      "case": "corrected-optical",
+      "iteration": 1,
+      "speechEndToVoicedReplyMs": 11519,
+      "eventsMs": {
+        "captureStopRequested": 1152,
+        "saveStarted": 1200,
+        "saveCompleted": 1225,
+        "playRequested": 11426,
+        "firstVoicedPlaybackCursor": 11519
+      },
+      "accessChecksMs": [
+        9,
+        10,
+        10,
+        14,
+        22,
+        15
+      ],
+      "durableSavesMs": [
+        24
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19
+      },
+      "expectedValuesVerified": false,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+        "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Enter a reading (optional)",
+        "dBm",
+        "0/40",
+        "Repeat question",
+        "Not measured",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "Your voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": null,
+          "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+        }
+      }
+    },
+    {
+      "case": "s1-summary",
+      "iteration": 1,
+      "speechEndToVoicedReplyMs": 2271,
+      "eventsMs": {
+        "captureStopRequested": 2064,
+        "saveStarted": 2123,
+        "saveCompleted": 2149,
+        "playRequested": 2184,
+        "firstVoicedPlaybackCursor": 2271
+      },
+      "accessChecksMs": [
+        16,
+        9,
+        9,
+        10,
+        20,
+        9,
+        9
+      ],
+      "durableSavesMs": [
+        26
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Anything else?",
+        "I’ll speak first, then open the microphone.",
+        "Nothing else · Continue",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Repeat question",
+        "Skip summary",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "optical receive reading was minus 18.2 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        }
+      }
+    },
+    {
+      "case": "after-anything-else",
+      "iteration": 1,
+      "speechEndToVoicedReplyMs": 2365,
+      "eventsMs": {
+        "captureStopRequested": 2165,
+        "saveStarted": 2218,
+        "saveCompleted": 2237,
+        "playRequested": 2261,
+        "firstVoicedPlaybackCursor": 2365
+      },
+      "accessChecksMs": [
+        10,
+        10,
+        10,
+        10,
+        11,
+        9,
+        9,
+        9
+      ],
+      "durableSavesMs": [
+        18
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "2 answers saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.19,
+          "sourceSpan": "optical receive reading was minus 18.19 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber round. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        }
+      }
+    },
+    {
+      "case": "short-optical",
+      "iteration": 2,
+      "speechEndToVoicedReplyMs": 1235,
+      "eventsMs": {
+        "captureStopRequested": 1038,
+        "saveStarted": 1085,
+        "saveCompleted": 1110,
+        "playRequested": 1151,
+        "firstVoicedPlaybackCursor": 1235
+      },
+      "accessChecksMs": [
+        15,
+        9,
+        9,
+        9,
+        10,
+        10,
+        20
+      ],
+      "durableSavesMs": [
+        24
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Recorded operational / activation test result? Passed, Failed, Not tested.",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Passed",
+        "Failed",
+        "Not tested",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "minus 18.2 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+        }
+      }
+    },
+    {
+      "case": "short-choice",
+      "iteration": 2,
+      "speechEndToVoicedReplyMs": 878,
+      "eventsMs": {
+        "captureStopRequested": 684,
+        "saveStarted": 736,
+        "saveCompleted": 748,
+        "playRequested": 786,
+        "firstVoicedPlaybackCursor": 878
+      },
+      "accessChecksMs": [
+        10,
+        10,
+        10,
+        9,
+        11,
+        9,
+        9,
+        9
+      ],
+      "durableSavesMs": [
+        11
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "sourceType": "manual",
+          "sourceSpan": "-18.2"
+        },
+        "operational_test": {
+          "sourceType": "speech",
+          "sourceSpan": "Past.",
+          "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+        }
+      }
+    },
+    {
+      "case": "corrected-optical",
+      "iteration": 2,
+      "speechEndToVoicedReplyMs": 11053,
+      "eventsMs": {
+        "captureStopRequested": 924,
+        "saveStarted": 957,
+        "saveCompleted": 983,
+        "playRequested": 10963,
+        "firstVoicedPlaybackCursor": 11053
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        10,
+        23,
+        10,
+        11
+      ],
+      "durableSavesMs": [
+        26
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19
+      },
+      "expectedValuesVerified": false,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+        "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Enter a reading (optional)",
+        "dBm",
+        "0/40",
+        "Repeat question",
+        "Not measured",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "Your voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": null,
+          "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+        }
+      }
+    },
+    {
+      "case": "s1-summary",
+      "iteration": 2,
+      "speechEndToVoicedReplyMs": 2391,
+      "eventsMs": {
+        "captureStopRequested": 2196,
+        "saveStarted": 2255,
+        "saveCompleted": 2267,
+        "playRequested": 2304,
+        "firstVoicedPlaybackCursor": 2391
+      },
+      "accessChecksMs": [
+        13,
+        11,
+        10,
+        10,
+        9,
+        9,
+        9
+      ],
+      "durableSavesMs": [
+        12
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Anything else?",
+        "I’ll speak first, then open the microphone.",
+        "Nothing else · Continue",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Repeat question",
+        "Skip summary",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "optical receive reading was minus 18.2 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        }
+      }
+    },
+    {
+      "case": "after-anything-else",
+      "iteration": 2,
+      "speechEndToVoicedReplyMs": 2522,
+      "eventsMs": {
+        "captureStopRequested": 2321,
+        "saveStarted": 2374,
+        "saveCompleted": 2393,
+        "playRequested": 2431,
+        "firstVoicedPlaybackCursor": 2522
+      },
+      "accessChecksMs": [
+        11,
+        9,
+        9,
+        10,
+        9,
+        22,
+        8
+      ],
+      "durableSavesMs": [
+        18
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "2 answers saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.19,
+          "sourceSpan": "optical receive reading was minus 18.19 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        }
+      }
+    },
+    {
+      "case": "short-optical",
+      "iteration": 3,
+      "speechEndToVoicedReplyMs": 1198,
+      "eventsMs": {
+        "captureStopRequested": 990,
+        "saveStarted": 1042,
+        "saveCompleted": 1064,
+        "playRequested": 1107,
+        "firstVoicedPlaybackCursor": 1198
+      },
+      "accessChecksMs": [
+        10,
+        13,
+        10,
+        14,
+        19,
+        10,
+        12
+      ],
+      "durableSavesMs": [
+        21
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Recorded operational / activation test result? Passed, Failed, Not tested.",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Passed",
+        "Failed",
+        "Not tested",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "minus 18.2 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+        }
+      }
+    },
+    {
+      "case": "short-choice",
+      "iteration": 3,
+      "speechEndToVoicedReplyMs": 1180,
+      "eventsMs": {
+        "captureStopRequested": 983,
+        "saveStarted": 1037,
+        "saveCompleted": 1050,
+        "playRequested": 1102,
+        "firstVoicedPlaybackCursor": 1180
+      },
+      "accessChecksMs": [
+        11,
+        10,
+        9,
+        11,
+        10,
+        10,
+        14
+      ],
+      "durableSavesMs": [
+        13
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "sourceType": "manual",
+          "sourceSpan": "-18.2"
+        },
+        "operational_test": {
+          "sourceType": "speech",
+          "sourceSpan": "Past.",
+          "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+        }
+      }
+    },
+    {
+      "case": "corrected-optical",
+      "iteration": 3,
+      "speechEndToVoicedReplyMs": 11166,
+      "eventsMs": {
+        "captureStopRequested": 704,
+        "saveStarted": 743,
+        "saveCompleted": 763,
+        "playRequested": 11074,
+        "firstVoicedPlaybackCursor": 11166
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        13,
+        16,
+        15
+      ],
+      "durableSavesMs": [
+        19
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19
+      },
+      "expectedValuesVerified": false,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+        "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Enter a reading (optional)",
+        "dBm",
+        "0/40",
+        "Repeat question",
+        "Not measured",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "Your voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": null,
+          "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+        }
+      }
+    },
+    {
+      "case": "s1-summary",
+      "iteration": 3,
+      "speechEndToVoicedReplyMs": 2442,
+      "eventsMs": {
+        "captureStopRequested": 2245,
+        "saveStarted": 2296,
+        "saveCompleted": 2318,
+        "playRequested": 2353,
+        "firstVoicedPlaybackCursor": 2442
+      },
+      "accessChecksMs": [
+        11,
+        9,
+        13,
+        9,
+        20,
+        10,
+        13
+      ],
+      "durableSavesMs": [
+        22
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Anything else?",
+        "I’ll speak first, then open the microphone.",
+        "Nothing else · Continue",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Repeat question",
+        "Skip summary",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "optical receive reading was minus 18.2 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        }
+      }
+    },
+    {
+      "case": "after-anything-else",
+      "iteration": 3,
+      "speechEndToVoicedReplyMs": 2409,
+      "eventsMs": {
+        "captureStopRequested": 2222,
+        "saveStarted": 2273,
+        "saveCompleted": 2293,
+        "playRequested": 2317,
+        "firstVoicedPlaybackCursor": 2409
+      },
+      "accessChecksMs": [
+        9,
+        9,
+        9,
+        9,
+        16,
+        8,
+        10
+      ],
+      "durableSavesMs": [
+        20
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "2 answers saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.19,
+          "sourceSpan": "optical receive reading was minus 18.19 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        }
+      }
+    },
+    {
+      "case": "short-optical",
+      "iteration": 4,
+      "speechEndToVoicedReplyMs": 1154,
+      "eventsMs": {
+        "captureStopRequested": 945,
+        "saveStarted": 997,
+        "saveCompleted": 1018,
+        "playRequested": 1061,
+        "firstVoicedPlaybackCursor": 1154
+      },
+      "accessChecksMs": [
+        10,
+        14,
+        9,
+        15,
+        18,
+        9,
+        12
+      ],
+      "durableSavesMs": [
+        20
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Recorded operational / activation test result? Passed, Failed, Not tested.",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Passed",
+        "Failed",
+        "Not tested",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "minus 18.2 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+        }
+      }
+    },
+    {
+      "case": "short-choice",
+      "iteration": 4,
+      "speechEndToVoicedReplyMs": 893,
+      "eventsMs": {
+        "captureStopRequested": 707,
+        "saveStarted": 756,
+        "saveCompleted": 776,
+        "playRequested": 809,
+        "firstVoicedPlaybackCursor": 893
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        10,
+        12,
+        17,
+        9,
+        18
+      ],
+      "durableSavesMs": [
+        19
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "sourceType": "manual",
+          "sourceSpan": "-18.2"
+        },
+        "operational_test": {
+          "sourceType": "speech",
+          "sourceSpan": "Past.",
+          "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+        }
+      }
+    },
+    {
+      "case": "corrected-optical",
+      "iteration": 4,
+      "speechEndToVoicedReplyMs": 11365,
+      "eventsMs": {
+        "captureStopRequested": 1149,
+        "saveStarted": 1186,
+        "saveCompleted": 1206,
+        "playRequested": 11281,
+        "firstVoicedPlaybackCursor": 11365
+      },
+      "accessChecksMs": [
+        9,
+        9,
+        9,
+        9,
+        11
+      ],
+      "durableSavesMs": [
+        20
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19
+      },
+      "expectedValuesVerified": false,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+        "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Enter a reading (optional)",
+        "dBm",
+        "0/40",
+        "Repeat question",
+        "Not measured",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "Your voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": null,
+          "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+        }
+      }
+    },
+    {
+      "case": "s1-summary",
+      "iteration": 4,
+      "speechEndToVoicedReplyMs": 2403,
+      "eventsMs": {
+        "captureStopRequested": 2222,
+        "saveStarted": 2271,
+        "saveCompleted": 2291,
+        "playRequested": 2324,
+        "firstVoicedPlaybackCursor": 2403
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        9,
+        9,
+        17,
+        9,
+        12
+      ],
+      "durableSavesMs": [
+        20
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Anything else?",
+        "I’ll speak first, then open the microphone.",
+        "Nothing else · Continue",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Repeat question",
+        "Skip summary",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "optical receive reading was minus 18.2 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        }
+      }
+    },
+    {
+      "case": "after-anything-else",
+      "iteration": 4,
+      "speechEndToVoicedReplyMs": 2363,
+      "eventsMs": {
+        "captureStopRequested": 2163,
+        "saveStarted": 2212,
+        "saveCompleted": 2230,
+        "playRequested": 2271,
+        "firstVoicedPlaybackCursor": 2363
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        14,
+        9,
+        15,
+        9,
+        13
+      ],
+      "durableSavesMs": [
+        17
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "2 answers saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.19,
+          "sourceSpan": "optical receive reading was minus 18.19 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        }
+      }
+    },
+    {
+      "case": "short-optical",
+      "iteration": 5,
+      "speechEndToVoicedReplyMs": 1110,
+      "eventsMs": {
+        "captureStopRequested": 905,
+        "saveStarted": 958,
+        "saveCompleted": 982,
+        "playRequested": 1022,
+        "firstVoicedPlaybackCursor": 1110
+      },
+      "accessChecksMs": [
+        11,
+        10,
+        11,
+        13,
+        20,
+        9,
+        12
+      ],
+      "durableSavesMs": [
+        23
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Recorded operational / activation test result? Passed, Failed, Not tested.",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Passed",
+        "Failed",
+        "Not tested",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "minus 18.2 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+        }
+      }
+    },
+    {
+      "case": "short-choice",
+      "iteration": 5,
+      "speechEndToVoicedReplyMs": 1158,
+      "eventsMs": {
+        "captureStopRequested": 985,
+        "saveStarted": 1032,
+        "saveCompleted": 1045,
+        "playRequested": 1081,
+        "firstVoicedPlaybackCursor": 1158
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        10,
+        11,
+        9,
+        8,
+        9
+      ],
+      "durableSavesMs": [
+        12
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "sourceType": "manual",
+          "sourceSpan": "-18.2"
+        },
+        "operational_test": {
+          "sourceType": "speech",
+          "sourceSpan": "Past.",
+          "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+        }
+      }
+    },
+    {
+      "case": "corrected-optical",
+      "iteration": 5,
+      "speechEndToVoicedReplyMs": 11276,
+      "eventsMs": {
+        "captureStopRequested": 987,
+        "saveStarted": 1026,
+        "saveCompleted": 1037,
+        "playRequested": 11184,
+        "firstVoicedPlaybackCursor": 11276
+      },
+      "accessChecksMs": [
+        9,
+        10,
+        12,
+        8,
+        9,
+        11
+      ],
+      "durableSavesMs": [
+        11
+      ],
+      "savedValues": {
+        "actual_work": "Installed the ONT in the living room using the existing duct.",
+        "claimed_outcome": "completed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19
+      },
+      "expectedValuesVerified": false,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+        "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Enter a reading (optional)",
+        "dBm",
+        "0/40",
+        "Repeat question",
+        "Not measured",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "Your voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "manual",
+          "sourceSpan": "Installed the ONT in the living room using the existing duct."
+        },
+        "claimed_outcome": {
+          "sourceType": "manual",
+          "sourceSpan": "completed"
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": null,
+          "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+        }
+      }
+    },
+    {
+      "case": "s1-summary",
+      "iteration": 5,
+      "speechEndToVoicedReplyMs": 2330,
+      "eventsMs": {
+        "captureStopRequested": 2147,
+        "saveStarted": 2199,
+        "saveCompleted": 2220,
+        "playRequested": 2253,
+        "firstVoicedPlaybackCursor": 2330
+      },
+      "accessChecksMs": [
+        10,
+        9,
+        12,
+        11,
+        19,
+        8,
+        11
+      ],
+      "durableSavesMs": [
+        21
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.2,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Anything else?",
+        "I’ll speak first, then open the microphone.",
+        "Nothing else · Continue",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Repeat question",
+        "Skip summary",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "1 answer saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.2,
+          "sourceSpan": "optical receive reading was minus 18.2 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+        }
+      }
+    },
+    {
+      "case": "after-anything-else",
+      "iteration": 5,
+      "speechEndToVoicedReplyMs": 2431,
+      "eventsMs": {
+        "captureStopRequested": 2226,
+        "saveStarted": 2280,
+        "saveCompleted": 2297,
+        "playRequested": 2336,
+        "firstVoicedPlaybackCursor": 2431
+      },
+      "accessChecksMs": [
+        11,
+        9,
+        10,
+        11,
+        15,
+        9,
+        22
+      ],
+      "durableSavesMs": [
+        17
+      ],
+      "savedValues": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+        "claimed_outcome": "completed",
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValues": {
+        "optical_rx_dbm": -18.19,
+        "operational_test": "passed"
+      },
+      "expectedValuesVerified": true,
+      "assistantScreenText": [
+        "Voice AI",
+        "Visit summary",
+        "ASSISTANT SPEAKING",
+        "Next action and dependency status?",
+        "SPEAK YOUR ANSWER OR CHOOSE",
+        "Type an answer (optional)",
+        "0/1500",
+        "Repeat question",
+        "Not available / skip",
+        "Open draft",
+        "Voice active",
+        "Pause",
+        "Say repeat, skip, pause or open draft",
+        "2 answers saved · Voice stays on this phone"
+      ],
+      "speechSources": {
+        "actual_work": {
+          "sourceType": "speech",
+          "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "claimed_outcome": {
+          "fieldId": "claimed_outcome",
+          "value": "completed",
+          "sourceSpan": "The job is fully completed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "optical_rx_dbm": {
+          "fieldId": "optical_rx_dbm",
+          "value": -18.19,
+          "sourceSpan": "optical receive reading was minus 18.19 dBm",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        },
+        "operational_test": {
+          "fieldId": "operational_test",
+          "value": "passed",
+          "sourceSpan": "service test passed",
+          "sourceType": "speech",
+          "verificationStatus": "candidate",
+          "confidence": null,
+          "derivedFrom": "actual_work",
+          "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+        }
+      }
+    }
+  ],
+  "networkRequests": [
+    "auth/login"
+  ],
+  "harnessStatus": "25 measured turns completed; post-run empty-request-list assertion failed",
+  "postRunFailure": "An auth/login attempt was rejected by NoNetworkApi. The final assertion expected no attempted requests, although all transport was blocked. This occurred after every timing sample and did not invalidate their recorded boundaries. The assertion was subsequently corrected; the original log is retained.",
+  "summary": [
+    {
+      "case": "short-optical",
+      "label": "Short optical answer",
+      "samples": 5,
+      "expectedFieldMatches": 5,
+      "medianMs": 1198,
+      "minMs": 1110,
+      "maxMs": 1235,
+      "medianCaptureStopMs": 965,
+      "medianPlayRequestMs": 1107,
+      "medianPostSaveReplyPreparationMs": 43,
+      "medianPlayerStartMs": 91
+    },
+    {
+      "case": "short-choice",
+      "label": "Short choice (Passed)",
+      "samples": 5,
+      "expectedFieldMatches": 5,
+      "medianMs": 1158,
+      "minMs": 878,
+      "maxMs": 1227,
+      "medianCaptureStopMs": 983,
+      "medianPlayRequestMs": 1081,
+      "medianPostSaveReplyPreparationMs": 38,
+      "medianPlayerStartMs": 84
+    },
+    {
+      "case": "corrected-optical",
+      "label": "Spoken optical correction",
+      "samples": 5,
+      "expectedFieldMatches": 0,
+      "medianMs": 11276,
+      "minMs": 11053,
+      "maxMs": 11519,
+      "medianCaptureStopMs": 987,
+      "medianPlayRequestMs": 11184,
+      "medianPostSaveReplyPreparationMs": 10147,
+      "medianPlayerStartMs": 92
+    },
+    {
+      "case": "s1-summary",
+      "label": "Full S1 summary → Anything else?",
+      "samples": 5,
+      "expectedFieldMatches": 5,
+      "medianMs": 2391,
+      "minMs": 2271,
+      "maxMs": 2442,
+      "medianCaptureStopMs": 2196,
+      "medianPlayRequestMs": 2304,
+      "medianPostSaveReplyPreparationMs": 35,
+      "medianPlayerStartMs": 87
+    },
+    {
+      "case": "after-anything-else",
+      "label": "Added detail after Anything else? → next question",
+      "samples": 5,
+      "expectedFieldMatches": 5,
+      "medianMs": 2409,
+      "minMs": 2363,
+      "maxMs": 2522,
+      "medianCaptureStopMs": 2222,
+      "medianPlayRequestMs": 2317,
+      "medianPostSaveReplyPreparationMs": 38,
+      "medianPlayerStartMs": 92
+    }
+  ],
+  "host": {
+    "cpu": "Apple M2 Pro",
+    "memoryBytes": "17179869184",
+    "os": "macOS-27.0.1-arm64-arm-64bit",
+    "macos": "27.0.1"
+  },
+  "appVersion": "0.3.4+22",
+  "simulator": {
+    "name": "Field Assist Voice Timing",
+    "deviceType": "iPhone 17",
+    "os": "iOS 27.0",
+    "id": "037B382A-4CED-4EC7-917F-2B95EEDFA214"
+  },
+  "sourceSha256": {
+    "apps/mobile/integration_test/speech_to_speech_latency_test.dart": "ad658933773a448d916e9e870f240088cb5e14f6a28f72b069d652721e9be6c3",
+    "apps/mobile/lib/features/voice/streaming_capture.dart": "785091fbcb739ef420f643678ec846281b3fb9ffdfe1176ec81fb72cd7a51db4",
+    "apps/mobile/lib/features/voice/voice_audio.dart": "eafc0ebf5f171be510eb62fb14f5db946a213024dbb25ece7a34ff1c25b80467",
+    "apps/mobile/lib/features/voice/prompt_audio_cache.dart": "d62dd47264c7b4a3d52ea7cdda03a507d8c4b1bcd00576d4c9644147cdd20ef8",
+    "apps/mobile/lib/features/closure/closure_voice_assistant.dart": "827112cfc7415b1092b68826f34aa7cf5ad93145e6e2f2606d5c94e7a4d33794",
+    "apps/mobile/lib/features/closure/compact_closure_screen.dart": "f385bb84ad3c7d50d34be98d37c73b026729a2f17c41df545b277646b21ff867",
+    "apps/mobile/lib/features/closure/structured_visit_extraction.dart": "810065f37b19fcb2cdb2bb08795e61dc8c4f31a333c1953796c553ef37dc8feb",
+    "apps/mobile/lib/features/closure/question_voice.dart": "ff15838bf5568fc2aa7601c4c088b4da7abbd77af039587fb73010b0f696b3e7",
+    "apps/mobile/lib/app/app_controller.dart": "d314cba2e7ed908b80cd0e44c4f9cbf58631aa858d9e63ee753716efab4fb18f",
+    "apps/mobile/ios/Runner/AppDelegate.swift": "9eaee6679c83224eb8e621d0bb739ed421fda38bad5eac1a8e961aae4b3fa5c3",
+    "apps/mobile/assets/voice_questions/index.json": "786079a25a2d10129b09b2dad4ac35484559da07054f747849c1d97e67ce5dd6",
+    "apps/mobile/assets/offline_demo/bootstrap.json": "e88e26de269ccf98f407af48f9bccb9db148bde9e570878b1e4bd225b7c6b2b9",
+    "packages/field_voice/lib/field_voice.dart": "0103389532595b94b19b88b530f7be60f0c1511a7f87bfddc090c96311011f68",
+    "packages/field_voice/lib/moonshine.dart": "4fa2f710fce9614023a5b7931356cb405904fcf04e77722e4102b5df893606e1"
+  },
+  "harnessSourceSnapshot": ".local/speech-to-speech-primary-harness.dart",
+  "logSha256": "41cd1bb2595b7a85d994b9ee2f2f6c4bc3b82b5d7d9cb3b6e158ea4920cef1ad",
+  "preliminaryRuns": [
+    {
+      "log": ".local/speech-to-speech-ios-20261026-navigation-partial.log",
+      "sha256": "8b2eeedcbf2cc6da1b035f97af916e91ac39b58dd7d6a20467846127f6a2a233",
+      "samples": [
+        {
+          "case": "short-optical",
+          "iteration": 1,
+          "speechEndToVoicedReplyMs": 1923,
+          "eventsMs": {
+            "captureStopRequested": 1652,
+            "saveStarted": 1723,
+            "saveCompleted": 1761,
+            "playRequested": 1826,
+            "firstVoicedPlaybackCursor": 1923
+          },
+          "accessChecksMs": [
+            26,
+            11,
+            9,
+            9,
+            30,
+            10,
+            18
+          ],
+          "durableSavesMs": [
+            37
+          ],
+          "savedValues": {
+            "actual_work": "Installed the ONT in the living room using the existing duct.",
+            "claimed_outcome": "completed",
+            "optical_rx_dbm": -18.2
+          },
+          "expectedValuesVerified": true
+        }
+      ],
+      "scope": "Verified initial timing samples retained separately. The pilot stopped later because of test navigation or the original field-match assertion. These samples are not pooled with the complete repeat run."
+    },
+    {
+      "log": ".local/speech-to-speech-ios-20261026-correction-partial.log",
+      "sha256": "ac31ac2e48ea64d9ceb8d360475d09a26452ece155b482bb9786a9608f13d1ba",
+      "samples": [
+        {
+          "case": "short-optical",
+          "iteration": 1,
+          "speechEndToVoicedReplyMs": 1173,
+          "eventsMs": {
+            "captureStopRequested": 921,
+            "saveStarted": 985,
+            "saveCompleted": 1033,
+            "playRequested": 1085,
+            "firstVoicedPlaybackCursor": 1173
+          },
+          "accessChecksMs": [
+            19,
+            10,
+            9,
+            9,
+            36,
+            9,
+            30
+          ],
+          "durableSavesMs": [
+            47
+          ],
+          "savedValues": {
+            "actual_work": "Installed the ONT in the living room using the existing duct.",
+            "claimed_outcome": "completed",
+            "optical_rx_dbm": -18.2
+          },
+          "expectedValuesVerified": true
+        },
+        {
+          "case": "short-choice",
+          "iteration": 1,
+          "speechEndToVoicedReplyMs": 949,
+          "eventsMs": {
+            "captureStopRequested": 724,
+            "saveStarted": 783,
+            "saveCompleted": 814,
+            "playRequested": 858,
+            "firstVoicedPlaybackCursor": 949
+          },
+          "accessChecksMs": [
+            11,
+            12,
+            10,
+            9,
+            25,
+            10,
+            27
+          ],
+          "durableSavesMs": [
+            30
+          ],
+          "savedValues": {
+            "actual_work": "Installed the ONT in the living room using the existing duct.",
+            "claimed_outcome": "completed",
+            "optical_rx_dbm": -18.2,
+            "operational_test": "passed"
+          },
+          "expectedValuesVerified": true
+        }
+      ],
+      "scope": "Verified initial timing samples retained separately. The pilot stopped later because of test navigation or the original field-match assertion. These samples are not pooled with the complete repeat run."
+    }
+  ],
+  "limitations": [
+    "Synthetic clean speech; microphone acquisition is replaced by real-time PCM replay.",
+    "Native AVAudioPlayer cursor detects output onset. Actual speaker, acoustic route/buffering and microphone-driver stop latency are not measured.",
+    "Input/output voiced frames use RMS 0.004 over 20 ms; native output polling is every 10 ms. These define a software onset estimate, not sample-accurate acoustic timing.",
+    "iOS simulator debug on an Apple Silicon Mac. No physical iPhone, Android phone or Android emulator measurement in this run.",
+    "Models are resident after normal offline boot/smoke checks and synthetic fixture generation. Application/model startup is excluded.",
+    "Default voice/rate and the normal prepared-question/cache path. Uncached dynamic TTS, alternative voices/rates and site noise may behave differently.",
+    "Small scenario-specific sample counts; observed ranges are not service guarantees or population tail-latency estimates."
+  ],
+  "postRunHarnessValidation": {
+    "status": "passed",
+    "samples": [
+      {
+        "case": "short-optical",
+        "iteration": 1,
+        "speechEndToVoicedReplyMs": 1194,
+        "eventsMs": {
+          "captureStopRequested": 918,
+          "saveStarted": 992,
+          "saveCompleted": 1034,
+          "playRequested": 1101,
+          "firstVoicedPlaybackCursor": 1194
+        },
+        "accessChecksMs": [
+          19,
+          11,
+          10,
+          19,
+          36,
+          9,
+          22
+        ],
+        "durableSavesMs": [
+          42
+        ],
+        "savedValues": {
+          "actual_work": "Installed the ONT in the living room using the existing duct.",
+          "claimed_outcome": "completed",
+          "optical_rx_dbm": -18.2
+        },
+        "expectedValues": {
+          "optical_rx_dbm": -18.2
+        },
+        "expectedValuesVerified": true,
+        "assistantScreenText": [
+          "Voice AI",
+          "Visit summary",
+          "ASSISTANT SPEAKING",
+          "Recorded operational / activation test result? Passed, Failed, Not tested.",
+          "SPEAK YOUR ANSWER OR CHOOSE",
+          "Passed",
+          "Failed",
+          "Not tested",
+          "Repeat question",
+          "Not available / skip",
+          "Open draft",
+          "Voice active",
+          "Pause",
+          "Say repeat, skip, pause or open draft",
+          "1 answer saved · Voice stays on this phone"
+        ],
+        "speechSources": {
+          "actual_work": {
+            "sourceType": "manual",
+            "sourceSpan": "Installed the ONT in the living room using the existing duct."
+          },
+          "claimed_outcome": {
+            "sourceType": "manual",
+            "sourceSpan": "completed"
+          },
+          "optical_rx_dbm": {
+            "fieldId": "optical_rx_dbm",
+            "value": -18.2,
+            "sourceSpan": "minus 18.2 dBm.",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "question": "What optical receive reading did you measure, in dBm? Include minus if the reading is negative."
+          }
+        }
+      },
+      {
+        "case": "short-choice",
+        "iteration": 1,
+        "speechEndToVoicedReplyMs": 1112,
+        "eventsMs": {
+          "captureStopRequested": 907,
+          "saveStarted": 965,
+          "saveCompleted": 990,
+          "playRequested": 1030,
+          "firstVoicedPlaybackCursor": 1112
+        },
+        "accessChecksMs": [
+          10,
+          10,
+          10,
+          12,
+          9,
+          8,
+          25
+        ],
+        "durableSavesMs": [
+          25
+        ],
+        "savedValues": {
+          "actual_work": "Installed the ONT in the living room using the existing duct.",
+          "claimed_outcome": "completed",
+          "optical_rx_dbm": -18.2,
+          "operational_test": "passed"
+        },
+        "expectedValues": {
+          "operational_test": "passed"
+        },
+        "expectedValuesVerified": true,
+        "assistantScreenText": [
+          "Voice AI",
+          "Visit summary",
+          "ASSISTANT SPEAKING",
+          "Next action and dependency status?",
+          "SPEAK YOUR ANSWER OR CHOOSE",
+          "Type an answer (optional)",
+          "0/1500",
+          "Repeat question",
+          "Not available / skip",
+          "Open draft",
+          "Voice active",
+          "Pause",
+          "Say repeat, skip, pause or open draft",
+          "1 answer saved · Voice stays on this phone"
+        ],
+        "speechSources": {
+          "actual_work": {
+            "sourceType": "manual",
+            "sourceSpan": "Installed the ONT in the living room using the existing duct."
+          },
+          "claimed_outcome": {
+            "sourceType": "manual",
+            "sourceSpan": "completed"
+          },
+          "optical_rx_dbm": {
+            "sourceType": "manual",
+            "sourceSpan": "-18.2"
+          },
+          "operational_test": {
+            "sourceType": "speech",
+            "sourceSpan": "Past.",
+            "question": "Recorded operational / activation test result? Passed, Failed, Not tested."
+          }
+        }
+      },
+      {
+        "case": "corrected-optical",
+        "iteration": 1,
+        "speechEndToVoicedReplyMs": 13952,
+        "eventsMs": {
+          "captureStopRequested": 994,
+          "saveStarted": 1071,
+          "saveCompleted": 1112,
+          "playRequested": 13849,
+          "firstVoicedPlaybackCursor": 13952
+        },
+        "accessChecksMs": [
+          22,
+          12,
+          19,
+          34,
+          10,
+          12
+        ],
+        "durableSavesMs": [
+          41
+        ],
+        "savedValues": {
+          "actual_work": "Installed the ONT in the living room using the existing duct.",
+          "claimed_outcome": "completed"
+        },
+        "expectedValues": {
+          "optical_rx_dbm": -18.19
+        },
+        "expectedValuesVerified": false,
+        "assistantScreenText": [
+          "Voice AI",
+          "Visit summary",
+          "ASSISTANT SPEAKING",
+          "Please say just the measured receive value, including minus and the decimal digits. I will confirm any unclear reading.",
+          "I heard: “The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.”",
+          "SPEAK YOUR ANSWER OR CHOOSE",
+          "Enter a reading (optional)",
+          "dBm",
+          "0/40",
+          "Repeat question",
+          "Not measured",
+          "Open draft",
+          "Voice active",
+          "Pause",
+          "Say repeat, skip, pause or open draft",
+          "Your voice stays on this phone"
+        ],
+        "speechSources": {
+          "actual_work": {
+            "sourceType": "manual",
+            "sourceSpan": "Installed the ONT in the living room using the existing duct."
+          },
+          "claimed_outcome": {
+            "sourceType": "manual",
+            "sourceSpan": "completed"
+          },
+          "optical_rx_dbm": {
+            "fieldId": "optical_rx_dbm",
+            "value": null,
+            "sourceSpan": "The reading is 18.2. No, sorry. The final reading is minus 18.19 dBm.",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "ambiguityReason": "Uncertain or conflicting statement; ask the engineer."
+          }
+        }
+      },
+      {
+        "case": "s1-summary",
+        "iteration": 1,
+        "speechEndToVoicedReplyMs": 2318,
+        "eventsMs": {
+          "captureStopRequested": 2101,
+          "saveStarted": 2165,
+          "saveCompleted": 2188,
+          "playRequested": 2212,
+          "firstVoicedPlaybackCursor": 2318
+        },
+        "accessChecksMs": [
+          14,
+          10,
+          11,
+          10,
+          18,
+          9,
+          9
+        ],
+        "durableSavesMs": [
+          22
+        ],
+        "savedValues": {
+          "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+          "claimed_outcome": "completed",
+          "optical_rx_dbm": -18.2,
+          "operational_test": "passed"
+        },
+        "expectedValues": {
+          "optical_rx_dbm": -18.2,
+          "claimed_outcome": "completed",
+          "operational_test": "passed"
+        },
+        "expectedValuesVerified": true,
+        "assistantScreenText": [
+          "Voice AI",
+          "Visit summary",
+          "ASSISTANT SPEAKING",
+          "Anything else?",
+          "I’ll speak first, then open the microphone.",
+          "Nothing else · Continue",
+          "SPEAK YOUR ANSWER OR CHOOSE",
+          "Repeat question",
+          "Skip summary",
+          "Open draft",
+          "Voice active",
+          "Pause",
+          "Say repeat, skip, pause or open draft",
+          "1 answer saved · Voice stays on this phone"
+        ],
+        "speechSources": {
+          "actual_work": {
+            "sourceType": "speech",
+            "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+            "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+          },
+          "claimed_outcome": {
+            "fieldId": "claimed_outcome",
+            "value": "completed",
+            "sourceSpan": "The job is fully completed",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+          },
+          "optical_rx_dbm": {
+            "fieldId": "optical_rx_dbm",
+            "value": -18.2,
+            "sourceSpan": "optical receive reading was minus 18.2 dBm",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+          },
+          "operational_test": {
+            "fieldId": "operational_test",
+            "value": "passed",
+            "sourceSpan": "service test passed",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment."
+          }
+        }
+      },
+      {
+        "case": "after-anything-else",
+        "iteration": 1,
+        "speechEndToVoicedReplyMs": 2414,
+        "eventsMs": {
+          "captureStopRequested": 2223,
+          "saveStarted": 2275,
+          "saveCompleted": 2294,
+          "playRequested": 2333,
+          "firstVoicedPlaybackCursor": 2414
+        },
+        "accessChecksMs": [
+          10,
+          9,
+          9,
+          10,
+          9,
+          9,
+          9
+        ],
+        "durableSavesMs": [
+          18
+        ],
+        "savedValues": {
+          "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+          "claimed_outcome": "completed",
+          "optical_rx_dbm": -18.19,
+          "operational_test": "passed"
+        },
+        "expectedValues": {
+          "optical_rx_dbm": -18.19,
+          "operational_test": "passed"
+        },
+        "expectedValuesVerified": true,
+        "assistantScreenText": [
+          "Voice AI",
+          "Visit summary",
+          "ASSISTANT SPEAKING",
+          "Next action and dependency status?",
+          "SPEAK YOUR ANSWER OR CHOOSE",
+          "Type an answer (optional)",
+          "0/1500",
+          "Repeat question",
+          "Not available / skip",
+          "Open draft",
+          "Voice active",
+          "Pause",
+          "Say repeat, skip, pause or open draft",
+          "2 answers saved · Voice stays on this phone"
+        ],
+        "speechSources": {
+          "actual_work": {
+            "sourceType": "speech",
+            "sourceSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed.",
+            "interpretedSpan": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+          },
+          "claimed_outcome": {
+            "fieldId": "claimed_outcome",
+            "value": "completed",
+            "sourceSpan": "The job is fully completed",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+          },
+          "optical_rx_dbm": {
+            "fieldId": "optical_rx_dbm",
+            "value": -18.19,
+            "sourceSpan": "optical receive reading was minus 18.19 dBm",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+          },
+          "operational_test": {
+            "fieldId": "operational_test",
+            "value": "passed",
+            "sourceSpan": "service test passed",
+            "sourceType": "speech",
+            "verificationStatus": "candidate",
+            "confidence": null,
+            "derivedFrom": "actual_work",
+            "derivedSummary": "I installed the ONT in the living room. I used the existing duct for the fiber route. The job is fully completed.\nThe optical receive reading was minus 18.19 dBm. The service test passed."
+          }
+        }
+      }
+    ],
+    "measuredAt": "2026-10-26T18:29:38.090989Z",
+    "blockedNetworkAttempts": [
+      "auth/login"
+    ],
+    "log": ".local/speech-to-speech-ios-validation-20261026.log",
+    "logSha256": "6434c1dd5f99b6cd88ebda21ff7aaff060e01912499ebe50aa8635ff83472521",
+    "harnessSha256": "7542964b632c6c59bcb579d13b45fab9d09fa5b6f0d93b033526b44d8042879f",
+    "scope": "One additional turn per scenario after correcting only the post-run attempted-request assertion. These five validation turns are retained separately, not pooled with the primary 25."
+  },
+  "combinedSummary": [
+    {
+      "case": "short-optical",
+      "label": "Short optical answer",
+      "samples": 6,
+      "medianMs": 1196.0,
+      "minMs": 1110,
+      "maxMs": 1235,
+      "expectedFieldMatches": 6
+    },
+    {
+      "case": "short-choice",
+      "label": "Short choice (Passed)",
+      "samples": 6,
+      "medianMs": 1135.0,
+      "minMs": 878,
+      "maxMs": 1227,
+      "expectedFieldMatches": 6
+    },
+    {
+      "case": "corrected-optical",
+      "label": "Spoken optical correction",
+      "samples": 6,
+      "medianMs": 11320.5,
+      "minMs": 11053,
+      "maxMs": 13952,
+      "expectedFieldMatches": 0
+    },
+    {
+      "case": "s1-summary",
+      "label": "Full S1 summary → Anything else?",
+      "samples": 6,
+      "medianMs": 2360.5,
+      "minMs": 2271,
+      "maxMs": 2442,
+      "expectedFieldMatches": 6
+    },
+    {
+      "case": "after-anything-else",
+      "label": "Added detail after Anything else? → next question",
+      "samples": 6,
+      "medianMs": 2411.5,
+      "minMs": 2363,
+      "maxMs": 2522,
+      "expectedFieldMatches": 6
+    }
+  ]
+}

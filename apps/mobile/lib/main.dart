@@ -35,6 +35,10 @@ class _FieldAssistAppState extends ConsumerState<FieldAssistApp>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    final controller = ref.read(appProvider.notifier);
+    if (controller.demoAccess.matches(ref.read(appProvider).user?.email)) {
+      return;
+    }
     if ([
           AppLifecycleState.paused,
           AppLifecycleState.detached,

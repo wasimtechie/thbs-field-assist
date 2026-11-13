@@ -1,0 +1,13 @@
+{
+  "status": "Training setup only; no adapted checkpoint has been produced",
+  "baseModel": "moonshine-ai/moonshine-streaming-small",
+  "baseRevision": "2c036506f23a09c18df5a50057599ba6d9280999",
+  "runtimeVersion": "0.1.5",
+  "trainerRepository": "moonshine-ai/moonshine",
+  "trainerRevision": "234f60faa0eb388b01cdf7e60aca232af37aefda",
+  "trainerCli": "language-bindings/python/src/moonshine_voice/lora/__main__.py",
+  "trainerSource": "https://github.com/moonshine-ai/moonshine/blob/234f60faa0eb388b01cdf7e60aca232af37aefda/language-bindings/python/src/moonshine_voice/lora/train.py",
+  "documentation": "https://moonshine-voice.readthedocs.io/en/stable/models/domain-customization/",
+  "accents": ["en-IN", "en-GB"],
+  "deployment": "Merge adapter, export and quantize for the existing offline runtime; qualify both phones before replacement"
+}

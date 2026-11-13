@@ -10,6 +10,10 @@ The requested THBS demo accounts, role matrix and management workflow are docume
 
 Clients, squads, Sales/Team Lead access, limited engineer dashboard, private/team messaging, fuzzy colleague search, in-app alerts and encrypted message/response queues are described in [Client-to-team demo](docs/design/client-team-messaging.md). The current manual Android APK is build **2014**, including scan-first cable guidance, confirmed numeric estimates, populated voice forms, the Android native voice-library repair, notification-friendly audio focus, automatic speech completion and the location-permission preflight. Its sign-in Connection settings can use a reachable server or shared local Wi-Fi address without USB. New dashboard demo logins are `lead1@thbs.com`, `lead2@thbs.com` and `sales@thbs.com`, password `123456`. Alerts refresh while the app is open; closed-app push is not configured.
 
+## Openreach FTTP demonstration
+
+Run `npm run demo:fttp` after local database setup, then sign in to Flutter with `fttp@fieldassist.demo` / `123456`. Two synthetic UK assignments demonstrate a completed installation and a blocked-duct handover, guided stages, encrypted photo evidence, completion gates, offline delivery and supervisor review. See [the presentation rehearsal](docs/demo/openreach-fttp.md) for setup, credentials, evidence limits and verification. This demo is not connected to or endorsed by Openreach.
+
 ## Local setup
 
 Requirements: Node 20.20 or newer, npm, PostgreSQL 17 or Docker, Flutter 3.44.8 / Dart 3.12.2. iOS requires Xcode, CocoaPods, and a physical iPhone for acceptance. Android requires JDK 21, SDK 36, NDK 28.2.13676358, and a physical ARM64 phone for acceptance. Keep several GB free for native build tools.
@@ -84,6 +88,10 @@ This app has no role-switch control. Sign in with an assigned engineer account, 
 
 ## Offline voice assets
 
+The current phone demo is **0.3.0**, with Moonshine Small Streaming English, embedded Silero VAD, source-validated local Needle3 extraction and fixed-speaker Kokoro. Qwen and its native runtime are excluded. The signed ARM64 debug APK is **453,089,062 bytes (453.1 MB)**, down **47.75%** from 0.2.2. It retains the summary capture, added-detail merging and reading-confirmation fixes. Build number **18** (versionCode **2018**) upgrades the previous demo without uninstalling. Setup, test speech, storage requirements and the signed demo access window are in the [current voice demo guide](docs/demo/voice-demo.md).
+
+### Historical voice baseline
+
 An accuracy repair is now verified in source and awaits the next explicitly requested APK. It restores full captured audio and the pre-2014 recorder configuration, allows a natural pause and asks for clarification when completion speech is unclear. All 156 current Flutter tests, analysis and five native generated-speech cases pass; physical-phone retesting remains pending. The installer and phone still have **2014**, which has a reported recognition regression. See [accuracy repair evidence](docs/evidence/voice-accuracy-repair.json).
 
 Build **2014** includes automatic completion from microphone PCM, a separate cached Saved acknowledgment, notification ducking that retains capture and permission-before-GPS location confirmation. It retains the Android audio-focus handoff repair, preventing the recorder from interrupting its own speech session when listening starts. Shared-session callbacks still pause for external interruptions and headset removal. All 150 Flutter tests pass and analysis is clean. It also includes the earlier voice-library repair: `libfield_voice.so` declares `libm.so` and its source linker rejects undefined symbols. The packaged APK passes `python3 scripts/check-android-voice-linkage.py Field-Assist-Android-Test.apk`, original certificate continuity, ARM64-only packaging and 16 KiB ZIP/ELF checks. Full physical-phone microphone/camera acceptance remains a separate rehearsal. Initial sign-in/provisioning requires a reachable backend; no hosted server is configured. Install over the existing app to retain local data rather than uninstalling.
@@ -156,3 +164,9 @@ No public hosting, production adapters, real customer data, messaging, or produc
 Project boards, profile avatars and site time walkthrough: [guide](docs/design/boards-profiles-time.md).
 
 Connected dummy-data walkthrough: [client → squad → lead → engineer → report → review](docs/demo.md#connected-sample-data-thbs-walkthrough). Includes 12 jobs across four boards, original report history, closed site visits and clearly labelled sample conversations. Re-run `node --import tsx scripts/seed-connected-demo.ts` locally without duplicating existing fixtures. Generate an APK only when explicitly requested by the user.
+
+### Manager-defined FTTP closure MVP
+
+The five-scenario closure assistant and prepared 15-type catalogue are described in [the presentation runbook](docs/demo/closure-mvp.md). Seed the separate engineer and seven stage-specific assignments with `npm run demo:closure`; validate the local API with `npm run test:closure`.
+
+The offline phone voice workflow, prepared VibeVoice questions and VibeVoice/Ming evaluation are covered in [the voice demonstration guide](docs/demo/voice-demo.md).

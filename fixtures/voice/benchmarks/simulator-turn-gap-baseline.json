@@ -1,0 +1,20 @@
+{
+  "scope": "iOS simulator debug; realtime generated PCM into the production meter and voice assistant, real Keychain/ES256 checks, SQLCipher save and native playback. First nonzero output-meter frame, not an acoustic microphone-to-speaker or physical-phone measurement.",
+  "answerEndToNextSpeechMs": 1044,
+  "recognitionMs": 39,
+  "accessCheckMs": [
+    10,
+    12,
+    9,
+    8,
+    23,
+    9,
+    55
+  ],
+  "encryptedSaveMs": 2,
+  "audioConfigureMs": 0,
+  "negativeReadingSaved": true,
+  "status": "Baseline of current fast six-field assistant; no additional runtime changes in this check.",
+  "source": "apps/mobile/integration_test/voice_turn_gap_test.dart",
+  "sampleCount": 1
+}

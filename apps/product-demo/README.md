@@ -1,5 +1,11 @@
 # THBS Field Assist product film
 
+The current Player opens the **96-second voice promo**. Its source, nine Snapcn
+animations, build commands, claim limits and delivery files are documented in
+[voice-promo/README.md](voice-promo/README.md). Open `?film=product` for the earlier
+full walkthrough described below. `npm run promo:render` exports the voice promo;
+the existing `npm run render` continues to export the earlier walkthrough.
+
 A 2:42, 1920 × 1080, 30 fps narrated product walkthrough with 13 navigable chapters and visible English captions. Uses the requested Snapcn **Orb Swarm**, **Channel Thread**, **Phone Frame**, and **Word Wheel** as owned Remotion source. The original purple/teal palette is retained. This standalone project does not add runtime video dependencies to the dashboard or Flutter app.
 
 ## Watch and edit

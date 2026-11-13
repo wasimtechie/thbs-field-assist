@@ -1,0 +1,12 @@
+{
+  "repo": "unsloth/Qwen3-0.6B-GGUF",
+  "revision": "50968a4468ef4233ed78cd7c3de230dd1d61a56b",
+  "file": "Qwen3-0.6B-Q4_K_M.gguf",
+  "source": "https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/50968a4468ef4233ed78cd7c3de230dd1d61a56b/Qwen3-0.6B-Q4_K_M.gguf",
+  "relativePath": "visit-qwen3-0.6b-q4.gguf",
+  "bytes": 396705472,
+  "sha256": "ac2d97712095a558e31573f62f466a3f9d93990898b0ec79d7c974c1780d524a",
+  "licence": "Apache-2.0",
+  "runtimePackage": "llamadart-0.16.0",
+  "nativeRuntime": "llamadart-native-v0.7.0-2"
+}

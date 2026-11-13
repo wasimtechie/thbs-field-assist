@@ -1,0 +1,104 @@
+{
+  "generatedAt": "2026-10-21T20:28:31.365191+00:00",
+  "units": "Exact bytes. Display MB = bytes / 1,000,000. Payload sums are not certified installed/store download sizes.",
+  "voiceRoute": "on-device only; prepared VibeVoice recordings plus local Whistle, Needle 3 and Kokoro",
+  "assetManifestSha256": "2addd579a77c9c69e52c4f5b5fb4fd7328c3e938689a4d03bbfc457529b1c511",
+  "offlineVoiceFiles": {
+    "count": 362,
+    "bytesByPurpose": {
+      "phonemizer": 18003144,
+      "kokoro": 134186977,
+      "tokenizer": 1078,
+      "voices": 5755904,
+      "needle3": 35335380,
+      "whistle": 16919407
+    },
+    "totalBytes": 210201890
+  },
+  "preparedQuestionPack": {
+    "bytes": 21822158,
+    "questions": 79,
+    "conversationPrompts": 9,
+    "recordings": 88,
+    "alreadyIncludedInEachBuild": true,
+    "fullVibeVoiceModelShipped": false
+  },
+  "android": {
+    "release": {
+      "buildType": "release sizing artifact",
+      "artifact": "field-assist-offline-release-unsigned.apk",
+      "fileBytes": 103112898,
+      "zipContentsLogicalBytes": 103500357,
+      "sha256": "24d7f9ff04ed572e15021e1e7730a7f18326caa94853a3a3711fe127362c28d3",
+      "architectures": [
+        "arm64-v8a"
+      ],
+      "signedForInstallation": false,
+      "physicalPhoneTested": false,
+      "preparedRecordings": 88,
+      "interaction": "hands-free and optional answer choices; automatic draft advancement"
+    },
+    "debug": {
+      "buildType": "debug local demo",
+      "artifact": "field-assist-closure-demo.apk",
+      "fileBytes": 218504473,
+      "zipContentsLogicalBytes": 261436359,
+      "sha256": "4926290205fdf276fe6e2a6147e0fcb5eab63750df5209c98ca5fe91c8881527",
+      "architectures": [
+        "arm64-v8a"
+      ],
+      "signedForInstallation": true,
+      "physicalPhoneTested": false,
+      "preparedRecordings": 88,
+      "interaction": "hands-free and optional answer choices; automatic draft advancement"
+    }
+  },
+  "ios": {
+    "releaseUnsignedDeviceBundle": {
+      "buildType": "unsigned release device bundle",
+      "bundleId": "dev.fieldassist.fieldAssist",
+      "minimumOS": "18.0",
+      "preparedRecordings": 88,
+      "bundleLogicalBytes": 81076836,
+      "compiledDartSha256": "6254ae447db7604fa44242c39ee2777626990ecdd94bfce3409ca138e9cd3abd",
+      "physicalPhoneTested": false,
+      "signedForInstallation": false,
+      "voiceRoute": "offline only",
+      "interaction": "hands-free and optional answer choices; automatic draft advancement"
+    }
+  },
+  "totals": {
+    "androidReleaseApkPlusVoiceFilesBytes": 313314788,
+    "androidReleaseZipContentsPlusVoiceFilesBytes": 313702247,
+    "androidDebugApkPlusVoiceFilesBytes": 428706363,
+    "androidDebugZipContentsPlusVoiceFilesBytes": 471638249,
+    "iosReleaseBundlePlusVoiceFilesLogicalBytes": 291278726
+  },
+  "runtimeObservations": {
+    "scope": "Current user-driven iOS simulator debug app, 12 one-second RSS snapshots; not a controlled voice benchmark, lifetime peak, physical-device RAM limit or release measurement. Same offline inference stack, observed before refreshing the simulator with the route removal.",
+    "earlierRssSnapshotBytes": 604733440,
+    "laterSampleMinimumRssBytes": 268582912,
+    "laterSampleMaximumRssBytes": 289259520,
+    "sampleCount": 12,
+    "captureTime": "2026-10-21T19:21:45.844517+00:00",
+    "physicalPhonePeakMeasured": false,
+    "refreshedSimulatorStartupRssSnapshotBytes": 531939328,
+    "refreshedSnapshotScope": "Updated offline-only debug build just after simulator launch; no controlled inference workload.",
+    "nativeSimulatorTestRssSnapshotBytes": 1247444992,
+    "nativeSnapshotScope": "One RSS sample during native automatic-advance replay verification before the prepared-acknowledgement optimisation with the same Whistle/Needle/Kokoro stack: 1,218,208 KiB. Not a lifetime peak or physical-device release measurement."
+  },
+  "provisionalPlanning": {
+    "appAndWorkingDataAllowanceBytes": 1000000000,
+    "freeSpaceForInstallAndUpdatesBytes": 2000000000,
+    "appWorkingMemoryHeadroomBytes": 1500000000,
+    "android": "ARM64, Android 12+; target 6 GB RAM or more, 8 GB for extra headroom",
+    "ios": "iOS 18+; target iPhone 13 / A15 or newer",
+    "certifiedMinimumDeviceMatrix": false
+  },
+  "limits": [
+    "No physical-device peak RAM, thermals, battery endurance or latency qualification.",
+    "Android installed storage includes OS-managed data and is not the same as ZIP contents.",
+    "iOS release bundle is unsigned; no App Store thinning/download size was measured.",
+    "Model updates, retained old packages, encrypted reports and evidence add variable storage."
+  ]
+}

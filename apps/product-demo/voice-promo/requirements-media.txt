@@ -1,0 +1,2 @@
+# Full FFmpeg for raw-frame checks; installed only in the local media environment.
+imageio-ffmpeg==0.6.0

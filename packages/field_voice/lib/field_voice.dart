@@ -9,6 +9,19 @@ import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 import 'package:sherpa_onnx/sherpa_onnx.dart' as sherpa;
 import 'field_voice_bindings_generated.dart' as native;
+import 'moonshine.dart';
+import 'streaming_speech.dart';
+import 'speech_voices.dart';
+export 'streaming_speech.dart';
+export 'speech_voices.dart';
+part 'needle_visit_extractor.dart';
+
+// Default speech-only profile for prepared prompts and live on-device speech.
+// Speaker IDs are for the pinned English v0.19 package, not Kokoro v1.x.
+const attentiveSpeechModel = 'kokoro-int8-en-v0_19';
+const attentiveSpeechVoice = 'bm_george';
+const attentiveSpeechSpeakerId = 9;
+const attentiveSpeechSpeed = 1.05;
 
 class VoiceFailure implements Exception {
   const VoiceFailure(this.code, this.message);
@@ -43,7 +56,38 @@ abstract interface class SpeechSynthesizer {
 /// The pinned API cannot unload weights. Retain buffers until process exit;
 /// unload resets conversation/TTS; activating new weights requires a restart.
 class FieldVoice
-    implements SpeechRecognizer, FieldExtractor, SpeechSynthesizer {
+    implements
+        SpeechRecognizer,
+        FieldExtractor,
+        SpeechSynthesizer,
+        StreamingSpeechRecognizer {
+  String _speechVoiceId = attentiveSpeechVoice;
+  String get speechVoiceId => _speechVoiceId;
+  void selectSpeechVoice(String id) {
+    if (offlineSpeechVoice(id) == null) {
+      throw ArgumentError.value(id, 'voiceId');
+    }
+    _speechVoiceId = id;
+  }
+
+  MoonshineRecognizer? _moonshine;
+  FieldExtractor? _summaryExtractor;
+  FieldExtractor get summaryExtractor =>
+      _summaryExtractor ??= NeedleVisitExtractor(this);
+  bool _streamingReady = false;
+  @override
+  bool get streamingAvailable => _streamingReady;
+  @override
+  Future<StreamingSpeechTurn> startSpeechTurn() {
+    if (!_streamingReady) {
+      throw const VoiceFailure(
+        'NOT_LOADED',
+        'Prepare offline streaming speech first.',
+      );
+    }
+    return _moonshine!.start();
+  }
+
   SendPort? _port;
   ReceivePort? _responses;
   final _pending = <int, Completer<Object?>>{};
@@ -92,21 +136,45 @@ class FieldVoice
   }
 
   Future<void> load(String directory) async {
+    final streaming = await File(
+      '$directory/moonshine-small-streaming/streaming_config.json',
+    ).exists();
+    if (streaming) {
+      _moonshine ??= MoonshineRecognizer();
+      await _moonshine!.load(
+        '$directory/moonshine-small-streaming',
+        libraryPath: Platform.environment['FIELD_ASSIST_MOONSHINE_LIBRARY'],
+      );
+    }
     await _call('load', {'directory': directory});
+    _streamingReady = streaming;
   }
 
   Future<void> unload() async {
     cancel();
+    _streamingReady = false;
+    await _moonshine?.unload();
     await _call('reset', {});
   }
 
   void cancel() {
     _generation++;
+    _moonshine?.cancel();
   }
 
   @override
-  Future<String> transcribe(Float32List pcm16k) async =>
-      await _call('transcribe', {'pcm': pcm16k}) as String;
+  Future<String> transcribe(Float32List pcm16k) async {
+    if (!_streamingReady) {
+      return await _call('transcribe', {'pcm': pcm16k}) as String;
+    }
+    final generation = _generation;
+    final text = await _moonshine!.transcribe(pcm16k);
+    if (generation != _generation) {
+      throw const VoiceFailure('CANCELLED', 'Late speech result discarded.');
+    }
+    return text;
+  }
+
   @override
   Future<Map<String, dynamic>> extract(
     String transcript,
@@ -120,9 +188,24 @@ class FieldVoice
           })
           as Map<String, dynamic>;
   @override
-  Future<SynthesizedAudio> synthesize(String text, {double speed = 1}) async {
+  Future<SynthesizedAudio> synthesize(String text, {double speed = 1}) =>
+      synthesizeVoice(text, voiceId: _speechVoiceId, speed: speed);
+
+  Future<SynthesizedAudio> synthesizeVoice(
+    String text, {
+    required String voiceId,
+    double speed = 1,
+  }) async {
+    if (offlineSpeechVoice(voiceId) == null) {
+      throw ArgumentError.value(voiceId, 'voiceId');
+    }
     final audio =
-        await _call('synthesize', {'text': text, 'speed': speed}) as Map;
+        await _call('synthesize', {
+              'text': text,
+              'speed': speed,
+              'voiceId': voiceId,
+            })
+            as Map;
     return SynthesizedAudio(
       audio['samples'] as Float32List,
       audio['sampleRate'] as int,
@@ -194,7 +277,13 @@ void _worker(SendPort ready) async {
             );
           }
           if (loadedDirectory == null) {
-            for (final name in ['needle3.cact', 'whistle.cact']) {
+            final streaming = await File(
+              '$directory/moonshine-small-streaming/streaming_config.json',
+            ).exists();
+            for (final name in [
+              'needle3.cact',
+              if (!streaming) 'whistle.cact',
+            ]) {
               final bytes = await File('$directory/$name').readAsBytes();
               final pointer = calloc<Uint8>(bytes.length);
               pointer.asTypedList(bytes.length).setAll(0, bytes);
@@ -290,10 +379,19 @@ void _worker(SendPort ready) async {
               'Install and verify the offline spoken-question package first.',
             );
           }
+          final voice = offlineSpeechVoice(
+            args['voiceId'] as String? ?? attentiveSpeechVoice,
+          );
+          if (voice == null) {
+            throw const VoiceFailure(
+              'INVALID_VOICE',
+              'Choose an installed voice.',
+            );
+          }
           final audio = tts.generate(
             text: args['text'] as String,
-            sid: 0,
-            speed: (args['speed'] as num).toDouble(),
+            sid: voice.speakerId,
+            speed: (args['speed'] as num).toDouble() * attentiveSpeechSpeed,
           );
           result = {
             'samples': Float32List.fromList(audio.samples),

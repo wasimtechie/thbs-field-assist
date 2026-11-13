@@ -5,6 +5,7 @@ export const workOrderInputSchema = z.object({
   title:z.string().trim().min(3).max(120),
   site:z.string().trim().min(2).max(180),
   instructions:z.string().trim().max(2000).default(''),
+  closureContext:z.object({scenario:z.enum(['S1','S2','S3','S4','S5']),workStage:z.enum(['survey','design','civils','fibre','distribution','network_acceptance','final_provision'])}).strict().optional(),
   assetReference:z.string().trim().max(120).default(''),
   boardId:z.uuid().nullable().optional(), assigneeId:z.uuid(), clientId:z.uuid().nullable().optional(), priority:z.enum(workOrderPriorities), dueAt:z.iso.datetime(),
 }).strict();

@@ -1,0 +1,656 @@
+{
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "durationInFrames": 2880,
+  "durationSeconds": 96,
+  "scenes": [
+    {
+      "id": "hook",
+      "label": "The engineer's moment",
+      "from": 0,
+      "durationInFrames": 180,
+      "seconds": 6,
+      "lines": [
+        {
+          "text": "Your engineer knows the work. Let the record catch up.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 3.2293,
+          "file": "fae991066018b0b76bf5661adfbf183551d6706f71a300775b35bbabddebb2b8.wav"
+        }
+      ]
+    },
+    {
+      "id": "reveal",
+      "label": "Meet the voice assistant",
+      "from": 180,
+      "durationInFrames": 240,
+      "seconds": 8,
+      "lines": [
+        {
+          "text": "Field Assist. Voice-guided reporting, designed for the applications your engineers already use.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 5.398,
+          "file": "448afe64075407b636c1c9ef6140128b7eca0ca224b4002fb555da471b5ba8f4.wav"
+        }
+      ]
+    },
+    {
+      "id": "capture",
+      "label": "Speak once, fill the record",
+      "from": 420,
+      "durationInFrames": 480,
+      "seconds": 16,
+      "lines": [
+        {
+          "text": "I installed the O N T in the living room. I used the existing duct. Optical receive was minus eighteen point two d B m. The service test passed. The job is complete.",
+          "display": "I installed the ONT in the living room. I used the existing duct. Optical receive was −18.2 dBm. The service test passed. The job is complete.",
+          "voice": "am_michael",
+          "role": "ENGINEER",
+          "start": 0.35,
+          "seconds": 10.8365,
+          "file": "37000c1a162f20a68995da894e3211714120000920251ca5db54e3fcc7249917.wav"
+        }
+      ]
+    },
+    {
+      "id": "followup",
+      "label": "Only the missing answer",
+      "from": 900,
+      "durationInFrames": 300,
+      "seconds": 10,
+      "lines": [
+        {
+          "text": "Is any follow-up work required?",
+          "voice": "bm_george",
+          "role": "ASSISTANT",
+          "gapAfter": 0.6,
+          "start": 0.35,
+          "seconds": 2.1256,
+          "file": "c8c2365d0ef7e9c9b253ab40a9071980b8ea7b78a0d87641894639a5df5bef8d.wav"
+        },
+        {
+          "text": "No further work required.",
+          "voice": "am_michael",
+          "role": "ENGINEER",
+          "gapAfter": 0.7,
+          "start": 3.0756,
+          "seconds": 1.7516,
+          "file": "58adbfeb60543727f94f9d660edf84235d5467d5f6b58693ca774e359c0a6170.wav"
+        },
+        {
+          "text": "Ready for your review.",
+          "voice": "bf_emma",
+          "start": 5.5272,
+          "seconds": 1.3569,
+          "file": "f38998b3fe6dd9b528918411f5974513a93d2ca56ad9690de0e36547615eed54.wav"
+        }
+      ]
+    },
+    {
+      "id": "repair",
+      "label": "Corrections stay in the conversation",
+      "from": 1200,
+      "durationInFrames": 300,
+      "seconds": 10,
+      "lines": [
+        {
+          "text": "The reading is eighteen point two. No, sorry. The reading is minus eighteen point one nine d B m.",
+          "display": "The reading is 18.2. No, sorry. The reading is −18.19 dBm.",
+          "voice": "am_michael",
+          "role": "ENGINEER",
+          "start": 0.35,
+          "seconds": 6.543,
+          "file": "25ceee0af77e8f2682548f033976f79c8c7602b2ac7a4b5319402ec3b783309f.wav"
+        }
+      ]
+    },
+    {
+      "id": "speed",
+      "label": "Early recognition benchmark",
+      "from": 1500,
+      "durationInFrames": 300,
+      "seconds": 10,
+      "lines": [
+        {
+          "text": "Early synthetic tests measured short-answer recognition at about zero point four five seconds.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 5.0616,
+          "file": "d69888436bc9089e98f39911ccf7ce42ae67acdbc24df8a445ff7b4cfd8bab0e.wav"
+        }
+      ]
+    },
+    {
+      "id": "offline",
+      "label": "Capture offline",
+      "from": 1800,
+      "durationInFrames": 240,
+      "seconds": 8,
+      "lines": [
+        {
+          "text": "Capture offline after setup. Save on the phone. Sync confirmed records when connected.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 5.4254,
+          "file": "7b091432b028f2990ab857793f8b327b5dc8b7e3206147235b21bed8a753438b.wav"
+        }
+      ]
+    },
+    {
+      "id": "integration",
+      "label": "Designed for your existing apps",
+      "from": 2040,
+      "durationInFrames": 240,
+      "seconds": 8,
+      "lines": [
+        {
+          "text": "Bring voice into your existing application, through agreed interfaces and your approved rules.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 4.8368,
+          "file": "bd0c3e40c845d60f9741680c422c976fb3897ce620a1a2a0326b67eaab8099f2.wav"
+        }
+      ]
+    },
+    {
+      "id": "adapt",
+      "label": "Adapted to your requirements",
+      "from": 2280,
+      "durationInFrames": 360,
+      "seconds": 12,
+      "lines": [
+        {
+          "text": "Configure forms, terminology and voices. For deeper adaptation, fine-tuning can be scoped around approved engineer recordings and validated against your requirements.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 9.07,
+          "file": "5b52bdf774ea36648c55b9871cff2949b161f625c3b5b2f5a3c641479a450adf.wav"
+        }
+      ]
+    },
+    {
+      "id": "close",
+      "label": "Start with one workflow",
+      "from": 2640,
+      "durationInFrames": 240,
+      "seconds": 8,
+      "lines": [
+        {
+          "text": "Speak the visit. Complete the record. Start with one workflow. Prove it with your engineers.",
+          "voice": "bf_emma",
+          "start": 0.35,
+          "seconds": 5.5101,
+          "file": "39704030ee9127b6680637fae83be2c67343a2159890785c8a3c352872b23a69.wav"
+        }
+      ]
+    }
+  ],
+  "captions": [
+    {
+      "from": 10,
+      "to": 59,
+      "text": "Your engineer knows the work.",
+      "role": "",
+      "scene": "hook"
+    },
+    {
+      "from": 59,
+      "to": 111,
+      "text": "Let the record catch up.",
+      "role": "",
+      "scene": "hook"
+    },
+    {
+      "from": 190,
+      "to": 285,
+      "text": "Field Assist. Voice-guided reporting, designed for the",
+      "role": "",
+      "scene": "reveal"
+    },
+    {
+      "from": 285,
+      "to": 356,
+      "text": "applications your engineers already use.",
+      "role": "",
+      "scene": "reveal"
+    },
+    {
+      "from": 430,
+      "to": 518,
+      "text": "I installed the ONT in the living",
+      "role": "ENGINEER",
+      "scene": "capture"
+    },
+    {
+      "from": 518,
+      "to": 593,
+      "text": "room. I used the existing duct.",
+      "role": "ENGINEER",
+      "scene": "capture"
+    },
+    {
+      "from": 593,
+      "to": 656,
+      "text": "Optical receive was −18.2 dBm.",
+      "role": "ENGINEER",
+      "scene": "capture"
+    },
+    {
+      "from": 656,
+      "to": 706,
+      "text": "The service test passed.",
+      "role": "ENGINEER",
+      "scene": "capture"
+    },
+    {
+      "from": 706,
+      "to": 759,
+      "text": "The job is complete.",
+      "role": "ENGINEER",
+      "scene": "capture"
+    },
+    {
+      "from": 910,
+      "to": 978,
+      "text": "Is any follow-up work required?",
+      "role": "ASSISTANT",
+      "scene": "followup"
+    },
+    {
+      "from": 992,
+      "to": 1048,
+      "text": "No further work required.",
+      "role": "ENGINEER",
+      "scene": "followup"
+    },
+    {
+      "from": 1066,
+      "to": 1110,
+      "text": "Ready for your review.",
+      "role": "",
+      "scene": "followup"
+    },
+    {
+      "from": 1210,
+      "to": 1282,
+      "text": "The reading is 18.2.",
+      "role": "ENGINEER",
+      "scene": "repair"
+    },
+    {
+      "from": 1282,
+      "to": 1410,
+      "text": "No, sorry. The reading is −18.19 dBm.",
+      "role": "ENGINEER",
+      "scene": "repair"
+    },
+    {
+      "from": 1510,
+      "to": 1592,
+      "text": "Early synthetic tests measured short-answer recognition at",
+      "role": "",
+      "scene": "speed"
+    },
+    {
+      "from": 1592,
+      "to": 1666,
+      "text": "about zero point four five seconds.",
+      "role": "",
+      "scene": "speed"
+    },
+    {
+      "from": 1810,
+      "to": 1861,
+      "text": "Capture offline after setup.",
+      "role": "",
+      "scene": "offline"
+    },
+    {
+      "from": 1861,
+      "to": 1911,
+      "text": "Save on the phone.",
+      "role": "",
+      "scene": "offline"
+    },
+    {
+      "from": 1911,
+      "to": 1977,
+      "text": "Sync confirmed records when connected.",
+      "role": "",
+      "scene": "offline"
+    },
+    {
+      "from": 2050,
+      "to": 2129,
+      "text": "Bring voice into your existing application, through",
+      "role": "",
+      "scene": "integration"
+    },
+    {
+      "from": 2129,
+      "to": 2199,
+      "text": "agreed interfaces and your approved rules.",
+      "role": "",
+      "scene": "integration"
+    },
+    {
+      "from": 2290,
+      "to": 2355,
+      "text": "Configure forms, terminology and voices.",
+      "role": "",
+      "scene": "adapt"
+    },
+    {
+      "from": 2355,
+      "to": 2446,
+      "text": "For deeper adaptation, fine-tuning can be scoped",
+      "role": "",
+      "scene": "adapt"
+    },
+    {
+      "from": 2446,
+      "to": 2566,
+      "text": "around approved engineer recordings and validated against your requirements.",
+      "role": "",
+      "scene": "adapt"
+    },
+    {
+      "from": 2650,
+      "to": 2717,
+      "text": "Speak the visit. Complete the record.",
+      "role": "",
+      "scene": "close"
+    },
+    {
+      "from": 2717,
+      "to": 2761,
+      "text": "Start with one workflow.",
+      "role": "",
+      "scene": "close"
+    },
+    {
+      "from": 2761,
+      "to": 2819,
+      "text": "Prove it with your engineers.",
+      "role": "",
+      "scene": "close"
+    }
+  ],
+  "audioSource": "Local synthetic Kokoro voices; original procedural score and foley",
+  "musicRevision": 2,
+  "soundEvents": [
+    {
+      "seconds": 6.0,
+      "frame": 180,
+      "type": "next"
+    },
+    {
+      "seconds": 6.22,
+      "frame": 187,
+      "type": "reveal"
+    },
+    {
+      "seconds": 14.0,
+      "frame": 420,
+      "type": "next"
+    },
+    {
+      "seconds": 14.22,
+      "frame": 427,
+      "type": "reveal"
+    },
+    {
+      "seconds": 30.0,
+      "frame": 900,
+      "type": "next"
+    },
+    {
+      "seconds": 30.22,
+      "frame": 907,
+      "type": "reveal"
+    },
+    {
+      "seconds": 40.0,
+      "frame": 1200,
+      "type": "next"
+    },
+    {
+      "seconds": 40.22,
+      "frame": 1207,
+      "type": "reveal"
+    },
+    {
+      "seconds": 50.0,
+      "frame": 1500,
+      "type": "next"
+    },
+    {
+      "seconds": 50.22,
+      "frame": 1507,
+      "type": "reveal"
+    },
+    {
+      "seconds": 60.0,
+      "frame": 1800,
+      "type": "next"
+    },
+    {
+      "seconds": 60.22,
+      "frame": 1807,
+      "type": "reveal"
+    },
+    {
+      "seconds": 68.0,
+      "frame": 2040,
+      "type": "next"
+    },
+    {
+      "seconds": 68.22,
+      "frame": 2047,
+      "type": "reveal"
+    },
+    {
+      "seconds": 76.0,
+      "frame": 2280,
+      "type": "next"
+    },
+    {
+      "seconds": 76.22,
+      "frame": 2287,
+      "type": "reveal"
+    },
+    {
+      "seconds": 88.0,
+      "frame": 2640,
+      "type": "next"
+    },
+    {
+      "seconds": 88.22,
+      "frame": 2647,
+      "type": "reveal"
+    },
+    {
+      "seconds": 18.0,
+      "frame": 540,
+      "type": "field-pop"
+    },
+    {
+      "seconds": 24.4,
+      "frame": 732,
+      "type": "field-pop"
+    },
+    {
+      "seconds": 26.8,
+      "frame": 804,
+      "type": "field-pop"
+    },
+    {
+      "seconds": 28.56,
+      "frame": 857,
+      "type": "field-pop"
+    },
+    {
+      "seconds": 30.35,
+      "frame": 910,
+      "type": "dialogue-pop"
+    },
+    {
+      "seconds": 33.0756,
+      "frame": 992,
+      "type": "dialogue-pop"
+    },
+    {
+      "seconds": 35.5272,
+      "frame": 1066,
+      "type": "dialogue-pop"
+    },
+    {
+      "seconds": 36.6458,
+      "frame": 1099,
+      "type": "review-ready"
+    },
+    {
+      "seconds": 42.2,
+      "frame": 1266,
+      "type": "correction"
+    },
+    {
+      "seconds": 43.8333,
+      "frame": 1315,
+      "type": "corrected"
+    },
+    {
+      "seconds": 8.2,
+      "frame": 246,
+      "type": "portal"
+    },
+    {
+      "seconds": 68.4,
+      "frame": 2052,
+      "type": "integration-node"
+    },
+    {
+      "seconds": 69.0,
+      "frame": 2070,
+      "type": "integration-node"
+    },
+    {
+      "seconds": 69.6,
+      "frame": 2088,
+      "type": "integration-node"
+    },
+    {
+      "seconds": 70.2,
+      "frame": 2106,
+      "type": "integration-node"
+    },
+    {
+      "seconds": 76.35,
+      "frame": 2290,
+      "type": "reel-pop"
+    },
+    {
+      "seconds": 76.75,
+      "frame": 2302,
+      "type": "reel-pop"
+    },
+    {
+      "seconds": 77.25,
+      "frame": 2318,
+      "type": "reel-pop"
+    },
+    {
+      "seconds": 78.1,
+      "frame": 2343,
+      "type": "collage"
+    },
+    {
+      "seconds": 81.0,
+      "frame": 2430,
+      "type": "reveal"
+    },
+    {
+      "seconds": 88.48,
+      "frame": 2654,
+      "type": "title-sweep"
+    },
+    {
+      "seconds": 89.0933,
+      "frame": 2673,
+      "type": "title-sweep"
+    },
+    {
+      "seconds": 90.1333,
+      "frame": 2704,
+      "type": "title-sweep"
+    },
+    {
+      "seconds": 90.9333,
+      "frame": 2728,
+      "type": "title-sweep"
+    },
+    {
+      "seconds": 93.2,
+      "frame": 2796,
+      "type": "final"
+    }
+  ],
+  "musicBalance": [
+    {
+      "scene": "hook",
+      "voiceAboveMusicDb": 19.2
+    },
+    {
+      "scene": "reveal",
+      "voiceAboveMusicDb": 19.5
+    },
+    {
+      "scene": "capture",
+      "voiceAboveMusicDb": 22.0
+    },
+    {
+      "scene": "followup",
+      "voiceAboveMusicDb": 23.2
+    },
+    {
+      "scene": "repair",
+      "voiceAboveMusicDb": 22.6
+    },
+    {
+      "scene": "speed",
+      "voiceAboveMusicDb": 19.4
+    },
+    {
+      "scene": "offline",
+      "voiceAboveMusicDb": 19.0
+    },
+    {
+      "scene": "integration",
+      "voiceAboveMusicDb": 19.2
+    },
+    {
+      "scene": "adapt",
+      "voiceAboveMusicDb": 19.2
+    },
+    {
+      "scene": "close",
+      "voiceAboveMusicDb": 19.2
+    }
+  ],
+  "normalization": "Two-pass loudnorm −14 LUFS / −1 dBTP",
+  "preNormalization": {
+    "input_i": "-18.43",
+    "input_tp": "-2.32",
+    "input_lra": "10.30",
+    "input_thresh": "-29.35",
+    "output_i": "-14.22",
+    "output_tp": "-1.00",
+    "output_lra": "8.50",
+    "output_thresh": "-24.79",
+    "normalization_type": "dynamic",
+    "target_offset": "0.22"
+  }
+}

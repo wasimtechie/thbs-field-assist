@@ -1,3 +1,6 @@
+import '../fttp/fttp_widgets.dart';
+import '../fttp/fttp_workflow.dart';
+import '../jobs/visit_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,7 +17,13 @@ class HomeScreen extends ConsumerWidget {
     final app = ref.watch(appProvider),
         controller = ref.read(appProvider.notifier);
     final drafts = app.reports
-        .where((r) => r.state == ReportState.draft)
+        .where(
+          (r) =>
+              r.state == ReportState.draft &&
+              !app.summarySubmissions.any(
+                (s) => (s['payload'] as Json)['clientReportId'] == r.id,
+              ),
+        )
         .toList();
     final queued = app.reports
         .where(
@@ -25,7 +34,15 @@ class HomeScreen extends ConsumerWidget {
           ].contains(r.state),
         )
         .length;
-    final active = app.workOrders.where((j) => j.status != 'completed').length;
+    final active = app.workOrders
+        .where(
+          (j) => !VisitProgress(
+            j,
+            app.reports,
+            app.summarySubmissions,
+          ).inCompleted,
+        )
+        .length;
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -97,7 +114,16 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 22),
               ErrorNotice(app.error),
               if (app.notice.isNotEmpty) ErrorNotice(app.notice, isInfo: true),
-              if (app.form != null)
+              if ([
+                fttpTemplateId,
+                closureTemplateId,
+              ].contains(app.form?.templateId))
+                const FttpToday(),
+              if (app.form != null &&
+                  ![
+                    fttpTemplateId,
+                    closureTemplateId,
+                  ].contains(app.form?.templateId))
                 FieldEntrance(
                   delay: 50,
                   child: Container(
@@ -222,7 +248,7 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                 )
-              else
+              else if (app.form == null)
                 const ErrorNotice(
                   'No default form is assigned. Connect and ask your administrator to assign a published form.',
                 ),

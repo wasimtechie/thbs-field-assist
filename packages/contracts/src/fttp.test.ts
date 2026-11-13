@@ -1,0 +1,13 @@
+import {describe,it,expect} from 'vitest';
+import {readFileSync} from 'node:fs';
+import {fttpIssues,FTTP_TEMPLATE_ID,templateSchema,validateValues,reportEvidenceSchema,sha256} from './index';
+const schema=templateSchema.parse(JSON.parse(readFileSync('fixtures/templates/fttp-demo.json','utf8')));
+const complete={installation_outcome:'completed',access_confirmed:true,route_agreed:true,site_checks:true,work_performed:'Demo installation',cable_id:'DEMO-101',csp_reference:'DEMO-CSP-101',cable_installed:{amount:12,unit:'m'},ont_serial:'DEMO-ONT-101',optical_reading:-22.4,connectivity_test:'passed',tester_reference:'DEMO-TEST-101',customer_handover:true,site_tidy:true};
+const photos=['before','installation','test'].map(stage=>({stage}));
+describe('FTTP completion gates',()=>{
+ it('accepts a complete installation only with required evidence',()=>{expect(validateValues(schema,complete).valid).toBe(true);expect(fttpIssues(FTTP_TEMPLATE_ID,complete,photos)).toEqual([]);expect(fttpIssues(FTTP_TEMPLATE_ID,complete,photos.slice(0,2))).not.toEqual([])});
+ it('refuses failed tests and negative safety/access confirmations',()=>{for(const field of ['access_confirmed','route_agreed','site_checks','customer_handover','site_tidy'])expect(fttpIssues(FTTP_TEMPLATE_ID,{...complete,[field]:false},photos)).not.toEqual([]);expect(fttpIssues(FTTP_TEMPLATE_ID,{...complete,connectivity_test:'failed'},photos)).not.toEqual([])});
+ it('allows an honest blocked visit without inventing installation readings',()=>{const blocked={installation_outcome:'blocked',work_performed:'Inspected accessible entry',connectivity_test:'not_tested',exception_reason:'Duct blocked',next_team:'civils',next_action:'Arrange clearance and return access'};expect(validateValues(schema,blocked).valid).toBe(true);expect(fttpIssues(FTTP_TEMPLATE_ID,blocked,[{stage:'blocker'}])).toEqual([]);expect(fttpIssues(FTTP_TEMPLATE_ID,{...blocked,next_action:''},[{stage:'blocker'}])).not.toEqual([])});
+ it('does not apply new gates to existing templates',()=>expect(fttpIssues('legacy',{},[])).toEqual([]));
+ it('rejects altered image bytes, oversized images and unsupported formats',()=>{const data=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl6nCgAAAAASUVORK5CYII=','base64');const image={id:'90000000-0000-4000-8000-000000000001',stage:'before',caption:'Demo image',mimeType:'image/png',data:data.toString('base64'),sha256:sha256(data),capturedAt:new Date().toISOString(),synthetic:true};expect(reportEvidenceSchema.safeParse(image).success).toBe(true);for(const change of [{sha256:'0'.repeat(64)},{mimeType:'text/html'},{data:Buffer.alloc(120001).toString('base64')}])expect(reportEvidenceSchema.safeParse({...image,...change}).success).toBe(false)});
+});

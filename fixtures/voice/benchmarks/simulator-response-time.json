@@ -1,0 +1,35 @@
+{
+  "scope": "iOS simulator debug; generated speech only. No microphone, field accuracy or physical-phone latency claim.",
+  "syntheticAnswerSynthesisMs": 2691,
+  "recognition": [
+    {
+      "input": "padded",
+      "audioMs": 9838,
+      "recognitionMs": 157,
+      "negativeReadingPreserved": true
+    },
+    {
+      "input": "trimmed",
+      "audioMs": 2200,
+      "recognitionMs": 71,
+      "negativeReadingPreserved": true
+    },
+    {
+      "input": "trimmed",
+      "audioMs": 2200,
+      "recognitionMs": 188,
+      "negativeReadingPreserved": true
+    },
+    {
+      "input": "padded",
+      "audioMs": 9838,
+      "recognitionMs": 156,
+      "negativeReadingPreserved": true
+    }
+  ],
+  "coldPreparedPromptMs": 33,
+  "cachedPreparedPromptMs": 0,
+  "device": "iPhone 18 Pro, iOS 27.0 simulator",
+  "source": "apps/mobile/integration_test/voice_latency_test.dart",
+  "interpretation": "Two synthetic runs per input shape, not a controlled performance distribution. Includes no endpoint wait, access checks, durable write or audio playback latency; do not label this an end-to-end response time."
+}

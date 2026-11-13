@@ -1,0 +1,71 @@
+job_type_id	field_id	condition	action	rule_status
+FTTP_PROVISION	customer_route_agreed	access_obtained == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	entry_method	access_obtained == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	drilling_required	access_obtained == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	drilling_consent	drilling_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	csp_installed	access_obtained == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	ont_installed	access_obtained == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	ont_serial	ont_installed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	optical_rx_dbm	ont_installed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	service_test	ont_installed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	customer_demo	service_test == Pass	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	install_photo	ont_installed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_PROVISION	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+FTTP_PROVISION	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+FTTP_REPAIR	los_state_before	ont_power == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_REPAIR	pon_state_before	ont_power == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_REPAIR	customer_confirmed	service_restored == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_REPAIR	repair_photo	service_restored == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+FTTP_REPAIR	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+FTTP_REPAIR	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+COPPER_REPAIR	sync_down_mbps	voice_or_data != Voice only	Show field; require only if mandatory=true	Synthetic - validate with SME
+COPPER_REPAIR	dial_tone	voice_or_data != Broadband only	Show field; require only if mandatory=true	Synthetic - validate with SME
+COPPER_REPAIR	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+COPPER_REPAIR	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+FTTC_REPAIR	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+FTTC_REPAIR	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+NO_ACCESS	contact_method	contact_attempts > 0	Show field; require only if mandatory=true	Synthetic - validate with SME
+NO_ACCESS	no_access_reason	premises_accessible == false	Show field; require only if mandatory=true	Synthetic - validate with SME
+NO_ACCESS	next_action	revisit_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+NO_ACCESS	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+NO_ACCESS	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+CIVILS_BLOCKAGE	blockage_distance_m	blockage_confirmed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	obstruction_type	blockage_confirmed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	excavation_required	blockage_confirmed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	traffic_management	excavation_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	photo_ref	blockage_confirmed == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	handoff_details	excavation_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CIVILS_BLOCKAGE	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+CIVILS_BLOCKAGE	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+POLE_ACTIVITY	specialist_test_result	specialist_test_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+POLE_ACTIVITY	work_performed	climb_authorised == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+POLE_ACTIVITY	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+POLE_ACTIVITY	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+CHAMBER_ENTRY	water_action	water_present == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CHAMBER_ENTRY	work_done	entry_permitted == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+CHAMBER_ENTRY	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+CHAMBER_ENTRY	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+NETWORK_DAMAGE	make_safe	public_risk == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+NETWORK_DAMAGE	escalation_ref	public_risk == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+NETWORK_DAMAGE	handoff_notes	repair_required == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+NETWORK_DAMAGE	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+NETWORK_DAMAGE	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+QUALITY_AUDIT	defect_description	duct_entry_ok == false	Show field; require only if mandatory=true	Synthetic - validate with SME
+QUALITY_AUDIT	remedial_action	duct_entry_ok == false	Show field; require only if mandatory=true	Synthetic - validate with SME
+QUALITY_AUDIT	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+QUALITY_AUDIT	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+MDU_INSTALL	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+MDU_INSTALL	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+ASSET_REPLACE	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+ASSET_REPLACE	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+JOB_FOLLOW_ON	material_required	blocker_category == Materials unavailable	Show field; require only if mandatory=true	Synthetic - validate with SME
+JOB_FOLLOW_ON	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+JOB_FOLLOW_ON	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+POWER_OR_ONTRISK	psu_replaced	psu_faulty == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+POWER_OR_ONTRISK	pon_after	ont_power_after == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+POWER_OR_ONTRISK	connectivity_test	ont_power_after == true	Show field; require only if mandatory=true	Synthetic - validate with SME
+POWER_OR_ONTRISK	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+POWER_OR_ONTRISK	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail
+CUSTOMER_PREMISE_WIRING	broadband_test	service_type != Voice only	Show field; require only if mandatory=true	Synthetic - validate with SME
+CUSTOMER_PREMISE_WIRING	job_outcome	job_outcome == Completed	Check all required applicable fields and tests; require human review	Synthetic - validate with SME
+CUSTOMER_PREMISE_WIRING	engineer_notes	always	Preserve original narrative; do not invent measurements or consent	Recommended design guardrail

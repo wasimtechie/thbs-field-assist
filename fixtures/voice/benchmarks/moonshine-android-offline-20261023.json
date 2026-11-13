@@ -1,0 +1,93 @@
+{
+  "scope": "Actual Android ARM64 API 37 emulator in airplane mode; 1 CPU and 4 GB RAM. Synthetic paced Kokoro PCM through native Moonshine Small Streaming, embedded Silero, strict local Qwen extraction and source-grounded validation. No live microphone or physical-phone accuracy/latency claim.",
+  "network": "Airplane mode enabled; unreachable API used for bundled installation. No network inference.",
+  "speechCases": [
+    {
+      "case": "s1-summary",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "partialUpdates": 71,
+      "finalizationWallMs": 18423,
+      "extractionMs": 19
+    },
+    {
+      "case": "reading-fragment",
+      "transcript": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+      "values": {
+        "actual_work": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "partialUpdates": 35,
+      "finalizationWallMs": 9307,
+      "extractionMs": 5
+    },
+    {
+      "case": "asset",
+      "transcript": "CBT-SYN-10.",
+      "values": {
+        "actual_work": "CBT-SYN-10.",
+        "serving_asset": "CBT-SYN-10"
+      },
+      "partialUpdates": 19,
+      "finalizationWallMs": 4818,
+      "extractionMs": 10
+    },
+    {
+      "case": "short-no",
+      "transcript": "No.",
+      "values": {
+        "actual_work": "No."
+      },
+      "partialUpdates": 9,
+      "finalizationWallMs": 2522,
+      "extractionMs": 2
+    },
+    {
+      "case": "negative",
+      "transcript": "I have not completed the job. The service test did not pass.",
+      "values": {
+        "actual_work": "I have not completed the job. The service test did not pass.",
+        "claimed_outcome": null,
+        "operational_test": null
+      },
+      "partialUpdates": 21,
+      "finalizationWallMs": 6083,
+      "extractionMs": 5
+    }
+  ],
+  "structuredParaphraseCases": [
+    {
+      "transcript": "I finished all the work. Connectivity checks were successful.",
+      "values": {
+        "actual_work": "I finished all the work. Connectivity checks were successful.",
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "elapsedMs": 1502
+    },
+    {
+      "transcript": "All the work is done. I verified the connection and it was working.",
+      "values": {
+        "actual_work": "All the work is done. I verified the connection and it was working.",
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "elapsedMs": 646
+    }
+  ],
+  "silencePassed": true,
+  "modelReadinessPassed": true,
+  "allPassed": true,
+  "unitWidgetTests": 161,
+  "followupParserTests": 29,
+  "analysis": "No issues in mobile app or field_voice package.",
+  "cpuOnlyRuntimeReplayPassed": true,
+  "iosSimulatorVoiceReadinessPassed": true
+}

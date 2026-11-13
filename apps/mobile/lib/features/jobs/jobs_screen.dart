@@ -1,3 +1,5 @@
+import '../fttp/fttp_widgets.dart';
+import '../fttp/fttp_workflow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -8,6 +10,7 @@ import '../../core/design_system/profile_avatar.dart';
 import '../time_tracking/site_time_card.dart';
 import '../../core/design_system/theme.dart';
 import '../../core/design_system/workspace.dart';
+import 'visit_progress.dart';
 
 String jobDate(DateTime value) {
   final d = value.toLocal();
@@ -15,13 +18,23 @@ String jobDate(DateTime value) {
 }
 
 class JobsScreen extends ConsumerStatefulWidget {
-  const JobsScreen({super.key});
+  const JobsScreen({super.key, this.showCompleted = false});
+  final bool showCompleted;
   @override
   ConsumerState<JobsScreen> createState() => _JobsScreenState();
 }
 
 class _JobsScreenState extends ConsumerState<JobsScreen> {
-  bool refreshing = false, history = false;
+  bool refreshing = false;
+  late bool history = widget.showCompleted;
+  @override
+  void didUpdateWidget(covariant JobsScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.showCompleted != widget.showCompleted) {
+      history = widget.showCompleted;
+    }
+  }
+
   String error = '';
   Future<void> refresh() async {
     if (refreshing) return;
@@ -50,7 +63,12 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
         app.workOrders
             .where(
               (j) =>
-                  history ? j.status == 'completed' : j.status != 'completed',
+                  VisitProgress(
+                    j,
+                    app.reports,
+                    app.summarySubmissions,
+                  ).inCompleted ==
+                  history,
             )
             .toList()
           ..sort((a, b) {
@@ -99,7 +117,12 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
           WorkspaceTabs<bool>(
             values: const [(false, 'Active jobs'), (true, 'Completed')],
             selected: history,
-            onSelected: (value) => setState(() => history = value),
+            onSelected: (value) {
+              setState(() => history = value);
+              GoRouter.maybeOf(
+                context,
+              )?.go(value ? '/jobs?view=completed' : '/jobs');
+            },
           ),
           const SizedBox(height: 17),
           if (jobs.isEmpty)
@@ -108,12 +131,17 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
                 padding: const EdgeInsets.all(24),
                 child: Text(
                   history
-                      ? 'Approved jobs will appear here.'
+                      ? 'Completed visits and approved jobs will appear here.'
                       : 'No downloaded active jobs. Refresh after your supervisor assigns work.',
                 ),
               ),
             ),
           ...jobs.map((job) {
+            final progress = VisitProgress(
+              job,
+              app.reports,
+              app.summarySubmissions,
+            );
             final local = app.reports
                 .where(
                   (r) =>
@@ -154,9 +182,13 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
                                   ? context.colors.danger
                                   : context.colors.indigo,
                             ),
-                            if (job.status != 'assigned' || local != null)
+                            if (progress.summary != null ||
+                                job.status != 'assigned' ||
+                                local != null)
                               StatusPill(
-                                local == null
+                                progress.label.isNotEmpty
+                                    ? progress.label
+                                    : local == null
                                     ? job.statusLabel
                                     : local.state == ReportState.draft
                                     ? 'Draft on device'
@@ -197,6 +229,16 @@ class _JobsScreenState extends ConsumerState<JobsScreen> {
                             ),
                           ],
                         ),
+                        if (progress.summary != null) ...[
+                          const SizedBox(height: 10),
+                          Text(
+                            progress.delivery,
+                            style: TextStyle(
+                              color: context.colors.muted,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                         const SizedBox(height: 12),
                         AssignmentPeople(source: job.source),
                         const SizedBox(height: 12),
@@ -376,6 +418,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
               j.assetReference == job.assetReference,
         )
         .toList();
+    final progress = VisitProgress(job, app.reports, app.summarySubmissions);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Visit brief'),
@@ -392,7 +435,10 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
                 job.priority.toUpperCase(),
                 color: context.colors.indigo,
               ),
-              StatusPill(job.statusLabel, color: context.colors.teal),
+              StatusPill(
+                progress.label.isEmpty ? job.statusLabel : progress.label,
+                color: context.colors.teal,
+              ),
             ],
           ),
           const SizedBox(height: 12),
@@ -410,6 +456,24 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
           ),
           const SizedBox(height: 22),
           Text(job.title, style: Theme.of(context).textTheme.headlineLarge),
+          if (progress.summary != null) ...[
+            const SizedBox(height: 16),
+            Card(
+              child: ListTile(
+                leading: Icon(
+                  progress.visitCompleted
+                      ? Icons.task_alt
+                      : Icons.assignment_turned_in_outlined,
+                ),
+                title: Text(progress.label),
+                subtitle: Text(
+                  '${progress.delivery}. Supervisor approval is tracked separately.',
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => context.push('/queue'),
+              ),
+            ),
+          ],
           const SizedBox(height: 18),
           AssignmentPeople(source: job.source),
           const SizedBox(height: 20),
@@ -444,13 +508,19 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
               'Asset / cable reference',
               job.assetReference,
             ),
-          _Brief(
-            Icons.assignment_outlined,
-            'Visit instructions',
-            job.instructions.isEmpty
-                ? 'No additional instructions supplied.'
-                : job.instructions,
-          ),
+          if ([
+            fttpTemplateId,
+            closureTemplateId,
+          ].contains(app.form?.templateId))
+            FttpBrief(job: job)
+          else
+            _Brief(
+              Icons.assignment_outlined,
+              'Visit instructions',
+              job.instructions.isEmpty
+                  ? 'No additional instructions supplied.'
+                  : job.instructions,
+            ),
           if (job.reviewNote.isNotEmpty)
             _Brief(
               Icons.rate_review_outlined,
@@ -565,7 +635,9 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
                 starting
                     ? 'Opening…'
                     : local != null
-                    ? 'Resume job report'
+                    ? progress.summary != null
+                          ? 'Edit visit summary'
+                          : 'Resume job report'
                     : job.status == 'follow_up'
                     ? 'Start follow-up report'
                     : 'Start job report',

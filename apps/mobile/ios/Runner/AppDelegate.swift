@@ -3,11 +3,13 @@ import UIKit
 import CoreLocation
 import Vision
 import Security
+import AVFAudio
 
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   private let reportLocation = ReportLocationCapture()
   private let labelRecognition = CableLabelRecognition()
+  private let voicePlayback = VoicePromptPlayback()
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -21,6 +23,11 @@ import Security
     let channel = FlutterMethodChannel(name: "field_assist/security", binaryMessenger: registrar.messenger())
     let locationChannel = FlutterMethodChannel(name: "field_assist/location", binaryMessenger: registrar.messenger())
     let labelChannel = FlutterMethodChannel(name: "field_assist/label_ocr", binaryMessenger: registrar.messenger())
+    let voiceChannel = FlutterMethodChannel(name: "field_assist/voice_playback", binaryMessenger: registrar.messenger())
+    voiceChannel.setMethodCallHandler { [weak self] call, result in
+      guard let self else { result(FlutterError(code: "VOICE_CLOSED", message: "Voice playback is unavailable.", details: nil)); return }
+      self.voicePlayback.handle(call, result: result)
+    }
     labelChannel.setMethodCallHandler { [weak self] call, result in
       guard let self else { return }
       switch call.method {
@@ -70,6 +77,90 @@ import Security
       }
     }
   }
+}
+
+/// Short, in-memory TTS prompts use the conversation's AVAudioSession. The Dart
+/// owner changes category only after playback/capture has fully stopped. There
+/// is no deferred engine pause worker left to race the next microphone turn.
+private final class VoicePromptPlayback: NSObject, AVAudioPlayerDelegate {
+  private var player: AVAudioPlayer?
+  private var playbackId: String?
+  private var pending: FlutterResult?
+
+  override init() {
+    super.init()
+    NotificationCenter.default.addObserver(self, selector: #selector(backgrounded), name: UIApplication.didEnterBackgroundNotification, object: nil)
+  }
+
+  func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    #if targetEnvironment(simulator)
+    // Read-only timing probe. Tests observe the native playback cursor instead
+    // of treating the Dart animation meter as an audible-start timestamp.
+    if call.method == "diagnosticPlaybackPosition" {
+      result(["playing": player?.isPlaying ?? false,
+              "seconds": player?.currentTime ?? 0])
+      return
+    }
+    #endif
+    guard let args = call.arguments as? [String: Any], let id = args["id"] as? String, !id.isEmpty else {
+      result(FlutterError(code: "INVALID_AUDIO", message: "A voice playback ID is required.", details: nil)); return
+    }
+    switch call.method {
+    case "play":
+      guard let wav = args["wav"] as? FlutterStandardTypedData,
+        wav.data.count >= 44, wav.data.count <= 33554432 else {
+        result(FlutterError(code: "INVALID_AUDIO", message: "A valid voice prompt is required.", details: nil)); return
+      }
+      finish(false)
+      do {
+        let output = try AVAudioPlayer(data: wav.data)
+        output.delegate = self
+        output.volume = min(1, max(0, (args["volume"] as? NSNumber)?.floatValue ?? 1))
+        player = output; playbackId = id; pending = result
+        guard output.prepareToPlay(), output.play() else {
+          finish(FlutterError(code: "VOICE_PLAYBACK_FAILED", message: "Voice playback could not start. Retry the voice assistant.", details: nil)); return
+        }
+      } catch {
+        // If decoding failed before ownership was assigned there is no pending
+        // callback for finish() to resolve.
+        if pending != nil {
+          finish(FlutterError(code: "VOICE_PLAYBACK_FAILED", message: "Voice playback could not start. Retry the voice assistant.", details: nil))
+        } else {
+          result(FlutterError(code: "VOICE_PLAYBACK_FAILED", message: "Voice playback could not start. Retry the voice assistant.", details: nil))
+        }
+      }
+    case "stop":
+      if playbackId == id { finish(false) }
+      result(nil)
+    case "volume":
+      if playbackId == id {
+        player?.volume = min(1, max(0, (args["volume"] as? NSNumber)?.floatValue ?? 1))
+      }
+      result(nil)
+    default: result(FlutterMethodNotImplemented)
+    }
+  }
+
+  private func finish(_ value: Any) {
+    let callback = pending
+    pending = nil; playbackId = nil
+    let output = player; player = nil
+    output?.delegate = nil
+    output?.stop()
+    callback?(value)
+  }
+
+  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    guard self.player === player else { return }
+    finish(flag)
+  }
+
+  func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+    guard self.player === player else { return }
+    finish(FlutterError(code: "VOICE_DECODE_FAILED", message: "Voice playback failed. Retry the voice assistant.", details: nil))
+  }
+
+  @objc private func backgrounded() { finish(false) }
 }
 
 /// Use only identity attributes in mutation queries. Never delete/recreate an

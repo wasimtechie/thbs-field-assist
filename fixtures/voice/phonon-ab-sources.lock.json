@@ -1,0 +1,36 @@
+{
+  "scope": "Offline diagnostic only; no production model switch",
+  "model": {
+    "repo": "FermionResearch/Phonon-2.5-English",
+    "revision": "cea043a0a125d6535d473645ad5fa90847a6b001",
+    "source": "https://huggingface.co/FermionResearch/Phonon-2.5-English/resolve/cea043a0a125d6535d473645ad5fa90847a6b001/phonon-2.5-en.fsq",
+    "file": "phonon-2.5-en.fsq",
+    "bytes": 157616598,
+    "sha256": "87dacb412f42c736967345a42455c05fa7b1835fd2d0b40ce2fbfbfd415bdadd",
+    "unpackedBytes": 177757399,
+    "containerBytes": 177479389,
+    "containerSha256": "c57119c0f04756932acc1d60d90506346e3708d69f00e654084acc7fe507fe27",
+    "licence": "CC-BY-4.0"
+  },
+  "pythonRuntime": {
+    "version": "0.2.15",
+    "source": "https://files.pythonhosted.org/packages/b5/77/29a29033d085117d187f09ce9e89edd862d73077bdd884daf693ba72661a/fermion_research-0.2.15-py3-none-any.whl",
+    "file": "fermion_research-0.2.15-py3-none-any.whl",
+    "sha256": "21ff7e5dfc6bba40850e82601c16224879f273ea9096a2274f95cec7e6e03ec8",
+    "licence": "Apache-2.0"
+  },
+  "androidRuntime": {
+    "tag": "android-arm64-v8a-0.2.11",
+    "source": "https://github.com/fermionresearch/phonon/releases/download/android-arm64-v8a-0.2.11/phonon2-android-arm64-v8a-0.2.11.zip",
+    "file": "android-runtime.zip",
+    "sha256": "06d75b2d0e88f4e2194400e9c6c1b5987056702b36a5f95720e56ce8a11d220b",
+    "licence": "Apache-2.0"
+  },
+  "iosRuntime": {
+    "status": "Experimental simulator-only CPU port; not a qualified physical-iPhone runtime",
+    "source": "The exact pinned Python wheel's macOS ARM64 encoder and TDT dylibs",
+    "transformation": "Copy; replace LC_BUILD_VERSION with iOS Simulator 18.0 / SDK 27.0; ad-hoc sign. Model weights and kernel instructions unchanged.",
+    "notUsed": "Phonon-2 CoreML weights, because these are a different model"
+  },
+  "moonshine": "fixtures/voice/moonshine-sources.lock.json"
+}

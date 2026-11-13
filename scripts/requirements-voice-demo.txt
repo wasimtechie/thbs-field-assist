@@ -1,0 +1,6 @@
+# Isolated Mac-only evaluation/server environment. Not Flutter dependencies.
+mlx-audio @ git+https://github.com/Blaizzy/mlx-audio.git@7cc680b2bea1e8ef34b1a78ee4ff389953aebe40
+mlx==0.32.4
+transformers==5.20.2
+sherpa-onnx==1.13.8
+soundfile==0.14.0

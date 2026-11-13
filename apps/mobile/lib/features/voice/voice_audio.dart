@@ -6,6 +6,7 @@ import 'package:field_voice/field_voice.dart';
 import 'package:flutter_soloud/flutter_soloud.dart';
 import 'package:record/record.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart'
     show TargetPlatform, defaultTargetPlatform;
 import 'pcm_meter.dart';
@@ -32,15 +33,28 @@ abstract interface class VoiceAudio {
   Future<void> close();
 }
 
-class DeviceVoiceAudio implements VoiceAudio {
+abstract interface class NoiseControlledVoiceAudio {
+  bool get noiseReduction;
+  set noiseReduction(bool value);
+}
+
+class DeviceVoiceAudio implements VoiceAudio, NoiseControlledVoiceAudio {
   DeviceVoiceAudio({
     AudioRecorder? recorder,
     TargetPlatform? platform,
+    MethodChannel? iosPlaybackChannel,
     this.onInterruption,
+    this.noiseReduction = false,
   }) : recorder = recorder ?? AudioRecorder(),
+       iosPlaybackChannel =
+           iosPlaybackChannel ??
+           const MethodChannel('field_assist/voice_playback'),
        platform = platform ?? defaultTargetPlatform;
   final AudioRecorder recorder;
   final TargetPlatform platform;
+  final MethodChannel iosPlaybackChannel;
+  @override
+  bool noiseReduction;
   AudioSession? _session;
   StreamSubscription<Uint8List>? _bytes;
   StreamSubscription<AudioInterruptionEvent>? _interruptions;
@@ -50,6 +64,8 @@ class DeviceVoiceAudio implements VoiceAudio {
   Completer<bool>? _completion;
   int _playGeneration = 0, _captureGeneration = 0;
   bool _ducked = false;
+  String? _iosPlaybackId;
+  static int _iosPlaybackSequence = 0;
   void Function()? onInterruption;
 
   static AudioSessionConfiguration get sessionConfiguration =>
@@ -62,6 +78,17 @@ class DeviceVoiceAudio implements VoiceAudio {
   void handleInterruption(AudioInterruptionEvent event) {
     if (event.type == AudioInterruptionType.duck) {
       _ducked = event.begin;
+      final playbackId = _iosPlaybackId;
+      if (playbackId != null) {
+        unawaited(
+          iosPlaybackChannel
+              .invokeMethod<void>('volume', {
+                'id': playbackId,
+                'volume': _ducked ? .25 : 1.0,
+              })
+              .catchError((Object _) {}),
+        );
+      }
       final handle = _handle;
       if (handle != null && SoLoud.instance.isInitialized) {
         SoLoud.instance.setVolume(handle, _ducked ? .25 : 1);
@@ -97,17 +124,26 @@ class DeviceVoiceAudio implements VoiceAudio {
     final generation = ++_captureGeneration;
     await stopPlayback();
     if (generation != _captureGeneration) return;
-    await _session?.setActive(true);
+    if (platform == TargetPlatform.iOS) {
+      // Let record set its preferred input rate and category before activating
+      // the microphone. Reconfiguring an active output session can stall the
+      // simulator's audio bridge. Native playback has already fully stopped.
+      await _session?.setActive(false);
+      if (generation != _captureGeneration) return;
+    } else {
+      await _session?.setActive(true);
+    }
     if (generation != _captureGeneration) return;
     final stream = await recorder.startStream(
       RecordConfig(
         encoder: AudioEncoder.pcm16bits,
         sampleRate: 16000,
         numChannels: 1,
-        // Restore the recording settings used before build 2014. OEM speech
-        // effects can attenuate the first/quiet words; retain unprocessed PCM.
-        echoCancel: false,
-        noiseSuppress: false,
+        // Optional device processing for noisy sites. Raw capture remains the
+        // default because some OEM effects attenuate quiet opening words.
+        echoCancel: noiseReduction,
+        noiseSuppress: noiseReduction,
+        autoGain: false,
         // audio_session already owns Android focus for the conversation.
         // A second request from record interrupts that same session at the
         // playback -> capture handoff. Calls/focus loss/headset removal still
@@ -122,19 +158,40 @@ class DeviceVoiceAudio implements VoiceAudio {
       return;
     }
     final meter = PcmLevelMeter(onLevel);
-    _bytes = stream.listen((bytes) {
-      if (generation != _captureGeneration) return;
-      onBytes(bytes);
-      meter.add(bytes);
-    }, onError: onError);
+    _bytes = stream.listen(
+      (bytes) {
+        if (generation != _captureGeneration) return;
+        // Deliver at most 20 ms before each meter update. With a whole native
+        // chunk first, all its frames appeared to have the same elapsed time.
+        for (var at = 0; at < bytes.length; at += 640) {
+          if (generation != _captureGeneration) return;
+          final frame = Uint8List.sublistView(
+            bytes,
+            at,
+            min(at + 640, bytes.length),
+          );
+          onBytes(frame);
+          meter.add(frame);
+        }
+      },
+      onError: onError,
+      onDone: () {
+        if (generation == _captureGeneration) {
+          onError(StateError('Microphone stream ended.'));
+        }
+      },
+    );
   }
 
   @override
   Future<void> stopCapture() async {
     _captureGeneration++;
-    await recorder.stop();
-    await _bytes?.cancel();
-    _bytes = null;
+    try {
+      await recorder.stop();
+    } finally {
+      await _bytes?.cancel();
+      _bytes = null;
+    }
   }
 
   @override
@@ -146,7 +203,20 @@ class DeviceVoiceAudio implements VoiceAudio {
     await stopCapture();
     await _stopPlayback();
     if (generation != _playGeneration) return false;
+    if (platform == TargetPlatform.iOS) {
+      // The recorder's native stop has completed before changing category.
+      // A speech-output category also avoids the simulator's input/output
+      // AudioQueue failing to start when only a prompt is being played.
+      await _session?.setActive(false);
+      if (generation != _playGeneration) return false;
+      await _session?.configure(sessionConfiguration);
+      if (generation != _playGeneration) return false;
+    }
     await _session?.setActive(true);
+    if (generation != _playGeneration) return false;
+    if (platform == TargetPlatform.iOS) {
+      return _playIos(audio, onLevel);
+    }
     if (!SoLoud.instance.isInitialized) await SoLoud.instance.init();
     final source = await SoLoud.instance.loadMem(
       'kokoro-${DateTime.now().microsecondsSinceEpoch}.wav',
@@ -184,6 +254,43 @@ class DeviceVoiceAudio implements VoiceAudio {
     return completion.future;
   }
 
+  /// AVAudioPlayer owns iOS output, avoiding SoLoud's deferred device-stop
+  /// worker racing the microphone's AudioUnit. Native completion, not this
+  /// animation timer, determines when the assistant starts listening.
+  Future<bool> _playIos(
+    SynthesizedAudio audio,
+    void Function(double) onLevel,
+  ) async {
+    final id =
+        '${DateTime.now().microsecondsSinceEpoch}-${_iosPlaybackSequence++}';
+    _iosPlaybackId = id;
+    final watch = Stopwatch()..start();
+    _meter = Timer.periodic(const Duration(milliseconds: 60), (_) {
+      if (_iosPlaybackId != id) return;
+      final index = watch.elapsedMicroseconds * audio.sampleRate ~/ 1000000;
+      var power = 0.0;
+      final end = min(index + 1024, audio.samples.length);
+      for (var i = index; i < end; i++) {
+        power += audio.samples[i] * audio.samples[i];
+      }
+      onLevel(sqrt(power / max(1, end - index)).clamp(0, 1));
+    });
+    try {
+      return await iosPlaybackChannel.invokeMethod<bool>('play', {
+            'id': id,
+            'wav': encodeVoiceWav(audio),
+            'volume': _ducked ? .25 : 1.0,
+          }) ??
+          false;
+    } finally {
+      if (_iosPlaybackId == id) {
+        _iosPlaybackId = null;
+        _meter?.cancel();
+        onLevel(0);
+      }
+    }
+  }
+
   @override
   Future<void> stopPlayback() async {
     _playGeneration++;
@@ -192,6 +299,11 @@ class DeviceVoiceAudio implements VoiceAudio {
 
   Future<void> _stopPlayback() async {
     _meter?.cancel();
+    final playbackId = _iosPlaybackId;
+    _iosPlaybackId = null;
+    if (playbackId != null) {
+      await iosPlaybackChannel.invokeMethod<void>('stop', {'id': playbackId});
+    }
     final handle = _handle;
     _handle = null;
     if (handle != null && SoLoud.instance.isInitialized) {

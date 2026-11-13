@@ -6,6 +6,7 @@ plugins {
 
 android {
     namespace = "dev.fieldassist.field_assist"
+    sourceSets.getByName("main").jniLibs.srcDir("../../../../packages/field_voice/native/moonshine/android")
     compileSdk = 36
     ndkVersion = "28.2.13676358"
     // Reuse an installed matching NDK without changing the host Flutter SDK setting.
@@ -35,6 +36,14 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Configure release credentials locally before distribution.
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // The upstream runtime archive includes this validation layer
+            // even when only CPU inference modules are selected.
+            excludes += "**/libVkLayer_khronos_validation.so"
         }
     }
 }

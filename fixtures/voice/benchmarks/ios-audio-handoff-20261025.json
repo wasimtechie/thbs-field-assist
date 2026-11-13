@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-25",
+  "build": "0.3.2+20",
+  "status": "Native iOS simulator capture and eight audio handoffs passed after Mac reboot",
+  "changes": [
+    "iOS AVAudioPlayer output replaces SoLoud deferred-pause playback",
+    "Native output completes before recorder startup",
+    "Deactivate previous iOS output before recorder input configuration",
+    "Android voice models and playback unchanged"
+  ],
+  "verification": {
+    "unit_widget_tests": {
+      "passed": 53,
+      "log": ".local/ios-audio-fix-tests.log"
+    },
+    "analysis": "No issues found",
+    "speaker_only_native": "passed in iOS 27.1",
+    "full_speak_listen_native": "passed: eight turns, 400 PCM frames, stop/replay and duck/restore on iOS 27.1",
+    "capture_only_48000_native": "passed after reboot: 9600 first-buffer bytes",
+    "physical_phone_microphone": "not tested",
+    "normal_app_retry": "original iPhone 18 Pro iOS 27.0, existing normal 0.3.2 (20) app, S1 greeting followed by Auto listening visibly verified after reboot",
+    "android_fallback": "existing version 0.3.1 launched on emulator-5554; live microphone not verified in this investigation",
+    "restored_iphone": "existing normal app launched without reinstalling or clearing current local data",
+    "capture_only_16000_native": "passed after reboot: 2708 first-buffer bytes"
+  },
+  "environment_actions": [
+    "Restarted simulator UI, audio helper and backend without erasing devices",
+    "Selected MacBook Pro Speakers and MacBook Pro Microphone; audible simulator volume",
+    "Mac microphone permission confirmed enabled by user",
+    "Accepted simulated iPhone microphone consent",
+    "Stopped unused Android emulator during iOS diagnostics, then reopened Android as fallback"
+  ],
+  "data_incident": {
+    "cause": "Flutter integration-test default uninstall cleanup was initially used",
+    "impact": "original iPhone simulator app local data removed",
+    "server_submissions": "unchanged by diagnostics",
+    "recovery": "no remaining reports.db or local Time Machine snapshot found",
+    "mitigation": "subsequent test commands use --no-uninstall; normal iPhone demo rebuilt and relaunched"
+  },
+  "sources": {
+    "apps/mobile/lib/features/voice/voice_audio.dart": "eafc0ebf5f171be510eb62fb14f5db946a213024dbb25ece7a34ff1c25b80467",
+    "apps/mobile/ios/Runner/AppDelegate.swift": "eba5e023ff3547ce9c5aa7c4a052e28cbf6fb6410fe88e2c7fdd723ad9114f0d",
+    "apps/mobile/test/voice_device_audio_test.dart": "16d17863aba570712c6efbba32c927add1b3a039b952a809a9677ebc1f83dcdd",
+    "apps/mobile/integration_test/voice_audio_handoff_native_test.dart": "69007c7bd23a85336bd807b05c6639ebe97343925d0e89f27a221ce461ae4a69",
+    "apps/mobile/integration_test/voice_capture_rate_native_test.dart": "92bb7c2449b9f4025882721937a587a689026620974440e4437611b9392a9526"
+  },
+  "latest_investigation": {
+    "crash": "Runner-2026-10-25-183842.ips",
+    "fatal_stack": "_ReportRPCTimeout -> AURemoteIO::Start -> AVAudioEngine.start -> RecorderStreamDelegate.start",
+    "host_evidence": "coreaudiod: BuiltInMicrophoneDevice is not running; ASDDSPAudioDevice.m:406 assertion; IO thread failed to start, code 1937010544",
+    "microphone_permission": "tccd AUTHREQ_RESULT authValue=2 (granted) for SimulatorTrampoline at crash time; no permission changes made",
+    "sim_audio_processor_sample": "idle; no active blocked work identified in sample",
+    "next_step": "Completed after user reboot: native capture and handoffs pass; normal S1 voice screen reached Auto listening for user testing",
+    "storage": "Current original simulator app data privately backed up before further recovery; no uninstall/erase used in this investigation",
+    "logs": [
+      ".local/coreaudio-simulator-errors.log",
+      ".local/coreaudio-last-crash-context.log",
+      ".local/ios-microphone-permission-diagnostic.log",
+      ".local/simulator-audio-service.sample"
+    ]
+  },
+  "before_reboot_verification": {
+    "unit_widget_tests": {
+      "passed": 53,
+      "log": ".local/ios-audio-fix-tests.log"
+    },
+    "analysis": "No issues found",
+    "speaker_only_native": "passed in iOS 27.1",
+    "full_speak_listen_native": "failed at microphone startup",
+    "capture_only_48000_native": "aborted in AURemoteIO::Cleanup via AVAudioEngine input-node setup",
+    "physical_phone_microphone": "not tested",
+    "normal_app_retry": "iPhone 18 Pro iOS 27.0 normal app also aborted at AURemoteIO::Start during AVAudioEngine recorder startup; crash report Runner-2026-10-25-183632.ips",
+    "android_fallback": "existing version 0.3.1 launched on emulator-5554; live microphone not verified in this investigation",
+    "restored_iphone": "normal version 0.3.2 relaunched; S1 Visit brief visibly open after crash"
+  },
+  "after_reboot": {
+    "user_action": "User restarted the Mac; uptime confirmed a fresh boot",
+    "diagnostic_simulator": "iPhone Duo iOS 27.1, 7410254D-6D25-4941-B05D-7CF1F143BDC5",
+    "data_retention": "Both flutter test runs explicitly used --no-uninstall; original demo app not used for diagnostic tests",
+    "capture_rates_hz": [
+      48000,
+      16000
+    ],
+    "handoff_turns": 8,
+    "pcm_frames": 400,
+    "logs": [
+      ".local/ios-capture-after-reboot-20261025.log",
+      ".local/ios-handoff-after-reboot-20261025.log",
+      ".local/ios-normal-after-reboot-20261025.log"
+    ],
+    "scope": "Microphone byte delivery and audio lifecycle only; no accent accuracy, semantic extraction or physical phone benchmark claimed",
+    "code_changes_after_reboot": "none"
+  }
+}

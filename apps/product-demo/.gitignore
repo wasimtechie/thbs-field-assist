@@ -2,3 +2,8 @@ node_modules/
 dist/
 .cache/
 out/
+public/voice-promo/*.mp4
+public/voice-promo/*.wav
+public/voice-promo/*.png
+public/voice-promo/*.jpg
+voice-promo/*.mp4

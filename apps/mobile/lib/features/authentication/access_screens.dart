@@ -7,6 +7,91 @@ import '../../core/design_system/appearance.dart';
 import 'auth_layout.dart';
 import '../../core/design_system/profile_avatar.dart';
 
+class DemoEntryScreen extends ConsumerWidget {
+  const DemoEntryScreen({super.key});
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final app = ref.watch(appProvider),
+        controller = ref.read(appProvider.notifier);
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Brand(),
+                const SizedBox(height: 40),
+                Text(
+                  'Your field demo',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 12),
+                const Text(
+                  'Open your saved jobs and continue the voice assistant demo.',
+                ),
+                const SizedBox(height: 24),
+                ErrorNotice(app.error),
+                FilledButton.icon(
+                  onPressed: app.busy ? null : controller.startDemo,
+                  icon: const Icon(Icons.play_arrow_rounded),
+                  label: Text(app.busy ? 'Opening demo…' : 'Open demo'),
+                ),
+                if (controller.demoAccess.offlinePackage)
+                  TextButton(
+                    onPressed: app.busy
+                        ? null
+                        : () async {
+                            var address = controller.api.dio.options.baseUrl;
+                            final result = await showDialog<String>(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Demo dashboard connection'),
+                                content: TextFormField(
+                                  initialValue: address,
+                                  onChanged: (value) => address = value,
+                                  keyboardType: TextInputType.url,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Server address',
+                                  ),
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  FilledButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, address),
+                                    child: const Text('Save connection'),
+                                  ),
+                                ],
+                              ),
+                            );
+                            if (result == null) return;
+                            try {
+                              await controller.configureServer(result);
+                            } catch (e) {
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())),
+                                );
+                              }
+                            }
+                          },
+                    child: const Text('Dashboard connection'),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
   @override
@@ -592,8 +677,14 @@ class ProvisionScreen extends ConsumerWidget {
                 label: const Text('Retry provisioning'),
               ),
               TextButton(
-                onPressed: controller.signOut,
-                child: const Text('Back to sign in'),
+                onPressed: controller.demoAccess.enabled
+                    ? controller.startDemo
+                    : controller.signOut,
+                child: Text(
+                  controller.demoAccess.enabled
+                      ? 'Restart demo setup'
+                      : 'Back to sign in',
+                ),
               ),
             ],
             const SizedBox(height: 24),

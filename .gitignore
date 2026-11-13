@@ -7,6 +7,7 @@ node_modules/
 !.env.example
 !.env.*.example
 .local/
+/apps/mobile/assets/offline_demo/
 *.log
 playwright-report/
 test-results/
@@ -15,6 +16,8 @@ coverage/
 .dart_tool/
 .flutter-plugins-dependencies
 build/
+*.tsbuildinfo
+/output/
 Pods/
 .symlinks/
 **/local.properties
@@ -27,9 +30,13 @@ models/
 *.so
 *.a
 *.apk
+# Downloaded native Moonshine XCFramework, rebuilt from the pinned provisioner.
+/packages/field_voice/native/moonshine/
 # Generated delivery artifacts; rebuild from the committed source.
 /Field-Assist-Android-Test.apk.sha256
 /THBS-Field-Assist-Demo.mp4
+/Field-Assist-Voice-Promo.mp4
+/Field-Assist-Voice-Promo.jpg
 # Local verification output may contain device diagnostics or session fixtures.
 /docs/evidence/*
 !/docs/evidence/README.md

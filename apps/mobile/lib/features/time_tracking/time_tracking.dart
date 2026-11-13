@@ -10,6 +10,38 @@ const timeActionLabels = {
 };
 String elapsedLabel(int seconds) =>
     '${seconds ~/ 3600}h ${(seconds % 3600) ~/ 60}m';
+
+/// Local confirmation counts for departure; dashboard delivery can happen later.
+bool visitHasSubmission(
+  String jobId,
+  int revision,
+  String startedAt,
+  List<LocalReport> reports,
+  List<Json> summaries,
+) {
+  final start = DateTime.parse(startedAt);
+  final own = reports.where(
+    (r) => r.workOrderId == jobId && r.workOrderAssignmentRevision == revision,
+  );
+  for (final report in own) {
+    if (report.state != ReportState.draft && report.frozen != null) {
+      final confirmed = DateTime.tryParse(
+        (jsonDecode(report.frozen!) as Json)['confirmedAt'] as String? ?? '',
+      );
+      if (confirmed != null && !confirmed.isBefore(start)) return true;
+    }
+  }
+  final ids = own.map((r) => r.id).toSet();
+  return summaries.any((e) {
+    final payload = e['payload'] as Json;
+    final at = DateTime.tryParse(payload['confirmedAt'] as String? ?? '');
+    return payload['workOrderId'] == jobId &&
+        ids.contains(payload['clientReportId']) &&
+        at != null &&
+        !at.isBefore(start);
+  });
+}
+
 Json visitDurations(List<Json> events, {DateTime? now}) {
   var working = 0, breaks = 0, state = 'closed';
   DateTime? start, first, last;

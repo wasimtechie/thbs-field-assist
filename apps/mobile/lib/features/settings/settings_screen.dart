@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/app_controller.dart';
 import 'avatar_picker.dart';
+import 'voice_picker.dart';
 import '../../core/design_system/profile_avatar.dart';
 import '../../core/design_system/theme.dart';
 import '../../core/design_system/appearance.dart';
@@ -74,6 +75,56 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 23),
             const WorkspaceSection('Make it yours'),
+            if (controller.demoAccess.offlinePackage)
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.cloud_sync_outlined),
+                  title: const Text('Demo dashboard connection'),
+                  subtitle: const Text(
+                    'Voice and forms work offline. Configure a reachable server to deliver queued summaries.',
+                  ),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () async {
+                    var address = controller.api.dio.options.baseUrl;
+                    final chosen = await showDialog<String>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Connect to demo dashboard'),
+                        content: TextFormField(
+                          initialValue: address,
+                          onChanged: (value) => address = value,
+                          keyboardType: TextInputType.url,
+                          decoration: const InputDecoration(
+                            labelText: 'Server address',
+                            hintText: 'http://192.168.1.9:3002',
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          FilledButton(
+                            onPressed: () => Navigator.pop(context, address),
+                            child: const Text('Save connection'),
+                          ),
+                        ],
+                      ),
+                    );
+                    if (chosen == null) return;
+                    try {
+                      await controller.configureServer(chosen);
+                      await controller.synchronize();
+                    } catch (e) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(SnackBar(content: Text(e.toString())));
+                      }
+                    }
+                  },
+                ),
+              ),
             const Card(
               child: Padding(
                 padding: EdgeInsets.all(18),
@@ -94,6 +145,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 20),
             const WorkspaceSection('Voice & interaction'),
+            const Card(child: VoicePicker()),
             Card(
               child: Column(
                 children: [
@@ -218,7 +270,9 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                   _Status(
                     'Offline lease',
-                    'Expires ${app.lease?.expiresAt.toLocal().toString().substring(0, 16) ?? 'not verified'}',
+                    app.lease?.nonExpiringDemo == true
+                        ? 'Demo access · No expiration'
+                        : 'Expires ${app.lease?.expiresAt?.toLocal().toString().substring(0, 16) ?? 'not verified'}',
                     Icons.schedule_rounded,
                   ),
                   _Status(
@@ -242,49 +296,50 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 7),
-            Card(
-              child: Column(
-                children: [
-                  ListTile(
-                    leading: const WorkspaceIcon(
-                      Icons.lock_outline_rounded,
-                      size: 38,
+            if (!controller.demoAccess.matches(app.user?.email))
+              Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const WorkspaceIcon(
+                        Icons.lock_outline_rounded,
+                        size: 38,
+                      ),
+                      title: const Text('Lock workspace'),
+                      trailing: const MotionIcon(
+                        Icons.chevron_right_rounded,
+                        size: 19,
+                      ),
+                      onTap: controller.lock,
                     ),
-                    title: const Text('Lock workspace'),
-                    trailing: const MotionIcon(
-                      Icons.chevron_right_rounded,
-                      size: 19,
+                    Divider(
+                      height: 1,
+                      indent: 20,
+                      endIndent: 20,
+                      color: context.colors.edge.withValues(alpha: .6),
                     ),
-                    onTap: controller.lock,
-                  ),
-                  Divider(
-                    height: 1,
-                    indent: 20,
-                    endIndent: 20,
-                    color: context.colors.edge.withValues(alpha: .6),
-                  ),
-                  ListTile(
-                    leading: WorkspaceIcon(
-                      Icons.logout_rounded,
-                      color: context.colors.danger,
-                      size: 38,
+                    ListTile(
+                      leading: WorkspaceIcon(
+                        Icons.logout_rounded,
+                        color: context.colors.danger,
+                        size: 38,
+                      ),
+                      title: Text(
+                        'Sign out',
+                        style: TextStyle(color: context.colors.danger),
+                      ),
+                      subtitle: const Text(
+                        'Pending reports stay encrypted for your account',
+                      ),
+                      trailing: const MotionIcon(
+                        Icons.chevron_right_rounded,
+                        size: 19,
+                      ),
+                      onTap: controller.signOut,
                     ),
-                    title: Text(
-                      'Sign out',
-                      style: TextStyle(color: context.colors.danger),
-                    ),
-                    subtitle: const Text(
-                      'Pending reports stay encrypted for your account',
-                    ),
-                    trailing: const MotionIcon(
-                      Icons.chevron_right_rounded,
-                      size: 19,
-                    ),
-                    onTap: controller.signOut,
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
             const SizedBox(height: 16),
             ErrorNotice(app.error),
             Center(

@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as developer;
 import 'dart:io';
 import 'package:field_voice/field_voice.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
+import '../features/closure/visit_summary_submission.dart';
 import 'package:uuid/uuid.dart';
 import '../core/contracts.dart';
 import '../core/location/location_capture.dart';
@@ -10,6 +13,7 @@ import '../core/networking/api_client.dart';
 import '../core/persistence/report_repository.dart';
 import '../core/persistence/account_secure_storage.dart';
 import '../features/offline_access/entitlement.dart';
+import '../features/authentication/demo_access.dart';
 import '../features/templates/asset_installer.dart';
 import '../features/sync/sync_service.dart';
 import '../features/sync/outbox_pump.dart';
@@ -22,6 +26,9 @@ import '../features/collaboration/collaboration_service.dart';
 part 'collaboration_controller.dart';
 
 enum AccessStage { booting, signedOut, locked, provisioning, ready }
+
+const _voiceSetupRecoveryNotice =
+    'Manual forms are available. To finish voice setup, open Profile → Offline readiness → Sync & repair package.';
 
 class AppState {
   const AppState({
@@ -40,9 +47,12 @@ class AppState {
     this.lastSync,
     this.playback = true,
     this.speechRate = 1,
+    this.speechVoiceId = attentiveSpeechVoice,
     this.reduceMotion = false,
     this.workOrders = const [],
     this.feedback = const [],
+    this.summarySubmissions = const [],
+    this.summaryDrafts = const {},
     this.operationsSyncedAt,
     this.collaboration = const CollaborationState(),
   });
@@ -50,9 +60,11 @@ class AppState {
   final String error, notice, step;
   final bool busy, voiceReady, offline, playback, reduceMotion;
   final double progress, speechRate;
+  final String speechVoiceId;
   final List<LocalReport> reports;
   final List<WorkOrder> workOrders;
-  final List<Json> feedback;
+  final List<Json> feedback, summarySubmissions;
+  final Map<String, Json> summaryDrafts;
   final DateTime? operationsSyncedAt;
   final CollaborationState collaboration;
   final EngineerIdentity? user;
@@ -75,9 +87,12 @@ class AppState {
     DateTime? lastSync,
     bool? playback,
     double? speechRate,
+    String? speechVoiceId,
     bool? reduceMotion,
     List<WorkOrder>? workOrders,
     List<Json>? feedback,
+    List<Json>? summarySubmissions,
+    Map<String, Json>? summaryDrafts,
     DateTime? operationsSyncedAt,
     CollaborationState? collaboration,
   }) => AppState(
@@ -96,9 +111,12 @@ class AppState {
     lastSync: lastSync ?? this.lastSync,
     playback: playback ?? this.playback,
     speechRate: speechRate ?? this.speechRate,
+    speechVoiceId: speechVoiceId ?? this.speechVoiceId,
     reduceMotion: reduceMotion ?? this.reduceMotion,
     workOrders: workOrders ?? this.workOrders,
     feedback: feedback ?? this.feedback,
+    summarySubmissions: summarySubmissions ?? this.summarySubmissions,
+    summaryDrafts: summaryDrafts ?? this.summaryDrafts,
     operationsSyncedAt: operationsSyncedAt ?? this.operationsSyncedAt,
     collaboration: collaboration ?? this.collaboration,
   );
@@ -109,6 +127,7 @@ final appProvider = NotifierProvider<AppController, AppState>(
 );
 
 class AppController extends Notifier<AppState> with CollaborationActions {
+  DemoAccess get demoAccess => const DemoAccess.fromEnvironment();
   final secrets = const AccountSecureStorage();
   @override
   late final repository = SecureReportRepository(secrets);
@@ -146,6 +165,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       final owner = await secrets.read(key: 'active-user');
       if (!ref.mounted) return;
       if (owner == null) {
+        if (demoAccess.enabled) {
+          await startDemo();
+          return;
+        }
         state = const AppState(stage: AccessStage.signedOut);
         return;
       }
@@ -159,6 +182,26 @@ class AppController extends Notifier<AppState> with CollaborationActions {
             ? null
             : EngineerIdentity.fromJson(jsonDecode(identity) as Json),
       );
+      if (demoAccess.enabled) {
+        if (demoAccess.matches(state.user?.email)) {
+          if (demoAccess.nonExpiringOfflineAccess) {
+            OfflineLease? savedLease;
+            try {
+              savedLease = await assertAccess();
+            } catch (_) {
+              // An upgraded demo replaces its old timed grant with the signed
+              // bundled demo grant, without clearing the encrypted workspace.
+            }
+            if (savedLease?.nonExpiringDemo != true) {
+              await startDemo();
+              return;
+            }
+          }
+          await unlock();
+          if (!ref.mounted || state.stage == AccessStage.ready) return;
+        }
+        await startDemo();
+      }
     } catch (e) {
       if (!ref.mounted) return;
       state = AppState(
@@ -166,6 +209,297 @@ class AppController extends Notifier<AppState> with CollaborationActions {
         error: 'Secure account storage could not be opened. ${e.toString()}',
       );
     }
+  }
+
+  Future<void> startDemo() async {
+    if (!demoAccess.configured) {
+      state = state.copy(
+        stage: AccessStage.signedOut,
+        busy: false,
+        error: 'This demo build needs its synthetic account configuration.',
+      );
+      return;
+    }
+    if (demoAccess.offlinePackage) {
+      await prepareBundledDemo();
+      // Bundled access remains subject to the normal signed lease lifetime.
+      // An online sign-in can renew it without replacing encrypted drafts.
+      if (state.stage != AccessStage.ready &&
+          state.error.contains('offline lease expired')) {
+        await signIn(demoAccess.email, demoAccess.password);
+        if (state.stage != AccessStage.ready) {
+          state = state.copy(
+            error:
+                'Offline demo access needs renewal. Connect to the dashboard server and open the demo again. ${state.error}',
+          );
+        }
+      }
+      return;
+    }
+    await signIn(demoAccess.email, demoAccess.password);
+  }
+
+  Future<Json> loadBundledDemo() async {
+    if (!demoAccess.offlinePackage) {
+      throw StateError('Offline demo package is not enabled.');
+    }
+    final snapshot =
+        jsonDecode(
+              await rootBundle.loadString('assets/offline_demo/bootstrap.json'),
+            )
+            as Json;
+    if (snapshot['synthetic'] != true ||
+        !demoAccess.matches((snapshot['user'] as Json)['email'] as String?)) {
+      throw StateError(
+        'Only the configured synthetic demo account can use this package.',
+      );
+    }
+    return snapshot;
+  }
+
+  Future<void> prepareBundledDemo() async {
+    state = state.copy(
+      stage: AccessStage.provisioning,
+      busy: true,
+      error: '',
+      step: 'Opening bundled offline demo',
+      progress: .05,
+    );
+    try {
+      final snapshot = await loadBundledDemo();
+      final user = EngineerIdentity.fromJson(snapshot['user'] as Json);
+      final form = FormDefinition.fromJson(snapshot['template'] as Json);
+      form.verifyHash();
+      final previous = await secrets.read(key: 'observed:${user.id}');
+      final lease = await OfflineLease.verify(
+        snapshot['entitlement'] as String,
+        _publicKey,
+        keyId: const String.fromEnvironment(
+          'ENTITLEMENT_KEY_ID',
+          defaultValue: 'field-assist-local-1',
+        ),
+        now: DateTime.now().toUtc(),
+        lastObserved: previous == null ? null : DateTime.parse(previous),
+        userId: user.id,
+        deviceId: snapshot['deviceId'] as String,
+        nonExpiringDemoEmail:
+            demoAccess.nonExpiringOfflineAccess &&
+                demoAccess.matches(user.email)
+            ? user.email
+            : null,
+      );
+      if (!lease.allowedTemplates.contains(form.templateId) ||
+          lease.typeId != form.typeId) {
+        throw StateError('Bundled form is outside the signed demo access.');
+      }
+      await repository.open(user.id, authorizePresence: false);
+      _deviceId = snapshot['deviceId'] as String;
+      await secrets.write(key: 'device:${user.id}', value: _deviceId);
+      await secrets.write(
+        key: 'lease:${user.id}',
+        value: snapshot['entitlement'] as String,
+      );
+      await secrets.write(
+        key: 'observed:${user.id}',
+        value: DateTime.now().toUtc().toIso8601String(),
+      );
+      await secrets.write(
+        key: 'identity:${user.id}',
+        value: jsonEncode(user.toJson()),
+      );
+      await secrets.write(key: 'active-user', value: user.id);
+      api.token = null;
+      await repository.setMetadata('installed-form', form.source);
+      if (await repository.metadata('operations-snapshot') == null) {
+        await repository.setMetadata(
+          'operations-snapshot',
+          snapshot['operations'] as Json,
+        );
+      }
+      state = state.copy(
+        user: user,
+        form: form,
+        lease: lease,
+        voiceReady: false,
+        offline: true,
+        step: 'Preparing bundled voice package',
+      );
+      await _restoreSettings();
+      await reloadReports();
+      await reloadSummarySubmissions();
+      await prepareBundledVoice(user.id, snapshot);
+      if (!ref.mounted || state.user?.id != user.id) return;
+      state = state.copy(
+        stage: AccessStage.ready,
+        busy: false,
+        progress: 1,
+        offline: true,
+        notice:
+            'Offline demo ready. Jobs, voice and saved summaries are available on this device.',
+      );
+      _startLeaseMonitor();
+    } catch (e) {
+      state = state.copy(
+        busy: false,
+        error: e.toString(),
+        step: 'Offline setup needs attention',
+      );
+    }
+  }
+
+  Future<void> prepareBundledVoice(String owner, Json snapshot) async {
+    bool current() =>
+        ref.mounted &&
+        state.user?.id == owner &&
+        [AccessStage.ready, AccessStage.provisioning].contains(state.stage);
+    final directory = await AssetInstaller(api).installBundled(snapshot, (p) {
+      if (current() && state.stage == AccessStage.provisioning) {
+        state = state.copy(
+          progress: .15 + .7 * p.done / p.total,
+          step: 'Preparing offline voice · ${p.done}/${p.total}',
+        );
+      }
+    });
+    if (!current()) return;
+    await voice.load(directory);
+    await voice.smokeTest();
+    if (!current()) return;
+    await repository.activateVoicePackage(
+      directory,
+      snapshot['manifest'] as Json,
+    );
+    if (current()) {
+      state = state.copy(
+        voiceReady: true,
+        notice: 'Offline voice package verified on this device.',
+      );
+    }
+  }
+
+  VisitSummaryOutbox? _summaryOutbox;
+  String? _summaryOwner;
+  VisitSummaryOutbox summariesFor(String owner) {
+    if (_summaryOwner != owner) {
+      _summaryOwner = owner;
+      Future<void> check() async {
+        if (!_currentOwner(owner)) throw StateError('Workspace changed.');
+        await assertAccess();
+        if (!_currentOwner(owner)) throw StateError('Workspace changed.');
+      }
+
+      _summaryOutbox = VisitSummaryOutbox(
+        read: repository.metadata,
+        write: repository.setMetadata,
+        assertAccess: check,
+        send: (payload) async {
+          await ensureDemoSession(owner);
+          await check();
+          try {
+            return await api.send(
+              'visit-summaries',
+              method: 'POST',
+              body: payload,
+            );
+          } on ServiceFailure catch (e) {
+            if (e.status != 401 || !demoAccess.matches(state.user?.email)) {
+              rethrow;
+            }
+            api.token = null;
+            await ensureDemoSession(owner);
+            await check();
+            return api.send('visit-summaries', method: 'POST', body: payload);
+          }
+        },
+      );
+    }
+    return _summaryOutbox!;
+  }
+
+  Future<void> reloadSummarySubmissions() async {
+    final owner = state.user?.id;
+    if (owner == null) return;
+    // Bootstrap also restores this queue before the ready stage is published.
+    final rows =
+        (await repository.metadata(VisitSummaryOutbox.storageKey) as List? ??
+                [])
+            .cast<Json>();
+    if (ref.mounted && state.user?.id == owner) {
+      state = state.copy(summarySubmissions: rows);
+    }
+  }
+
+  void cacheSummaryDraft(String id, Json saved, {required String ownerId}) {
+    if (_currentOwner(ownerId)) {
+      state = state.copy(summaryDrafts: {...state.summaryDrafts, id: saved});
+    }
+  }
+
+  Future<void> saveSummaryDraft(
+    String id,
+    Json saved, {
+    required String ownerId,
+  }) async {
+    await assertAccess();
+    if (!_currentOwner(ownerId)) throw StateError('Workspace changed.');
+    await repository.setMetadata('closure-demo-summary:$id', saved);
+    cacheSummaryDraft(id, saved, ownerId: ownerId);
+  }
+
+  Future<Json> queueVisitSummary({
+    required String reportId,
+    required String? workOrderId,
+    required Answers values,
+    required Json sources,
+  }) async {
+    final owner =
+        state.user?.id ?? (throw StateError('Open your workspace first.'));
+    final queued = await summariesFor(owner).enqueue(
+      reportId: reportId,
+      workOrderId: workOrderId,
+      values: values,
+      sources: sources,
+    );
+    if (!_currentOwner(owner)) throw StateError('Workspace changed.');
+    await reloadSummarySubmissions();
+    unawaited(flushVisitSummaries(owner, manual: true));
+    return queued;
+  }
+
+  Future<bool> flushVisitSummaries(String owner, {bool manual = false}) async {
+    if (!_currentOwner(owner)) return false;
+    try {
+      final hadPending = state.summarySubmissions.any(
+        (e) => e['status'] == 'waiting' || manual && e['status'] == 'attention',
+      );
+      final done = await summariesFor(owner).flush(manual: manual);
+      if (!_currentOwner(owner)) return false;
+      await reloadSummarySubmissions();
+      if (!done || hadPending) state = state.copy(offline: !done);
+      return done;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<void> ensureDemoSession(String owner) async {
+    if (!demoAccess.matches(state.user?.email) || api.token != null) return;
+    final login = await api.send(
+      'auth/login',
+      method: 'POST',
+      body: {
+        'email': demoAccess.email,
+        'password': demoAccess.password,
+        'audience': 'mobile',
+      },
+    );
+    if (!_currentOwner(owner)) throw StateError('Workspace changed.');
+    if ((login['user'] as Json)['id'] != owner) {
+      throw StateError(
+        'The server demo account differs from this offline workspace.',
+      );
+    }
+    api.token = login['token'] as String;
+    await secrets.write(key: 'token:$owner', value: api.token);
   }
 
   Future<void> updateAvatar(String avatarId) async {
@@ -191,7 +525,8 @@ class AppController extends Notifier<AppState> with CollaborationActions {
   }
 
   Future<void> configureServer(String address) async {
-    if (state.stage != AccessStage.signedOut) {
+    if (state.stage != AccessStage.signedOut &&
+        !(demoAccess.offlinePackage && demoAccess.matches(state.user?.email))) {
       throw StateError(
         'Sign out before changing the server. Saved reports remain on this phone.',
       );
@@ -199,6 +534,9 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     final url = normalizeServerAddress(address);
     await secrets.write(key: 'api-base-url', value: url);
     api.token = null;
+    if (state.user != null) {
+      await secrets.delete(key: 'token:${state.user!.id}');
+    }
     api.dio.options.baseUrl = url;
     state = state.copy(error: '');
   }
@@ -213,7 +551,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       );
       final user = EngineerIdentity.fromJson(login['user'] as Json);
       api.token = login['token'] as String;
-      await repository.open(user.id, authorizePresence: true);
+      await repository.open(
+        user.id,
+        authorizePresence: !demoAccess.matches(user.email),
+      );
       _deviceId =
           await secrets.read(key: 'device:${user.id}') ?? const Uuid().v4();
       await secrets.write(key: 'device:${user.id}', value: _deviceId);
@@ -271,6 +612,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       lastObserved: previous == null ? null : DateTime.parse(previous),
       userId: user.id,
       deviceId: _deviceId,
+      nonExpiringDemoEmail:
+          demoAccess.nonExpiringOfflineAccess && demoAccess.matches(user.email)
+          ? user.email
+          : null,
     );
     await secrets.write(
       key: 'observed:${user.id}',
@@ -297,6 +642,9 @@ class AppController extends Notifier<AppState> with CollaborationActions {
           'appVersion': '0.1.0',
           'osVersion': Platform.operatingSystemVersion,
           'model': '${Platform.operatingSystem} device (model not reported)',
+          if (demoAccess.nonExpiringOfflineAccess &&
+              demoAccess.matches(state.user?.email))
+            'nonExpiringDemo': true,
         },
       );
       final form = FormDefinition.fromJson(data['template'] as Json);
@@ -312,6 +660,11 @@ class AppController extends Notifier<AppState> with CollaborationActions {
         now: DateTime.parse(data['serverTime'] as String),
         userId: user.id,
         deviceId: _deviceId,
+        nonExpiringDemoEmail:
+            demoAccess.nonExpiringOfflineAccess &&
+                demoAccess.matches(user.email)
+            ? user.email
+            : null,
       );
       await repository.setMetadata('installed-form', form.source);
       await secrets.write(
@@ -354,10 +707,16 @@ class AppController extends Notifier<AppState> with CollaborationActions {
           voiceReady: true,
           notice: 'Offline voice package verified on this device.',
         );
-      } catch (e) {
+      } catch (e, stack) {
+        developer.log(
+          'Voice package setup failed',
+          name: 'field_assist.voice',
+          error: e,
+          stackTrace: stack,
+        );
         state = state.copy(
           voiceReady: false,
-          notice: 'Manual forms are available. Voice needs attention: $e',
+          notice: _voiceSetupRecoveryNotice,
         );
       }
       await repository.setMetadata(
@@ -366,6 +725,7 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       );
       await _restoreSettings();
       await reloadReports();
+      await reloadSummarySubmissions();
       state = state.copy(
         stage: AccessStage.ready,
         busy: false,
@@ -390,7 +750,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     state = state.copy(busy: true, error: '');
     try {
       final lease = await assertAccess();
-      await repository.open(state.user!.id, authorizePresence: true);
+      await repository.open(
+        state.user!.id,
+        authorizePresence: !demoAccess.matches(state.user?.email),
+      );
       final stored = await repository.metadata('installed-form');
       if (stored == null) {
         throw StateError(
@@ -412,6 +775,7 @@ class AppController extends Notifier<AppState> with CollaborationActions {
         notice: 'Manual forms are ready. Checking the local voice package…',
       );
       await reloadReports();
+      await reloadSummarySubmissions();
       _startLeaseMonitor();
       unawaited(_restoreVoice(state.user!.id));
       unawaited(_syncForeground(state.user!.id));
@@ -427,6 +791,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
 
   Future<void> _restoreVoice(String owner) async {
     try {
+      if (demoAccess.offlinePackage) {
+        await prepareBundledVoice(owner, await loadBundledDemo());
+        return;
+      }
       final pending =
           await repository.metadata('pending-voice-package') as Json?;
       final storedDirectory =
@@ -454,11 +822,17 @@ class AppController extends Notifier<AppState> with CollaborationActions {
         state = state.copy(voiceReady: true, notice: '');
         _warmOpeningPrompt();
       }
-    } catch (e) {
+    } catch (e, stack) {
+      developer.log(
+        'Voice package restore failed',
+        name: 'field_assist.voice',
+        error: e,
+        stackTrace: stack,
+      );
       if (_currentOwner(owner)) {
         state = state.copy(
           voiceReady: false,
-          notice: 'Manual forms are available. Voice needs repair: $e',
+          notice: _voiceSetupRecoveryNotice,
         );
       }
     }
@@ -467,6 +841,9 @@ class AppController extends Notifier<AppState> with CollaborationActions {
   void _warmOpeningPrompt() {
     final form = state.form;
     if (form == null || !state.playback) return;
+    // Closure already has prepared prompts. Background live synthesis shares
+    // the serial ASR/extraction worker and can delay the first spoken answer.
+    if (form.source['closurePolicy'] != null) return;
     // A shared short acknowledgment can play immediately after a durable save;
     // it no longer waits for synthesis of an entire combined next question.
     unawaited(
@@ -491,6 +868,9 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     try {
       await assertAccess();
       if (!_currentOwner(owner)) return false;
+      await ensureDemoSession(owner);
+      if (!_currentOwner(owner)) return false;
+      final summariesDelivered = await flushVisitSummaries(owner);
       await collaboration.flush(isCurrent: () => _currentOwner(owner));
       if (!_currentOwner(owner)) {
         return false;
@@ -502,7 +882,7 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       }
       await reloadReports();
       if (!_currentOwner(owner)) return false;
-      if (sync.lastError != null) {
+      if (sync.lastError != null || !summariesDelivered) {
         state = state.copy(offline: true);
         return false;
       }
@@ -556,33 +936,79 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     if (state.user?.id != owner) {
       return;
     }
+    final voiceId =
+        offlineSpeechVoice(s?['speechVoiceId'] as String?)?.id ??
+        attentiveSpeechVoice;
+    voice.selectSpeechVoice(voiceId);
+    promptAudio.clear();
     if (s != null) {
       state = state.copy(
         playback: s['playback'] as bool? ?? true,
         speechRate: (s['speechRate'] as num?)?.toDouble() ?? 1,
         reduceMotion: s['reduceMotion'] as bool? ?? false,
+        speechVoiceId: voiceId,
       );
+    } else {
+      state = state.copy(speechVoiceId: voiceId);
     }
   }
 
-  Future<void> settings({bool? playback, double? rate, bool? reduced}) async {
+  Future<void> settings({
+    bool? playback,
+    double? rate,
+    bool? reduced,
+    String? voiceId,
+  }) async {
+    if (voiceId != null) {
+      voice.selectSpeechVoice(voiceId);
+      promptAudio.clear();
+    }
     state = state.copy(
       playback: playback,
       speechRate: rate,
       reduceMotion: reduced,
+      speechVoiceId: voiceId,
     );
     await repository.setMetadata('settings', {
       'playback': state.playback,
       'speechRate': state.speechRate,
       'reduceMotion': state.reduceMotion,
+      'speechVoiceId': state.speechVoiceId,
     });
+  }
+
+  Future<int> nextVoiceGreetingIndex() async {
+    final owner = state.user?.id;
+    final previous = await repository.metadata('voice-greeting-index');
+    if (state.user?.id != owner) throw StateError('Workspace changed');
+    final index = previous is int && previous >= 0 ? previous % 3 : 0;
+    await repository.setMetadata('voice-greeting-index', (index + 1) % 3);
+    return index;
   }
 
   Future<void> reloadReports() async {
     if (!ref.mounted) return;
-    final owner = state.user?.id, reports = await repository.list();
-    if (owner != null && _currentOwner(owner)) {
-      state = state.copy(reports: reports);
+    final owner = state.user?.id;
+    bool current() =>
+        ref.mounted &&
+        state.user?.id == owner &&
+        [AccessStage.ready, AccessStage.provisioning].contains(state.stage);
+    if (owner == null || !current()) return;
+    final reports = await repository.list();
+    if (current()) {
+      final summaries = <String, Json>{};
+      for (final report in reports.where(
+        (r) => r.schema.source['closurePolicy'] != null,
+      )) {
+        if (!current()) return;
+        final saved =
+            await repository.metadata('closure-demo-summary:${report.id}')
+                as Json?;
+        if (saved != null) summaries[report.id] = saved;
+      }
+      if (current()) {
+        state = state.copy(reports: reports, summaryDrafts: summaries);
+      }
     }
   }
 
@@ -591,6 +1017,11 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     final form = state.form;
     if (form == null || !lease.allowedTemplates.contains(form.templateId)) {
       throw StateError('Reconnect to install your assigned form.');
+    }
+    if (form.source['closurePolicy'] != null) {
+      throw StateError(
+        'Start the closure assistant from an assigned visit in My jobs.',
+      );
     }
     final report = await repository.create(form, lease.id);
     await reloadReports();
@@ -678,12 +1109,39 @@ class AppController extends Notifier<AppState> with CollaborationActions {
         !lease.allowedTemplates.contains(form.templateId)) {
       throw StateError('Connect to install the form assigned to this job.');
     }
-    final draft = await repository.create(
+    var draft = await repository.create(
       form,
       lease.id,
       workOrderId: id,
       assignmentRevision: job.assignmentRevision,
     );
+    final closureContext = job.source['closureContext'] as Json?;
+    if (form.source['closurePolicy'] != null && closureContext != null) {
+      draft = await repository.save(draft.id, {
+        'scenario': TextAnswer(closureContext['scenario'] as String),
+        'work_stage': TextAnswer(closureContext['workStage'] as String),
+      }, source: 'job_pack');
+      await repository.saveClosureCapture(draft.id, {
+        'startedAt': DateTime.now().toUtc().toIso8601String(),
+        'transcript': '',
+        'candidates': [
+          for (final field in ['scenario', 'work_stage'])
+            {
+              'fieldId': field,
+              'value': field == 'scenario'
+                  ? closureContext['scenario']
+                  : closureContext['workStage'],
+              'sourceSpan':
+                  'Assigned job ${job.id}: ${closureContext['scenario']} / ${closureContext['workStage']}',
+              'sourceType': 'job_pack',
+              'confidence': null,
+              'verificationStatus': 'accepted',
+              'ambiguityReason':
+                  'Assigned job context; verify the premises identity on site.',
+            },
+        ],
+      });
+    }
     await reloadReports();
     return draft;
   }
@@ -696,6 +1154,10 @@ class AppController extends Notifier<AppState> with CollaborationActions {
     bool current() => _currentOwner(owner);
     state = state.copy(busy: true, error: '');
     try {
+      await ensureDemoSession(owner);
+      if (!current()) return;
+      final summariesDelivered = await flushVisitSummaries(owner, manual: true);
+      if (!current()) return;
       await collaboration.flush(isCurrent: current);
       if (!current()) {
         return;
@@ -713,15 +1175,27 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       if (!current()) {
         return;
       }
-      if (sync.lastError != null) {
-        state = state.copy(offline: true, error: sync.lastError, busy: false);
+      if (sync.lastError != null || !summariesDelivered) {
+        state = state.copy(
+          offline: true,
+          error:
+              sync.lastError ??
+              'A visit summary is still waiting to sync. Its saved details are in Reports.',
+          busy: false,
+        );
         return;
       }
       state = state.copy(lastSync: DateTime.now(), offline: false, busy: false);
       await provision();
     } catch (e) {
       if (current()) {
-        state = state.copy(busy: false, offline: true, error: e.toString());
+        state = state.copy(
+          busy: false,
+          offline: true,
+          error: e is ServiceFailure && e.status == null && e.retryable
+              ? 'Dashboard unavailable. Your reports are saved on this device. Submitted reports will be delivered when connected.'
+              : e.toString(),
+        );
       }
     }
   }
@@ -787,12 +1261,13 @@ class AppController extends Notifier<AppState> with CollaborationActions {
           ref.mounted &&
           state.stage == AccessStage.ready &&
           !state.busy &&
-          (state.reports.any((r) => r.state == ReportState.queued) ||
+          (state.summarySubmissions.any((s) => s['status'] == 'waiting') ||
+              state.reports.any((r) => r.state == ReportState.queued) ||
               state.collaboration.pending.any((p) => p['blocked'] != 1)),
       send: () => _syncForeground(state.user!.id),
     );
     _outbox!.start();
-    startCollaboration();
+    if (!demoAccess.offlinePackage || api.token != null) startCollaboration();
     _leaseTimer?.cancel();
     _leaseTimer = Timer.periodic(const Duration(seconds: 30), (_) async {
       if (!ref.mounted || state.stage != AccessStage.ready) return;
@@ -819,6 +1294,7 @@ class AppController extends Notifier<AppState> with CollaborationActions {
       voiceReady: false,
       busy: false,
       reports: [],
+      summaryDrafts: const {},
       collaboration: const CollaborationState(),
       error: '',
     );

@@ -64,6 +64,7 @@ import {
  * as far along it.
  */
 
+// Project adaptation: self-hosted OFL Inter, without remote font requests.
 const SANS = "Inter";
 
 /* ─────────────────────────────────────────────────────────────────────────

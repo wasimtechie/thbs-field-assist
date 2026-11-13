@@ -1,9 +1,12 @@
+import {closureChecks,CLOSURE_TEMPLATE_ID} from '@field-assist/contracts';
+import {fttpIssues,FTTP_TEMPLATE_ID} from '@field-assist/contracts';
 import {db} from '../../../../packages/database';
 import {templateSchema,validateValues,schemaHash,schemaBytes,frozenReportSchema,sha256,hasPermission,type TemplateSchema,type Values} from '@field-assist/contracts';
 import {ApiError,notFound} from './errors';
 import {requireAdmin,requirePermission,requireEngineer,publicUser,identity,type Context} from './auth';
 import {Prisma} from '@prisma/client';
-import {SignJWT,importJWK} from 'jose';
+import {SignJWT,importJWK,decodeJwt} from 'jose';
+import {offlineProvisionSchema,canIssueNonExpiringDemo,hasNonExpiringDemoClaims,offlineConfirmationAllowed,NON_EXPIRING_DEMO_ACCESS} from '@field-assist/contracts';
 import {z} from 'zod';
 import {randomUUID} from 'node:crypto';
 import {readFileSync} from 'node:fs';
@@ -138,16 +141,20 @@ export async function patchEngineer(ctx:Context,id:string,input:unknown){
 export async function listDevices(ctx:Context,url:URL){requirePermission(ctx,'devices.read');const {limit,...pagination}=pageParams(url);const engineer=url.searchParams.get('engineerId');const rows=await db.device.findMany({where:{organizationId:ctx.user.organizationId,...(engineer?{userId:engineer}:{})},...pagination,orderBy:[{lastSeenAt:'desc'},{id:'desc'}]});return page(await Promise.all(rows.map(async d=>({...d,engineer:publicUser(await db.user.findUniqueOrThrow({where:{id:d.userId}}))}))),limit);}
 
 export async function provision(ctx:Context,input:unknown){
-  requireEngineer(ctx);const data=parse(z.object({deviceId:z.uuid(),platform:z.enum(['ios','android']),appVersion:z.string().min(1).max(40),osVersion:z.string().min(1).max(100),model:z.string().max(100).optional()}),input);
+  requireEngineer(ctx);const data=parse(offlineProvisionSchema,input);
   const who=await identity(ctx);if(!who.engineerType||who.engineerType.archivedAt||!who.engineerType.defaultTemplateId)throw new ApiError(422,'NO_ASSIGNED_FORM','Ask your administrator to assign a published default form.');
   const template=await templateFor(ctx,who.engineerType.defaultTemplateId);if(!template.currentPublishedVersionId||template.archivedAt)throw new ApiError(422,'NO_ASSIGNED_FORM','No published form is available.');
   const version=await db.templateVersion.findUniqueOrThrow({where:{id:template.currentPublishedVersionId}});if(version.disabledAt)throw new ApiError(422,'VERSION_DISABLED','The assigned version is disabled. Contact your administrator.');
-  const issuedAt=new Date();const expiresAt=new Date(issuedAt.getTime()+Number(process.env.OFFLINE_LEASE_HOURS??72)*3600000);const entitlementId=randomUUID();
-  const claims={entitlementId,userId:ctx.user.id,organizationId:ctx.user.organizationId,deviceId:data.deviceId,engineerTypeId:who.engineerType.id,allowedTemplateIds:[template.id],assignmentRevision:who.assignmentRevision,issuedAt:issuedAt.toISOString(),expiresAt:expiresAt.toISOString()};
+  const demoScope={email:ctx.user.email,organizationId:ctx.user.organizationId,templateId:template.id};
+  if(data.nonExpiringDemo&&!canIssueNonExpiringDemo({...demoScope,enabled:process.env.NON_EXPIRING_SYNTHETIC_DEMO==='true',databaseUrl:process.env.DATABASE_URL??''}))throw new ApiError(403,'DEMO_ACCESS_FORBIDDEN','Non-expiring access is only available for the configured local synthetic demo.');
+  const issuedAt=new Date();const expiresAt=data.nonExpiringDemo?null:new Date(issuedAt.getTime()+Number(process.env.OFFLINE_LEASE_HOURS??72)*3600000);const entitlementId=randomUUID();
+  const claims={entitlementId,userId:ctx.user.id,organizationId:ctx.user.organizationId,deviceId:data.deviceId,engineerTypeId:who.engineerType.id,allowedTemplateIds:[template.id],assignmentRevision:who.assignmentRevision,issuedAt:issuedAt.toISOString(),expiresAt:expiresAt?.toISOString()??null,...(data.nonExpiringDemo?{offlineAccess:NON_EXPIRING_DEMO_ACCESS,demoAccount:ctx.user.email}:{})};
   const key=await importJWK(JSON.parse(process.env.ENTITLEMENT_PRIVATE_JWK!),'ES256');
-  const token=await new SignJWT(claims).setProtectedHeader({alg:'ES256',kid:process.env.ENTITLEMENT_KEY_ID}).setIssuer('field-assist').setAudience('field-assist-offline').setIssuedAt(Math.floor(issuedAt.getTime()/1000)).setExpirationTime(Math.floor(expiresAt.getTime()/1000)).sign(key);
+  const signer=new SignJWT(claims).setProtectedHeader({alg:'ES256',kid:process.env.ENTITLEMENT_KEY_ID}).setIssuer('field-assist').setAudience('field-assist-offline').setIssuedAt(Math.floor(issuedAt.getTime()/1000));
+  if(expiresAt)signer.setExpirationTime(Math.floor(expiresAt.getTime()/1000));
+  const token=await signer.sign(key);
   await transaction(async tx=>{const previous=await tx.device.findUnique({where:{id:data.deviceId}});if(previous&&previous.userId!==ctx.user.id)throw new ApiError(409,'DEVICE_ACCOUNT_CONFLICT','This device identifier belongs to another account.');await tx.device.upsert({where:{id:data.deviceId},create:{id:data.deviceId,userId:ctx.user.id,organizationId:ctx.user.organizationId,platform:data.platform,appVersion:data.appVersion,osVersion:data.osVersion,model:data.model??'Unreported model',readiness:{voiceReady:false,manualReady:false}},update:{lastSeenAt:issuedAt,appVersion:data.appVersion,osVersion:data.osVersion}});await tx.offlineEntitlement.create({data:{id:entitlementId,userId:ctx.user.id,organizationId:ctx.user.organizationId,deviceId:data.deviceId,typeId:who.engineerType!.id,assignmentRevision:who.assignmentRevision,allowedTemplates:[template.id],issuedAt,expiresAt,token}});});
-  return {user:who,entitlementId,entitlement:token,serverTime:issuedAt.toISOString(),expiresAt:expiresAt.toISOString(),manifest:await manifest(ctx,data.deviceId),template:{...version.schema as object,versionId:version.id,versionNumber:version.versionNumber,schemaHash:version.schemaHash}};
+  return {user:who,entitlementId,entitlement:token,serverTime:issuedAt.toISOString(),expiresAt:expiresAt?.toISOString()??null,manifest:await manifest(ctx,data.deviceId),template:{...version.schema as object,versionId:version.id,versionNumber:version.versionNumber,schemaHash:version.schemaHash}};
 }
 export async function manifest(ctx:Context,deviceId:string){
   requireEngineer(ctx);const device=await db.device.findFirst({where:{id:deviceId,userId:ctx.user.id}});if(!device)notFound();const who=await identity(ctx);const type=who.engineerType;
@@ -179,20 +186,37 @@ export async function acceptSubmission(ctx:Context,raw:string,providedHash:strin
     if(existing)throw new ApiError(409,'REPORT_ALREADY_ACCEPTED','This report was already accepted.',[],existing.userId===user.id?{receipt:await receiptFor(tx,existing.id)}:{});
     const entitlement=await tx.offlineEntitlement.findFirst({where:{id:data.entitlementId,userId:user.id,organizationId:user.organizationId}});
     const confirmed=new Date(data.confirmedAt);
-    if(!entitlement||!entitlement.allowedTemplates.includes(data.templateId)||confirmed<entitlement.issuedAt||confirmed>entitlement.expiresAt||confirmed.getTime()>Date.now()+120000)throw new ApiError(403,'ENTITLEMENT_INVALID','The report is outside its authorized offline lease. Local work is preserved.');
+    const demoScope={email:user.email,organizationId:user.organizationId,templateId:data.templateId};
+    const nonExpiringDemo=entitlement?.expiresAt===null&&canIssueNonExpiringDemo({...demoScope,enabled:process.env.NON_EXPIRING_SYNTHETIC_DEMO==='true',databaseUrl:process.env.DATABASE_URL??''})&&hasNonExpiringDemoClaims(decodeJwt(entitlement.token),demoScope);
+    if(!entitlement||!entitlement.allowedTemplates.includes(data.templateId)||!offlineConfirmationAllowed(entitlement,confirmed,new Date(),nonExpiringDemo))throw new ApiError(403,'ENTITLEMENT_INVALID','The report is outside its authorized offline lease. Local work is preserved.');
     const version=await tx.templateVersion.findFirst({where:{id:data.versionId,templateId:data.templateId,organizationId:user.organizationId}});if(!version)notFound();
     if(version.disabledAt)throw new ApiError(422,'VERSION_DISABLED','The report version is disabled. Local work is preserved.');
-    const schema=parse(templateSchema,version.schema);if(schema.engineerTypeId!==entitlement.typeId||version.schemaHash!==data.schemaHash)throw new ApiError(422,'SCHEMA_MISMATCH','The report does not match its pinned template.');
+    const schema=parse(templateSchema,version.schema);
+    const readiness=fttpIssues(schema.templateId,data.values,data.evidence??[]);if(readiness.length)throw new ApiError(422,'FTTP_EVIDENCE_REQUIRED',readiness.join(' '));
+    if(schema.engineerTypeId!==entitlement.typeId||version.schemaHash!==data.schemaHash)throw new ApiError(422,'SCHEMA_MISMATCH','The report does not match its pinned template.');
     const validation=validateValues(schema,data.values as Values);if(!validation.valid)throw new ApiError(422,'FIELD_VALIDATION_FAILED','Review the highlighted fields.',validation.errors);
+    const closure=closureChecks(schema,validation.values,data.evidence??[]);
+    if(closure.issues.length)throw new ApiError(422,'CLOSURE_NOT_READY',closure.issues.join(' '));
+    if(schema.closurePolicy&&!data.workOrderId)throw new ApiError(422,'CLOSURE_WORK_ORDER_REQUIRED','Start the closure assistant from an assigned work order.');
+    if(schema.closurePolicy&&!data.closureReview)throw new ApiError(422,'CLOSURE_REVIEW_REQUIRED','The engineer must review the source facts and approve this closure.');
+    if(schema.closurePolicy&&data.closureReview){
+      if(data.closureReview.policyVersion!==schema.closurePolicy.version)throw new ApiError(422,'CLOSURE_POLICY_MISMATCH','Review against the pinned policy version.');
+      for(const candidate of data.closureReview.candidates){
+        const mapping=schema.closurePolicy.banks.flatMap(b=>b.questions).some(q=>q.questionId===candidate.questionId&&q.fieldId===candidate.fieldId)||candidate.questionId===`CONTROL_${candidate.fieldId}`;
+        if(!mapping||!schema.fields.some(f=>f.id===candidate.fieldId)||candidate.verificationStatus==='accepted'&&data.values[candidate.fieldId]!==candidate.value)throw new ApiError(422,'CLOSURE_SOURCE_MISMATCH','Candidate provenance does not match the confirmed field.');
+      }
+    }
+    if(schema.closurePolicy&&data.closureReview?.candidates.some(c=>['speech','text'].includes(c.sourceType)&&![data.closureReview!.transcript,...data.closureReview!.transcriptHistory].some(t=>t.includes(c.sourceSpan))))throw new ApiError(422,'CLOSURE_SOURCE_MISMATCH','A candidate source span is not present in the preserved narrative.');
     if(validation.excluded.length)throw new ApiError(422,'HIDDEN_VALUES','Hidden fields must be excluded from submission.',validation.excluded.map(fieldId=>({fieldId,code:'HIDDEN_FIELD'})));
     if(data.workOrderId){
       const job=await tx.workOrder.findFirst({where:{id:data.workOrderId,organizationId:user.organizationId,assigneeId:user.id,typeId:entitlement.typeId}});
+      if(job?.closureContext&&schema.closurePolicy){const context=job.closureContext as {scenario:string;workStage:string};if(data.values.scenario!==context.scenario||data.values.work_stage!==context.workStage)throw new ApiError(422,'CLOSURE_CONTEXT_MISMATCH','The scenario and stage must match the assigned work order.');}
       if(!job)throw new ApiError(403,'WORK_ORDER_UNAVAILABLE','This job is not assigned to this account and form type. Local work is preserved.');
       if(data.workOrderAssignmentRevision!==undefined&&data.workOrderAssignmentRevision!==job.assignmentRevision||data.workOrderAssignmentRevision===undefined&&job.assignmentRevision>1)throw new ApiError(409,'ASSIGNMENT_CHANGED','This report belongs to an earlier assignment brief. Local work is preserved; contact your lead.');
       if(job.responseStatus!=='accepted')throw new ApiError(409,'ASSIGNMENT_NOT_ACCEPTED','Accept the current assignment before submitting its report. Your local work is preserved.');
       if(!['assigned','follow_up'].includes(job.status))throw new ApiError(409,'WORK_ORDER_NOT_OPEN','This job already has a report awaiting review or is completed. Local work is preserved.');
     }
-    const report=await tx.report.create({data:{organizationId:user.organizationId,clientReportId:data.clientReportId,userId:user.id,typeId:entitlement.typeId,templateVersionId:version.id,schemaHash:version.schemaHash,values:json(validation.values),...(data.location?{location:json(data.location)}:{}),...(data.workOrderId?{workOrderId:data.workOrderId,workOrderAssignmentRevision:data.workOrderAssignmentRevision??(await tx.workOrder.findUniqueOrThrow({where:{id:data.workOrderId}})).assignmentRevision}:{}),teamId:data.workOrderId?(await tx.workOrder.findUniqueOrThrow({where:{id:data.workOrderId}})).teamId:user.teamId,confirmedAt:confirmed,originatingTimezone:data.originatingTimezone}});
+    const report=await tx.report.create({data:{organizationId:user.organizationId,clientReportId:data.clientReportId,userId:user.id,typeId:entitlement.typeId,templateVersionId:version.id,schemaHash:version.schemaHash,values:json(validation.values),...(data.closureReview?{closureReview:json(data.closureReview),demo:true}:{}),...(data.evidence?{evidence:json(data.evidence),demo:[FTTP_TEMPLATE_ID,CLOSURE_TEMPLATE_ID].includes(schema.templateId)||data.evidence.some(e=>e.synthetic)}:{}),...(data.location?{location:json(data.location)}:{}),...(data.workOrderId?{workOrderId:data.workOrderId,workOrderAssignmentRevision:data.workOrderAssignmentRevision??(await tx.workOrder.findUniqueOrThrow({where:{id:data.workOrderId}})).assignmentRevision}:{}),teamId:data.workOrderId?(await tx.workOrder.findUniqueOrThrow({where:{id:data.workOrderId}})).teamId:user.teamId,confirmedAt:confirmed,originatingTimezone:data.originatingTimezone}});
     if(data.workOrderId)await tx.workOrder.update({where:{id:data.workOrderId},data:{status:'submitted',latestReportId:report.id,revision:{increment:1}}});
     const receipt=await tx.receipt.create({data:{reportId:report.id}});
     await tx.submissionAttempt.create({data:{attemptId:data.submissionAttemptId,clientReportId:data.clientReportId,organizationId:user.organizationId,userId:user.id,payloadHash,status:'accepted',receiptId:receipt.id}});
@@ -214,7 +238,7 @@ export async function cancelAttempt(ctx:Context,attemptId:string,input:unknown){
 export async function listSubmissions(ctx:Context,url:URL){
   requirePermission(ctx,'reports.read');const {limit,...pagination}=pageParams(url);const typeId=url.searchParams.get('typeId'),engineerId=url.searchParams.get('engineerId');const from=url.searchParams.get('from'),to=url.searchParams.get('to');
   if(from&&!z.iso.date().safeParse(from).success||to&&!z.iso.date().safeParse(to).success)throw new ApiError(400,'INVALID_DATE','Use YYYY-MM-DD date filters.');
-  const reports=await db.report.findMany({where:{AND:[await reportScope(ctx)],organizationId:ctx.user.organizationId,...(typeId?{typeId}:{}),...(engineerId?{userId:engineerId}:{}),...(from||to?{receivedAt:{...(from?{gte:new Date(from)}:{}),...(to?{lt:new Date(new Date(to).getTime()+86400000)}:{})}}:{})},...pagination,orderBy:[{receivedAt:'desc'},{id:'desc'}]});
+  const reports=await db.report.findMany({where:{AND:[await reportScope(ctx)],organizationId:ctx.user.organizationId,...(typeId?{typeId}:{}),...(engineerId?{userId:engineerId}:{}),...(from||to?{receivedAt:{...(from?{gte:new Date(from)}:{}),...(to?{lt:new Date(new Date(to).getTime()+86400000)}:{})}}:{})},omit:{evidence:true,closureReview:true},...pagination,orderBy:[{receivedAt:'desc'},{id:'desc'}]});
   return page(await Promise.all(reports.map(async r=>({...r,engineer:publicUser(await db.user.findUniqueOrThrow({where:{id:r.userId}})),type:await db.engineerType.findUnique({where:{id:r.typeId}}),version:await db.templateVersion.findUnique({where:{id:r.templateVersionId},select:{id:true,versionNumber:true}}),receipt:await receiptFor(db,r.id)}))),limit);
 }
 export async function submissionDetail(ctx:Context,id:string){requirePermission(ctx,'reports.read');const report=await db.report.findFirst({where:{id,...await reportScope(ctx)}});if(!report)notFound();return {...report,review:await db.reportReview.findUnique({where:{reportId:id}}),workOrder:report.workOrderId?await db.workOrder.findUnique({where:{id:report.workOrderId}}):null,receipt:await receiptFor(db,id),engineer:publicUser(await db.user.findUniqueOrThrow({where:{id:report.userId}})),version:await db.templateVersion.findUniqueOrThrow({where:{id:report.templateVersionId}})};}

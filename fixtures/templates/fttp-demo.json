@@ -1,0 +1,455 @@
+{
+  "schemaFormatVersion": 1,
+  "templateId": "40000000-0000-4000-8000-000000000005",
+  "engineerTypeId": "30000000-0000-4000-8000-000000000005",
+  "title": "FTTP installation \u00b7 demo",
+  "sections": [
+    {
+      "id": "arrival",
+      "label": "Arrival & access",
+      "order": 0
+    },
+    {
+      "id": "installation",
+      "label": "Installation",
+      "order": 1
+    },
+    {
+      "id": "tests",
+      "label": "Service tests",
+      "order": 2
+    },
+    {
+      "id": "handover",
+      "label": "Handover",
+      "order": 3
+    },
+    {
+      "id": "evidence",
+      "label": "Photo evidence",
+      "order": 4
+    }
+  ],
+  "fields": [
+    {
+      "id": "installation_outcome",
+      "sectionId": "arrival",
+      "order": 0,
+      "type": "single_select",
+      "label": "Visit outcome",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Visit outcome. Record only what the engineer explicitly states.",
+        "question": "Visit outcome?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "completed",
+          "label": "Installation completed"
+        },
+        {
+          "id": "partial",
+          "label": "Partially completed"
+        },
+        {
+          "id": "blocked",
+          "label": "Unable to complete"
+        }
+      ]
+    },
+    {
+      "id": "access_confirmed",
+      "sectionId": "arrival",
+      "order": 1,
+      "type": "boolean",
+      "label": "Site access confirmed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Site access confirmed. Record only what the engineer explicitly states.",
+        "question": "Site access confirmed?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      }
+    },
+    {
+      "id": "route_agreed",
+      "sectionId": "arrival",
+      "order": 2,
+      "type": "boolean",
+      "label": "Cable route agreed with customer",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Cable route agreed with customer. Record only what the engineer explicitly states.",
+        "question": "Cable route agreed with customer?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      }
+    },
+    {
+      "id": "site_checks",
+      "sectionId": "arrival",
+      "order": 3,
+      "type": "boolean",
+      "label": "Required site checks completed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Required site checks completed. Record only what the engineer explicitly states.",
+        "question": "Required site checks completed?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      }
+    },
+    {
+      "id": "work_performed",
+      "sectionId": "installation",
+      "order": 4,
+      "type": "long_text",
+      "label": "Work performed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Work performed. Record only what the engineer explicitly states.",
+        "question": "Work performed?",
+        "synonyms": []
+      },
+      "constraints": {
+        "maxLength": 1500
+      }
+    },
+    {
+      "id": "cable_id",
+      "sectionId": "installation",
+      "order": 5,
+      "type": "short_text",
+      "label": "Cable identifier",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Cable identifier. Record only what the engineer explicitly states.",
+        "question": "Cable identifier?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      },
+      "scan": {
+        "kind": "cable_label",
+        "target": "cable_id"
+      }
+    },
+    {
+      "id": "csp_reference",
+      "sectionId": "installation",
+      "order": 6,
+      "type": "short_text",
+      "label": "Customer splicing point reference",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Customer splicing point reference. Record only what the engineer explicitly states.",
+        "question": "Customer splicing point reference?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      }
+    },
+    {
+      "id": "cable_installed",
+      "sectionId": "installation",
+      "order": 7,
+      "type": "quantity",
+      "label": "Cable installed",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Cable installed. Record only what the engineer explicitly states.",
+        "question": "Cable installed?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed",
+          "partial"
+        ]
+      },
+      "units": {
+        "allowed": [
+          "m"
+        ],
+        "canonical": "m"
+      },
+      "constraints": {
+        "min": 0,
+        "max": 10000,
+        "precision": 1
+      }
+    },
+    {
+      "id": "ont_serial",
+      "sectionId": "installation",
+      "order": 8,
+      "type": "short_text",
+      "label": "ONT serial number",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "ONT serial number. Record only what the engineer explicitly states.",
+        "question": "ONT serial number?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed"
+        ]
+      }
+    },
+    {
+      "id": "optical_reading",
+      "sectionId": "tests",
+      "order": 9,
+      "type": "decimal",
+      "label": "Recorded optical reading (dBm)",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Recorded optical reading (dBm). Record only what the engineer explicitly states.",
+        "question": "Recorded optical reading (dBm)?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed"
+        ]
+      },
+      "constraints": {
+        "min": -60,
+        "max": 10,
+        "precision": 2
+      }
+    },
+    {
+      "id": "connectivity_test",
+      "sectionId": "tests",
+      "order": 10,
+      "type": "single_select",
+      "label": "Connectivity test",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Connectivity test. Record only what the engineer explicitly states.",
+        "question": "Connectivity test?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "passed",
+          "label": "Passed"
+        },
+        {
+          "id": "failed",
+          "label": "Failed"
+        },
+        {
+          "id": "not_tested",
+          "label": "Not tested"
+        }
+      ]
+    },
+    {
+      "id": "tester_reference",
+      "sectionId": "tests",
+      "order": 11,
+      "type": "short_text",
+      "label": "Test instrument / result reference",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Test instrument / result reference. Record only what the engineer explicitly states.",
+        "question": "Test instrument / result reference?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed"
+        ]
+      }
+    },
+    {
+      "id": "exception_reason",
+      "sectionId": "handover",
+      "order": 12,
+      "type": "long_text",
+      "label": "Blocker and work remaining",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Blocker and work remaining. Record only what the engineer explicitly states.",
+        "question": "Blocker and work remaining?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "partial",
+          "blocked"
+        ]
+      },
+      "constraints": {
+        "maxLength": 1500
+      }
+    },
+    {
+      "id": "next_team",
+      "sectionId": "handover",
+      "order": 13,
+      "type": "single_select",
+      "label": "Next responsible team",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Next responsible team. Record only what the engineer explicitly states.",
+        "question": "Next responsible team?",
+        "synonyms": []
+      },
+      "options": [
+        {
+          "id": "civils",
+          "label": "Civils coordination"
+        },
+        {
+          "id": "access",
+          "label": "Access coordination"
+        },
+        {
+          "id": "network",
+          "label": "Network support"
+        },
+        {
+          "id": "supervisor",
+          "label": "Service delivery supervisor"
+        }
+      ],
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "partial",
+          "blocked"
+        ]
+      }
+    },
+    {
+      "id": "next_action",
+      "sectionId": "handover",
+      "order": 14,
+      "type": "long_text",
+      "label": "Next action and access arrangements",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Next action and access arrangements. Record only what the engineer explicitly states.",
+        "question": "Next action and access arrangements?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "partial",
+          "blocked"
+        ]
+      },
+      "constraints": {
+        "maxLength": 1500
+      }
+    },
+    {
+      "id": "customer_handover",
+      "sectionId": "handover",
+      "order": 15,
+      "type": "boolean",
+      "label": "Service demonstrated to customer",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Service demonstrated to customer. Record only what the engineer explicitly states.",
+        "question": "Service demonstrated to customer?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed"
+        ]
+      }
+    },
+    {
+      "id": "site_tidy",
+      "sectionId": "handover",
+      "order": 16,
+      "type": "boolean",
+      "label": "Site left tidy",
+      "required": true,
+      "voice": {
+        "enabled": true,
+        "description": "Site left tidy. Record only what the engineer explicitly states.",
+        "question": "Site left tidy?",
+        "synonyms": []
+      },
+      "condition": {
+        "fieldId": "installation_outcome",
+        "operator": "in",
+        "value": [
+          "completed"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+# Use a separate CUDA training environment, never the Flutter inference bundle.
+moonshine-voice[finetune]==0.1.5
+huggingface-hub>=1.0,<2

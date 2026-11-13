@@ -1,3 +1,5 @@
+import 'closure_rules.dart';
+export 'closure_rules.dart';
 import 'dart:convert';
 import 'dart:math' as math;
 import 'package:crypto/crypto.dart';
@@ -177,7 +179,7 @@ class FormDefinition {
       ),
       source = Map.unmodifiable(j) {
     if (j['schemaFormatVersion'] != 1 ||
-        fields.length > 30 ||
+        fields.length > (j['closurePolicy'] == null ? 30 : 130) ||
         sections.isEmpty ||
         sections.length > 6 ||
         fields.map((f) => f.id).toSet().length != fields.length) {
@@ -215,6 +217,18 @@ class FormDefinition {
       }
       if (!sections.any((s) => s.id == f.sectionId) || f.options.length > 20) {
         throw const FormatException('Invalid form structure');
+      }
+      bool acyclic(String id, Set<String> seen) {
+        if (!seen.add(id)) return false;
+        final target = fields.where((x) => x.id == id).firstOrNull;
+        if (target == null) return false;
+        final a = target.source['activation'] as Json?;
+        return a == null ||
+            closureDependencies(a).every((d) => acyclic(d, {...seen}));
+      }
+
+      if (!acyclic(f.id, {})) {
+        throw const FormatException('Invalid activation expression');
       }
       final seen = <String>{f.id};
       var c = f.condition;
@@ -259,6 +273,8 @@ class FormDefinition {
       'fields',
     ])
       key: source[key],
+    if (source['closurePolicy'] != null)
+      'closurePolicy': source['closurePolicy'],
   };
   String get calculatedHash =>
       sha256.convert(canonicalizeUtf8(canonicalSchema)).toString();
@@ -269,6 +285,22 @@ class FormDefinition {
   }
 
   bool visible(FieldDefinition f, Answers values) {
+    final activation = f.source['activation'] as Json?;
+    if (activation != null) {
+      bool active(Json e) {
+        if (e['all'] is List) {
+          return (e['all'] as List).every((x) => active(x as Json));
+        }
+        if (e['any'] is List) {
+          return (e['any'] as List).any((x) => active(x as Json));
+        }
+        final parent = fields.where((p) => p.id == e['field']).firstOrNull;
+        return (parent == null || visible(parent, values)) &&
+            closureMatches(e, encodeAnswers(values));
+      }
+
+      if (!active(activation)) return false;
+    }
     final c = f.condition;
     if (c == null) return true;
     final parent = fields.firstWhere((f) => f.id == c.fieldId);
@@ -325,7 +357,13 @@ ValidationResult validate(
     void error(String code, String text) =>
         issues.add(ValidationIssue(f.id, code, text));
     if (missing(v)) {
-      if (requireComplete && f.required) {
+      if (requireComplete &&
+          closureRequired(
+            f.id,
+            f.required,
+            encodeAnswers(values),
+            schema.source['closurePolicy'] as Json?,
+          )) {
         error('REQUIRED', '${f.label} is required.');
       }
       continue;

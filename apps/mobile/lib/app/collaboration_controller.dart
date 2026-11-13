@@ -231,6 +231,20 @@ mixin CollaborationActions on Notifier<AppState> {
         action == 'break_end' && active?['state'] != 'break') {
       throw StateError('Refresh your visit to check its current break state.');
     }
+    if (action == 'check_out' &&
+        active != null &&
+        note.trim().isEmpty &&
+        !visitHasSubmission(
+          job.id,
+          job.assignmentRevision,
+          active['startedAt'] as String,
+          state.reports,
+          state.summarySubmissions,
+        )) {
+      throw StateError(
+        'Submit your visit summary first, or add a reason for leaving before submission.',
+      );
+    }
     final location = ['check_in', 'check_out'].contains(action)
         ? await const LocationCapture().capture()
         : null;

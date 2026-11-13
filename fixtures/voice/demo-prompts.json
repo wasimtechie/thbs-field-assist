@@ -1,0 +1,7 @@
+[
+  {"id":"welcome","text":"Hello. Tell me what happened on this visit. I will help you complete only the checks that apply."},
+  {"id":"reading","text":"I heard minus eighteen point two d B m. Please check that reading, then confirm whether the optical test passed."},
+  {"id":"blockage","text":"The route is blocked. Where is the obstruction, and which team will own the follow on work?"},
+  {"id":"safety","text":"Permission has not been confirmed. Keep this visit on hold and record the owner and next action."},
+  {"id":"stage","text":"The civils stage is complete. Customer service is still not live. Please confirm the downstream handover."}
+]

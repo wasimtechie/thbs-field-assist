@@ -1,0 +1,16 @@
+{
+  "scope": "iPhone simulator synthetic Kokoro-to-Whistle replay of the supplied S1 summary. No user microphone recording or report mutation.",
+  "audioSeconds": 15.3543125,
+  "recognitionMilliseconds": 127,
+  "transcript": "I installed the ONT in the living room. I used the existing duct for the fiber route. The optical receive reading was minus 18.2dbm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+  "extracted": {
+    "actual_work": "verbatim transcript",
+    "claimed_outcome": "completed",
+    "optical_rx_dbm": -18.2,
+    "operational_test": "passed"
+  },
+  "missing": ["serving_asset", "next_action"],
+  "passed": true,
+  "endToEndResponseLatencyMeasured": false,
+  "physicalPhoneTested": false
+}

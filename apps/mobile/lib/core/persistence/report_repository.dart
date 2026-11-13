@@ -1,3 +1,4 @@
+import '../../features/fttp/fttp_workflow.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
@@ -233,6 +234,81 @@ class SecureReportRepository {
       if (current.state != ReportState.draft) {
         throw StateError('Queued and accepted reports cannot be edited.');
       }
+      values = {...values};
+      if (current.schema.source['closurePolicy'] != null) {
+        final priorEvents = await tx.query(
+          'metadata',
+          where: 'key = ?',
+          whereArgs: ['closure-branches:$id'],
+        );
+        final events = priorEvents.isEmpty
+            ? <dynamic>[]
+            : jsonDecode(priorEvents.first['value'] as String) as List;
+        final archivedStages = <String>{};
+        for (final field in current.schema.fields) {
+          final wasVisible = current.schema.visible(field, current.values);
+          final nowVisible = current.schema.visible(field, values);
+          if (wasVisible != nowVisible) {
+            events.add({
+              'at': DateTime.now().toUtc().toIso8601String(),
+              'fieldId': field.id,
+              'from': wasVisible
+                  ? (missing(current.values[field.id])
+                        ? 'ACTIVE_UNANSWERED'
+                        : 'ANSWERED_UNVERIFIED')
+                  : 'NOT_SHOWN',
+              'to': nowVisible ? 'ACTIVE_UNANSWERED' : 'NOT_APPLICABLE',
+            });
+          }
+          if (!nowVisible && !missing(values[field.id])) {
+            if (field.source['capture'] == 'evidence') {
+              archivedStages.add(field.source['evidenceStage'] as String);
+            }
+            values[field.id] = null;
+          }
+        }
+        if (archivedStages.isNotEmpty) {
+          final photoRows = await tx.query(
+            'metadata',
+            where: 'key = ?',
+            whereArgs: ['evidence:$id'],
+          );
+          final allPhotos = photoRows.isEmpty
+              ? <dynamic>[]
+              : jsonDecode(photoRows.first['value'] as String) as List;
+          final historyRows = await tx.query(
+            'metadata',
+            where: 'key = ?',
+            whereArgs: ['closure-evidence-history:$id'],
+          );
+          final priorPhotos = historyRows.isEmpty
+              ? <dynamic>[]
+              : jsonDecode(historyRows.first['value'] as String) as List;
+          await tx.insert('metadata', {
+            'key': 'closure-evidence-history:$id',
+            'value': jsonEncode(
+              [
+                ...priorPhotos,
+                ...allPhotos.where((p) => archivedStages.contains(p['stage'])),
+              ].reversed.take(8).toList().reversed.toList(),
+            ),
+          }, conflictAlgorithm: ConflictAlgorithm.replace);
+          await tx.insert('metadata', {
+            'key': 'evidence:$id',
+            'value': jsonEncode(
+              allPhotos
+                  .where((p) => !archivedStages.contains(p['stage']))
+                  .toList(),
+            ),
+          }, conflictAlgorithm: ConflictAlgorithm.replace);
+        }
+        await tx.insert('metadata', {
+          'key': 'closure-branches:$id',
+          'value': jsonEncode(
+            events.reversed.take(200).toList().reversed.toList(),
+          ),
+        }, conflictAlgorithm: ConflictAlgorithm.replace);
+      }
       final history = <String, dynamic>{...current.provenance};
       for (final entry in values.entries) {
         if (jsonEncode(entry.value?.toJson()) ==
@@ -264,6 +340,70 @@ class SecureReportRepository {
     return get(id);
   }
 
+  Future<void> saveClosureCapture(String id, Json capture) async {
+    await checkStorage();
+    if (utf8.encode(jsonEncode(capture)).length > 100000) {
+      throw StateError(
+        'Keep the narrative and candidate history under 100 KB.',
+      );
+    }
+    await database.transaction((tx) async {
+      final rows = await tx.query(
+        'reports',
+        where: 'id = ? AND owner_id = ? AND state = ?',
+        whereArgs: [id, _owner, 'draft'],
+      );
+      if (rows.isEmpty ||
+          LocalReport.fromRow(rows.first).schema.source['closurePolicy'] ==
+              null) {
+        throw StateError(
+          'Only an editable closure draft can change its source record.',
+        );
+      }
+      await tx.insert('metadata', {
+        'key': 'closure-capture:$id',
+        'value': jsonEncode(capture),
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
+    });
+  }
+
+  Future<List<Json>> evidence(String id) async {
+    await get(id);
+    return ((await metadata('evidence:$id')) as List? ?? []).cast<Json>();
+  }
+
+  Future<void> saveEvidence(String id, List<Json> items) async {
+    await checkStorage();
+    if (items.length > 4) {
+      throw StateError('Keep at most four evidence images.');
+    }
+    for (final item in items) {
+      final bytes = base64Decode(item['data'] as String);
+      if (bytes.length > 120000 ||
+          sha256.convert(bytes).toString() != item['sha256']) {
+        throw StateError('Evidence must be hash-verified and at most 120 KB.');
+      }
+    }
+    await database.transaction((tx) async {
+      final rows = await tx.query(
+        'reports',
+        where: 'id = ? AND owner_id = ?',
+        whereArgs: [id, _owner],
+      );
+      if (rows.isEmpty || rows.first['state'] != 'draft') {
+        throw StateError('Only an editable draft can change its evidence.');
+      }
+      await tx.insert('metadata', {
+        'key': 'evidence:$id',
+        'value': jsonEncode(items),
+      }, conflictAlgorithm: ConflictAlgorithm.replace);
+      await tx.rawUpdate(
+        'UPDATE reports SET revision = revision + 1, updated_at = ? WHERE id = ? AND owner_id = ?',
+        [DateTime.now().toUtc().toIso8601String(), id, _owner],
+      );
+    });
+  }
+
   Future<LocalReport> confirm(
     String id, {
     required String timezone,
@@ -281,11 +421,138 @@ class SecureReportRepository {
       if (report.state != ReportState.draft) {
         throw StateError('This report is already confirmed.');
       }
+      if (report.schema.source['closurePolicy'] != null &&
+          report.workOrderId == null) {
+        throw StateError(
+          'Link the closure draft to its assigned work order before confirmation.',
+        );
+      }
       final result = validate(report.schema, report.values);
       if (!result.valid) {
         throw StateError(
           'Review the required or invalid fields before confirming.',
         );
+      }
+      final evidenceRows = await tx.query(
+        'metadata',
+        where: 'key = ?',
+        whereArgs: ['evidence:$id'],
+      );
+      final evidence = evidenceRows.isEmpty
+          ? <Json>[]
+          : (jsonDecode(evidenceRows.first['value'] as String) as List)
+                .cast<Json>();
+      final checks = fttpIssues(
+        report.schema.templateId,
+        report.values,
+        evidence,
+      );
+      if (checks.isNotEmpty) throw StateError(checks.join(' '));
+      final closure = checkClosure(
+        report.schema.source,
+        encodeAnswers(result.values),
+        evidence,
+      );
+      if (closure.issues.isNotEmpty) throw StateError(closure.issues.join(' '));
+      Json? closureReview;
+      if (report.schema.source['closurePolicy'] case final Json policy) {
+        final records = await tx.query(
+          'metadata',
+          where: 'key = ?',
+          whereArgs: ['closure-capture:$id'],
+        );
+        final capture = records.isEmpty
+            ? <String, dynamic>{}
+            : jsonDecode(records.first['value'] as String) as Json;
+        final branchRows = await tx.query(
+          'metadata',
+          where: 'key = ?',
+          whereArgs: ['closure-branches:$id'],
+        );
+        final branches = branchRows.isEmpty
+            ? <dynamic>[]
+            : jsonDecode(branchRows.first['value'] as String) as List;
+        final now = DateTime.now().toUtc();
+        final started =
+            DateTime.tryParse(capture['startedAt'] as String? ?? '') ?? now;
+        final rawValues = encodeAnswers(result.values);
+        final activeBanks = <String>{rawValues['scenario'] as String};
+        if (rawValues['scenario'] == 'S1' &&
+            rawValues['route_obstructed'] == true) {
+          activeBanks.add('S2');
+        }
+        if (rawValues['scenario'] == 'S2' &&
+                rawValues['route_obstructed'] == false ||
+            rawValues['scenario'] == 'S3' &&
+                rawValues['alternative_authorised'] == true ||
+            rawValues['scenario'] == 'S4' &&
+                rawValues['service_live'] == true) {
+          activeBanks.add('S1');
+        }
+        String questionFor(String fieldId) {
+          final banks = (policy['banks'] as List).cast<Json>();
+          for (final id in activeBanks) {
+            final questions =
+                banks.firstWhere((b) => b['id'] == id)['questions'] as List;
+            for (final q in questions) {
+              if (q['fieldId'] == fieldId) return q['questionId'] as String;
+            }
+          }
+          return 'CONTROL_$fieldId';
+        }
+
+        closureReview = {
+          'policyId': policy['id'],
+          'policyVersion': policy['version'],
+          'humanConfirmed': true,
+          'transcript': capture['transcript'] ?? '',
+          'transcriptHistory': capture['transcriptHistory'] ?? [],
+          'candidates': [
+            for (final c in (capture['candidates'] as List? ?? []))
+              {
+                ...c as Map,
+                'questionId': questionFor(c['fieldId'] as String),
+                'evidenceId': null,
+                'verificationStatus': rawValues[c['fieldId']] == c['value']
+                    ? 'accepted'
+                    : 'rejected',
+              },
+          ],
+          'questionStates': {
+            for (final b in policy['banks'] as List)
+              for (final q in b['questions'] as List)
+                q['questionId']: !activeBanks.contains(b['id'])
+                    ? 'NOT_SHOWN'
+                    : report.schema.visible(
+                        report.schema.fields.firstWhere(
+                          (f) => f.id == q['fieldId'],
+                        ),
+                        result.values,
+                      )
+                    ? (rawValues[q['fieldId']] == null
+                          ? 'ACTIVE_UNANSWERED'
+                          : 'VERIFIED')
+                    : branches.any(
+                        (e) =>
+                            e['fieldId'] == q['fieldId'] &&
+                            e['to'] == 'NOT_APPLICABLE',
+                      )
+                    ? 'NOT_APPLICABLE'
+                    : 'NOT_SHOWN',
+          },
+          'branchEvents': branches,
+          'metrics': {
+            'startedAt': started.toIso8601String(),
+            'reviewedAt': now.toIso8601String(),
+            'elapsedMs': now
+                .difference(started)
+                .inMilliseconds
+                .clamp(0, 8640000000),
+            'extractionMs': capture['extractionMs'] ?? 0,
+            'promptsShown': capture['promptsShown'] ?? 0,
+            'corrections': capture['corrections'] ?? 0,
+          },
+        };
       }
       final attempt = const Uuid().v4();
       location.requireFresh(DateTime.now().toUtc());
@@ -298,6 +565,8 @@ class SecureReportRepository {
         'schemaHash': report.schema.hash,
         'entitlementId': report.entitlementId,
         'values': encodeAnswers(result.values),
+        if (evidence.isNotEmpty) 'evidence': evidence,
+        'closureReview': ?closureReview,
         'confirmedAt': DateTime.now().toUtc().toIso8601String(),
         'originatingTimezone': timezone,
         'location': location.toJson(),

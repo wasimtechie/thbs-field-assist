@@ -1,0 +1,1059 @@
+FTTP engineer closure assistant 
+
+Comprehensive MVP functional design, conditional questionnaires, five business cases and validation plan 
+
+Version 1.0 • 21 October 2026 • Design hypotheses, not internal Openreach policies 
+
+1. Executive scope and evidence boundaries 
+
+Build one AI-assisted closure capability embedded in the field-engineer job journey. It converts engineer voice/text into candidate structured answers, activates only applicable questions, requests missing mandatory facts, and prepares a human-approved close / partial / referral outcome. There are five scenario-specific banks of 25 synthetic questions (125 total); an engineer will normally see only a conditional subset. These are not copies of Openreach production forms. 
+
+Official Openreach public guidance documents the drop route, external junction, ONT, tests, customer permission and possible civils delays. Reddit discussions illustrate plausible field exceptions but are anecdotes. The number “20–25 questions” is reported in this project’s stakeholder conversation and remains to be validated against actual forms and policy owners. 
+
+2. Scenarios and stage-sensitive definition of done 
+
+S1 — Standard FTTP provision 
+
+Starting context: Existing CBT and usable route; test passes 
+
+Closure gate: Close completed install only if optical and operational evidence pass 
+
+Openreach / BT business case: Faster accurate closure; improved job throughput and partner/customer experience 
+
+Leading KPIs: Closure time, corrections, revisit rate. Primary monetisable driver: Closure minutes avoided per completed job. 
+
+S2 — Blocked underground duct 
+
+Starting context: Existing route blocked before fibre can be completed 
+
+Closure gate: Close visit as blocked/partial; create civils dependency, never service-live 
+
+Openreach / BT business case: Reduce repeat truck rolls and handoff latency; preserve truthful order status 
+
+Leading KPIs: Repeat visits, re-triage, time to civils acceptance. Primary monetisable driver: Avoided repeat visits and triage minutes. 
+
+S3 — Missing or incorrect CBT 
+
+Starting context: Serving terminal missing, wrong, inaccessible or network records disagree 
+
+Closure gate: Record asset discrepancy; route to network data/build owner; no live closure 
+
+Openreach / BT business case: Higher data quality; fewer futile appointments and better build-to-provision handoffs 
+
+Leading KPIs: Wrong-team reassignment, preventable visits, record correction time. Primary monetisable driver: Avoided wrong-asset revisits. 
+
+S4 — ONT fitted, service not active 
+
+Starting context: Indoor installation complete but external fibre, optical signal or activation fails 
+
+Closure gate: Partial install or technical exception; distinguish no-light from provider activation 
+
+Openreach / BT business case: Prevent premature completion, unnecessary customer contact and repeat diagnosis 
+
+Leading KPIs: False-complete frequency, complaints, repeat diagnostics. Primary monetisable driver: Avoided false completions and follow-up hours. 
+
+S5 — Remote property multi-stage build 
+
+Starting context: No usable nearby fibre; survey, consents, civil works, cable/splice, readiness and final install may be separate work orders 
+
+Closure gate: Close each stage against its own acceptance criteria; customer service not live until final provision 
+
+Openreach / BT business case: Reduce queue latency, rework and handoff leakage across teams; enable accurate stage readiness 
+
+Leading KPIs: Handoff delay, missed dependencies, rejected as-builts, completion-to-ready lag. Primary monetisable driver: Reduced inter-stage delay and rebuild/rework. 
+
+3. Conditional question engine 
+
+Each question has a stable ID, data type, expression/trigger, source, evidence requirement, validation rule and review status. Re-evaluate visibility and requiredness whenever any upstream answer changes. Hidden fields are not counted as missing and must not be silently reused for another branch. Keep an audit trail of changes and branch transitions. 
+
+Minimum state model: NOT_SHOWN → ACTIVE_UNANSWERED → ANSWERED_UNVERIFIED → VERIFIED; branch changes may mark a previous answer NOT_APPLICABLE while retaining its history. Safety or permission holds supersede nominal pass responses. Do not mark the customer service live because an ONT is present or because an upstream network-build work order passed. 
+
+4. Five 25-question banks 
+
+S1 — Standard FTTP provision 
+
+Ten foundational questions plus 15 scenario-specific questions. Conditions below are illustrative logic, not Openreach official closure logic. 
+
+ID 
+
+Candidate question 
+
+Show when 
+
+S1-Q01 
+
+Work order and premises identity verified? 
+
+ALWAYS 
+
+S1-Q02 
+
+Assigned work stage? 
+
+ALWAYS 
+
+S1-Q03 
+
+What outcome is claimed for THIS work order? 
+
+ALWAYS 
+
+S1-Q04 
+
+Actual work completed? 
+
+ALWAYS 
+
+S1-Q05 
+
+Any safety hazard or incident? 
+
+ALWAYS 
+
+S1-Q06 
+
+Were access / permissions adequate? 
+
+ALWAYS 
+
+S1-Q07 
+
+Is attached evidence sufficient and linked to work order? 
+
+ALWAYS 
+
+S1-Q08 
+
+Is any work outstanding? 
+
+ALWAYS 
+
+S1-Q09 
+
+Was affected customer or next team informed? 
+
+IF customer-facing OR dependency 
+
+S1-Q10 
+
+Is the site safe and tidy or properly handed over? 
+
+IF physical work attempted 
+
+S1-Q11 
+
+Serving CBT/pole/chamber reference recorded? 
+
+IF installation 
+
+S1-Q12 
+
+Drop route type? 
+
+IF installation 
+
+S1-Q13 
+
+Route usable without obstruction? 
+
+IF drop attempted 
+
+S1-Q14 
+
+Customer approved cable and ONT location? 
+
+IF property entry 
+
+S1-Q15 
+
+Entry / drilling consent obtained? 
+
+IF penetration required 
+
+S1-Q16 
+
+External fibre and connection point installed? 
+
+IF drop attempted 
+
+S1-Q17 
+
+Internal fibre fitted to ONT? 
+
+IF ONT stage 
+
+S1-Q18 
+
+ONT serial / identifier captured? 
+
+IF ONT fitted 
+
+S1-Q19 
+
+ONT power/status checked? 
+
+IF ONT fitted 
+
+S1-Q20 
+
+Optical test evidence and result? 
+
+IF fibre connected 
+
+S1-Q21 
+
+Service operating / provider activation confirmed? 
+
+IF optical pass 
+
+S1-Q22 
+
+Customer handover completed? 
+
+IF service live 
+
+S1-Q23 
+
+Photo evidence of installation? 
+
+IF equipment installed 
+
+S1-Q24 
+
+Any surface/property damage? 
+
+IF drilling/external work 
+
+S1-Q25 
+
+Reinstatement accepted? 
+
+IF damage or excavation 
+
+Success requires evidence-backed stage-specific acceptance, not blanket completion of all 25 questions. 
+
+S2 — Blocked underground duct 
+
+Ten foundational questions plus 15 scenario-specific questions. Conditions below are illustrative logic, not Openreach official closure logic. 
+
+ID 
+
+Candidate question 
+
+Show when 
+
+S2-Q01 
+
+Work order and premises identity verified? 
+
+ALWAYS 
+
+S2-Q02 
+
+Assigned work stage? 
+
+ALWAYS 
+
+S2-Q03 
+
+What outcome is claimed for THIS work order? 
+
+ALWAYS 
+
+S2-Q04 
+
+Actual work completed? 
+
+ALWAYS 
+
+S2-Q05 
+
+Any safety hazard or incident? 
+
+ALWAYS 
+
+S2-Q06 
+
+Were access / permissions adequate? 
+
+ALWAYS 
+
+S2-Q07 
+
+Is attached evidence sufficient and linked to work order? 
+
+ALWAYS 
+
+S2-Q08 
+
+Is any work outstanding? 
+
+ALWAYS 
+
+S2-Q09 
+
+Was affected customer or next team informed? 
+
+IF customer-facing OR dependency 
+
+S2-Q10 
+
+Is the site safe and tidy or properly handed over? 
+
+IF physical work attempted 
+
+S2-Q11 
+
+Underground route confirmed? 
+
+IF duct path 
+
+S2-Q12 
+
+Exact obstruction section / chamber IDs? 
+
+IF blocked 
+
+S2-Q13 
+
+Rod/rope/pull attempted safely? 
+
+IF duct work 
+
+S2-Q14 
+
+Type of obstruction suspected? 
+
+IF blocked 
+
+S2-Q15 
+
+Estimated location / measured distance? 
+
+IF blocked 
+
+S2-Q16 
+
+Can obstruction be safely cleared in scope? 
+
+IF blocked 
+
+S2-Q17 
+
+Temporary mitigation or alternate route feasible? 
+
+IF blocked 
+
+S2-Q18 
+
+Dig/civils work required? 
+
+IF cannot clear 
+
+S2-Q19 
+
+Dig category and permit dependencies? 
+
+IF civils needed 
+
+S2-Q20 
+
+Site made safe after attempt? 
+
+IF physical work 
+
+S2-Q21 
+
+Civils task/reference created? 
+
+IF civils needed 
+
+S2-Q22 
+
+Named owning team and priority? 
+
+IF civils needed 
+
+S2-Q23 
+
+Other premises affected? 
+
+IF shared duct 
+
+S2-Q24 
+
+Was any ONT/CSP fitted before blockage found? 
+
+IF partial install 
+
+S2-Q25 
+
+Is optical/service activation confirmed? 
+
+IF fibre fully connected 
+
+Success requires evidence-backed stage-specific acceptance, not blanket completion of all 25 questions. 
+
+S3 — Missing or incorrect CBT 
+
+Ten foundational questions plus 15 scenario-specific questions. Conditions below are illustrative logic, not Openreach official closure logic. 
+
+ID 
+
+Candidate question 
+
+Show when 
+
+S3-Q01 
+
+Work order and premises identity verified? 
+
+ALWAYS 
+
+S3-Q02 
+
+Assigned work stage? 
+
+ALWAYS 
+
+S3-Q03 
+
+What outcome is claimed for THIS work order? 
+
+ALWAYS 
+
+S3-Q04 
+
+Actual work completed? 
+
+ALWAYS 
+
+S3-Q05 
+
+Any safety hazard or incident? 
+
+ALWAYS 
+
+S3-Q06 
+
+Were access / permissions adequate? 
+
+ALWAYS 
+
+S3-Q07 
+
+Is attached evidence sufficient and linked to work order? 
+
+ALWAYS 
+
+S3-Q08 
+
+Is any work outstanding? 
+
+ALWAYS 
+
+S3-Q09 
+
+Was affected customer or next team informed? 
+
+IF customer-facing OR dependency 
+
+S3-Q10 
+
+Is the site safe and tidy or properly handed over? 
+
+IF physical work attempted 
+
+S3-Q11 
+
+Expected CBT asset ID? 
+
+IF provision 
+
+S3-Q12 
+
+Observed asset ID or not found? 
+
+IF on-site 
+
+S3-Q13 
+
+Correct serving pole/chamber? 
+
+IF on-site 
+
+S3-Q14 
+
+CBT physically present? 
+
+IF asset check 
+
+S3-Q15 
+
+CBT reachable and safe? 
+
+IF present 
+
+S3-Q16 
+
+CBT capacity/port available per verified record? 
+
+IF present 
+
+S3-Q17 
+
+Asset-to-premises mapping match? 
+
+IF observed 
+
+S3-Q18 
+
+Photographic/location evidence attached? 
+
+IF mismatch 
+
+S3-Q19 
+
+Possible alternative terminal identified? 
+
+IF mismatch 
+
+S3-Q20 
+
+Alternative approved for use? 
+
+IF alternative 
+
+S3-Q21 
+
+Records correction requested? 
+
+IF mismatch 
+
+S3-Q22 
+
+Ticket / escalation reference? 
+
+IF correction needed 
+
+S3-Q23 
+
+Assigned network-build owner? 
+
+IF terminal absent 
+
+S3-Q24 
+
+Customer service affected? 
+
+IF failed provision 
+
+S3-Q25 
+
+Is reappointment held pending readiness? 
+
+IF unavailable 
+
+Success requires evidence-backed stage-specific acceptance, not blanket completion of all 25 questions. 
+
+S4 — ONT fitted, service not active 
+
+Ten foundational questions plus 15 scenario-specific questions. Conditions below are illustrative logic, not Openreach official closure logic. 
+
+ID 
+
+Candidate question 
+
+Show when 
+
+S4-Q01 
+
+Work order and premises identity verified? 
+
+ALWAYS 
+
+S4-Q02 
+
+Assigned work stage? 
+
+ALWAYS 
+
+S4-Q03 
+
+What outcome is claimed for THIS work order? 
+
+ALWAYS 
+
+S4-Q04 
+
+Actual work completed? 
+
+ALWAYS 
+
+S4-Q05 
+
+Any safety hazard or incident? 
+
+ALWAYS 
+
+S4-Q06 
+
+Were access / permissions adequate? 
+
+ALWAYS 
+
+S4-Q07 
+
+Is attached evidence sufficient and linked to work order? 
+
+ALWAYS 
+
+S4-Q08 
+
+Is any work outstanding? 
+
+ALWAYS 
+
+S4-Q09 
+
+Was affected customer or next team informed? 
+
+IF customer-facing OR dependency 
+
+S4-Q10 
+
+Is the site safe and tidy or properly handed over? 
+
+IF physical work attempted 
+
+S4-Q11 
+
+ONT installed? 
+
+IF indoor work 
+
+S4-Q12 
+
+ONT serial captured? 
+
+IF ONT installed 
+
+S4-Q13 
+
+Customer agreed ONT location? 
+
+IF ONT installed 
+
+S4-Q14 
+
+External CSP installed? 
+
+IF drop work 
+
+S4-Q15 
+
+External fibre actually connected end-to-end? 
+
+IF CSP/drop 
+
+S4-Q16 
+
+Power/LOS indicators checked? 
+
+IF ONT installed 
+
+S4-Q17 
+
+Optical reading captured? 
+
+IF end-to-end connected 
+
+S4-Q18 
+
+Optical test result? 
+
+IF connected 
+
+S4-Q19 
+
+Provisioning / authentication attempted? 
+
+IF optical pass 
+
+S4-Q20 
+
+Service activated/operational? 
+
+IF activation attempted 
+
+S4-Q21 
+
+Issue type isolated? 
+
+IF service not live 
+
+S4-Q22 
+
+Diagnostic evidence attached? 
+
+IF failed 
+
+S4-Q23 
+
+Owner for next action? 
+
+IF failed 
+
+S4-Q24 
+
+Follow-on ticket / appointment? 
+
+IF failed 
+
+S4-Q25 
+
+Customer informed service NOT live? 
+
+IF service not live 
+
+Success requires evidence-backed stage-specific acceptance, not blanket completion of all 25 questions. 
+
+S5 — Remote property multi-stage build 
+
+Ten foundational questions plus 15 scenario-specific questions. Conditions below are illustrative logic, not Openreach official closure logic. 
+
+ID 
+
+Candidate question 
+
+Show when 
+
+S5-Q01 
+
+Work order and premises identity verified? 
+
+ALWAYS 
+
+S5-Q02 
+
+Assigned work stage? 
+
+ALWAYS 
+
+S5-Q03 
+
+What outcome is claimed for THIS work order? 
+
+ALWAYS 
+
+S5-Q04 
+
+Actual work completed? 
+
+ALWAYS 
+
+S5-Q05 
+
+Any safety hazard or incident? 
+
+ALWAYS 
+
+S5-Q06 
+
+Were access / permissions adequate? 
+
+ALWAYS 
+
+S5-Q07 
+
+Is attached evidence sufficient and linked to work order? 
+
+ALWAYS 
+
+S5-Q08 
+
+Is any work outstanding? 
+
+ALWAYS 
+
+S5-Q09 
+
+Was affected customer or next team informed? 
+
+IF customer-facing OR dependency 
+
+S5-Q10 
+
+Is the site safe and tidy or properly handed over? 
+
+IF physical work attempted 
+
+S5-Q11 
+
+Current build stage? 
+
+IF remote program 
+
+S5-Q12 
+
+Network endpoint and survey reference? 
+
+IF survey 
+
+S5-Q13 
+
+Design version accepted? 
+
+IF design review 
+
+S5-Q14 
+
+Route distance and constraints confirmed? 
+
+IF survey 
+
+S5-Q15 
+
+Wayleave / access permission required? 
+
+IF route crosses third-party 
+
+S5-Q16 
+
+Wayleave/permit granted? 
+
+IF permission required 
+
+S5-Q17 
+
+Civils segment(s) identified? 
+
+IF build 
+
+S5-Q18 
+
+Duct / chamber works completed to design? 
+
+IF civils stage 
+
+S5-Q19 
+
+Reinstatement / safety evidence accepted? 
+
+IF civils stage 
+
+S5-Q20 
+
+Fibre cable placed and spliced? 
+
+IF fibre stage 
+
+S5-Q21 
+
+Splice/segment test evidence accepted? 
+
+IF fibre complete 
+
+S5-Q22 
+
+CBT/terminal available and mapped? 
+
+IF distribution stage 
+
+S5-Q23 
+
+As-built records accepted? 
+
+IF stage acceptance 
+
+S5-Q24 
+
+Named downstream owner / handoff accepted? 
+
+IF stage completion 
+
+S5-Q25 
+
+Premises marked ready for final provision? 
+
+IF network acceptance 
+
+Success requires evidence-backed stage-specific acceptance, not blanket completion of all 25 questions. 
+
+5. Deterministic branching and safety overrides 
+
+B01 [all] IF Q05=yes THEN OPEN safety evidence + escalation; HOLD if unmitigated hazard. Control: Never auto-close on unmitigated safety issue 
+
+B02 [all] IF Q06=no THEN OPEN permission/refusal reason; avoid installation tasks. Control: Do not infer permission 
+
+B03 [all] IF Q08=yes THEN REQUIRE next owner + task reference + status. Control: No orphan partial job 
+
+B04 [S1] IF drop route=underground AND obstructed THEN TRANSFER to S2 blocked-duct logic. Control: S1 cannot complete 
+
+B05 [S1] IF optical test=pass AND service live=yes AND evidence present AND safe THEN ALLOW completed provision. Control: Human confirms final action 
+
+B06 [S2] IF obstruction cannot be cleared safely THEN REQUIRE civils reason, section, follow-on ticket. Control: Blocked is not completed provision 
+
+B07 [S2] IF civils needed=no AND route later clears THEN RESUME install/optical sequence. Control: Re-evaluate rather than stale branch 
+
+B08 [S3] IF CBT missing OR mapping mismatch THEN REQUIRE asset mismatch evidence and data/build referral. Control: No fabricated CBT ID 
+
+B09 [S3] IF alternative CBT suggested THEN REQUIRE explicit authorization before use. Control: No unauthorized asset choice 
+
+B10 [S4] IF ONT=yes AND fibre connected=no THEN SKIP optical activation claims; PARTIAL status. Control: ONT presence ≠ service live 
+
+B11 [S4] IF optical pass AND activation fails THEN OPEN provider/provisioning issue; preserve optical readings. Control: Distinct root cause 
+
+B12 [S5] IF wayleave required=yes AND granted=no THEN BLOCK construction segment dependent on wayleave. Control: No unauthorized build 
+
+B13 [S5] IF civils stage completed THEN REQUIRE reinstatement / as-built before handoff. Control: Stage closure only 
+
+B14 [S5] IF all network stages accepted AND premises ready THEN ALLOW readiness handoff to final install. Control: Network ready ≠ customer live 
+
+B15 [all] IF speech missing a required triggered fact THEN ASK concise missing-only follow-up; never guess. Control: Low hallucination risk 
+
+6. AI extraction and interaction contract 
+
+The AI returns candidate answers with: questionId, value, sourceSpan, sourceType (speech/job pack/test/evidence), confidence, evidenceId, verificationStatus, and ambiguityReason. Engineer corrections are authoritative subject to policy validation. The rules engine determines the next question; LLM output does not decide policy and cannot bypass the safety gates. 
+
+Example: “ONT is in, but the underground duct is blocked after the second chamber. No light. I have raised a civils request.” Extract ONT fitted=yes; route=underground; obstruction=yes; service live=no; civils requested=yes. Ask only missing relevant items: second chamber asset ID, civils ticket reference, safe site state and customer notification. Do not assume a test was successfully run. 
+
+7. Business cases: assumptions versus realised value 
+
+Every scenario has an explicit operational hypothesis. Indicative ROI must be based on observed current-state volumes and rates, with A/B or matched-cohort measurement. The companion workbook includes editable annual job volume, minutes saved, avoided visits per 1,000 jobs, cost assumptions and year-one integration cost. Scenario-specific sample values are illustrative, not BT/Openreach forecasts. 
+
+S1 | Standard FTTP provision 
+
+Operational issue: Existing CBT and usable route; test passes. Intervention: speech-driven capture, conditional missing-only prompts, stage-level acceptance and correct referral. Benefit hypothesis: Faster accurate closure; improved job throughput and partner/customer experience. 
+
+Baseline and proof: sample before/after closure duration, exception coding accuracy, related subsequent visits, audit defect/reopen rate, and closure time, corrections, revisit rate. Use controlled cohorts, same job mix, and record attribution/exclusions. 
+
+Economic logic: annual eligible work orders × adoption × minutes saved / 60 × agreed capacity value per hour × realisation factor; plus verified avoidable repeat visits × marginal avoidable cost per visit. Deduct annual support and amortised/first-year build as appropriate. Do not monetise handoff time or customer satisfaction without a finance-approved conversion. 
+
+S2 | Blocked underground duct 
+
+Operational issue: Existing route blocked before fibre can be completed. Intervention: speech-driven capture, conditional missing-only prompts, stage-level acceptance and correct referral. Benefit hypothesis: Reduce repeat truck rolls and handoff latency; preserve truthful order status. 
+
+Baseline and proof: sample before/after closure duration, exception coding accuracy, related subsequent visits, audit defect/reopen rate, and repeat visits, re-triage, time to civils acceptance. Use controlled cohorts, same job mix, and record attribution/exclusions. 
+
+Economic logic: annual eligible work orders × adoption × minutes saved / 60 × agreed capacity value per hour × realisation factor; plus verified avoidable repeat visits × marginal avoidable cost per visit. Deduct annual support and amortised/first-year build as appropriate. Do not monetise handoff time or customer satisfaction without a finance-approved conversion. 
+
+S3 | Missing or incorrect CBT 
+
+Operational issue: Serving terminal missing, wrong, inaccessible or network records disagree. Intervention: speech-driven capture, conditional missing-only prompts, stage-level acceptance and correct referral. Benefit hypothesis: Higher data quality; fewer futile appointments and better build-to-provision handoffs. 
+
+Baseline and proof: sample before/after closure duration, exception coding accuracy, related subsequent visits, audit defect/reopen rate, and wrong-team reassignment, preventable visits, record correction time. Use controlled cohorts, same job mix, and record attribution/exclusions. 
+
+Economic logic: annual eligible work orders × adoption × minutes saved / 60 × agreed capacity value per hour × realisation factor; plus verified avoidable repeat visits × marginal avoidable cost per visit. Deduct annual support and amortised/first-year build as appropriate. Do not monetise handoff time or customer satisfaction without a finance-approved conversion. 
+
+S4 | ONT fitted, service not active 
+
+Operational issue: Indoor installation complete but external fibre, optical signal or activation fails. Intervention: speech-driven capture, conditional missing-only prompts, stage-level acceptance and correct referral. Benefit hypothesis: Prevent premature completion, unnecessary customer contact and repeat diagnosis. 
+
+Baseline and proof: sample before/after closure duration, exception coding accuracy, related subsequent visits, audit defect/reopen rate, and false-complete frequency, complaints, repeat diagnostics. Use controlled cohorts, same job mix, and record attribution/exclusions. 
+
+Economic logic: annual eligible work orders × adoption × minutes saved / 60 × agreed capacity value per hour × realisation factor; plus verified avoidable repeat visits × marginal avoidable cost per visit. Deduct annual support and amortised/first-year build as appropriate. Do not monetise handoff time or customer satisfaction without a finance-approved conversion. 
+
+S5 | Remote property multi-stage build 
+
+Operational issue: No usable nearby fibre; survey, consents, civil works, cable/splice, readiness and final install may be separate work orders. Intervention: speech-driven capture, conditional missing-only prompts, stage-level acceptance and correct referral. Benefit hypothesis: Reduce queue latency, rework and handoff leakage across teams; enable accurate stage readiness. 
+
+Baseline and proof: sample before/after closure duration, exception coding accuracy, related subsequent visits, audit defect/reopen rate, and handoff delay, missed dependencies, rejected as-builts, completion-to-ready lag. Use controlled cohorts, same job mix, and record attribution/exclusions. 
+
+Economic logic: annual eligible work orders × adoption × minutes saved / 60 × agreed capacity value per hour × realisation factor; plus verified avoidable repeat visits × marginal avoidable cost per visit. Deduct annual support and amortised/first-year build as appropriate. Do not monetise handoff time or customer satisfaction without a finance-approved conversion. 
+
+8. MVP app integration architecture 
+
+Job-context adapter: job type / identity / stage → context. Never fill from assumption 
+
+Speech/text layer: engineer narrative → transcript. Offline capability subject to device benchmark 
+
+Extraction engine: transcript + context → candidate fields. Evidence and confidence per field 
+
+Rules engine: question configuration + candidate answers → active subset. Deterministic, versioned, testable 
+
+Evidence verifier: photos + tester output + permission → validation state. No fabricated test results 
+
+Engineer review: candidate fields + prompts → approved payload. Mandatory human confirm 
+
+Job-closure integration: approved payload → draft/submit. Audited API and idempotency 
+
+Strategic integration: the supplied February 2026 App Strategy Review page 19 places allocation, execution, testing, completion and closure under OneApp/MyServices; pages 22 and 68 discuss ARENA evidence, quality and AI-assisted capture. Treat these as planned target architectures to validate with current application owners. 
+
+9. Acceptance test inventory 
+
+T1-01 S1 — clear overhead/live → Completed. Assert: optical pass, service live, consent, safety. 
+
+T1-02 S1 — clear underground/live → Completed. Assert: underground route, no blockage, tests. 
+
+T1-03 S1 — blocked underground → Blocked/referral. Assert: open S2 branch; do not complete. 
+
+T1-04 S1 — safety incident → Hold. Assert: hazard branch and human review. 
+
+T2-01 S2 — blocked requires civils → Blocked/referral. Assert: location, owner, task id. 
+
+T2-02 S2 — cleared onsite → Resume install. Assert: no civils branch. 
+
+T2-03 S2 — blocked and no safe access → Hold. Assert: safety gate. 
+
+T2-04 S2 — ONT fitted before obstruction → Partial. Assert: ONT recorded, service not live. 
+
+T3-01 S3 — CBT absent → Referred. Assert: asset mismatch + owner. 
+
+T3-02 S3 — wrong CBT, no alternative → Referred. Assert: photo mapping correction. 
+
+T3-03 S3 — approved alternative CBT → Continue install. Assert: approval check. 
+
+T3-04 S3 — CBT present but unsafe → Hold. Assert: safety branch. 
+
+T4-01 S4 — ONT yes, fibre no → Partial. Assert: no activation prompts. 
+
+T4-02 S4 — fibre present, no optical light → Partial fault. Assert: test failure + owner. 
+
+T4-03 S4 — optical pass, activation fails → Partial fault. Assert: provider issue. 
+
+T4-04 S4 — optical and service pass → Complete eligible. Assert: full handover / QA. 
+
+T5-01 S5 — survey only, consent needed → Survey closed; build pending. Assert: stage boundary. 
+
+T5-02 S5 — wayleave denied → Blocked build. Assert: no civil activity. 
+
+T5-03 S5 — civils completed, test pending → Civils stage complete. Assert: handoff only. 
+
+T5-04 S5 — network accepted, install pending → Network ready. Assert: do not mark customer live. 
+
+10. Engineering delivery and exit criteria 
+
+Day 1: confirm five test journey definitions, canonical events and sample mocked job packs; jointly approve proposed question banks. 
+
+Day 2: implement deterministic visibility/requiredness rules and unit tests, including changed answers. 
+
+Day 3: implement speech/text extraction with synthetic transcripts; attach provenance to every parsed field. 
+
+Day 4: build demo form renderer, field validation, evidence placeholders and missing-only clarification UX. 
+
+Day 5: add stage disposition decision, human review, audit and integration stub (no production mutation). 
+
+Day 6: run 20 included decision-path tests plus negative, offline and safety tests; instrument business KPIs. 
+
+Day 7: stakeholder walkthrough, metric baseline agreement, defects and decision on controlled pilot. 
+
+MVP done when: all 125 bank entries are uniquely versioned; 20 pathway tests pass; all triggered mandatory questions are resolved or hold is explicit; all five unsafe/false-complete branches refuse completion; edits re-evaluate branches; each candidate answer has source trace; outputs are approved by a human; no auto-commit occurs; latency and completeness are measured. 
+
+11. Open questions to validate before claiming production fidelity 
+
+Obtain real redacted form examples, rule/policy owners, authoritative test thresholds, exact job outcome codes, safety/permission controls, field identifiers, approved evidence retention, offline device requirements, existing app API contract, and finance-signed volumes/unit costs. Confirm whether MyServices, OneApp and ARENA target designs are deployed or conceptual. 
+
+12. Public references 
+
+Openreach installation: https://www.openreach.com/help-and-support/how-is-full-fibre-installed 
+
+Openreach checklist: https://www.openreach.com/help-and-support/full-fibre-broadband-installation-checklist 
+
+Openreach delays: https://www.openreach.com/help-and-support/full-fibre-installation-delay/most-common-reasons-for-full-fibre-delays 
+
+Reddit wrong pole anecdote: https://www.reddit.com/r/openreach/comments/1tx0npr/failed_install_whats_the_next_step/ 
+
+Reddit blocked duct anecdote: https://www.reddit.com/r/openreach/comments/1x13s19/update_1_or_fttp_installation_house_installation/ 
+
+Internal source: App strategy review 2026.pdf, pages 19, 22 and 68 (user-supplied). 

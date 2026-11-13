@@ -1,0 +1,35 @@
+{
+  "apkBytes": 453089062,
+  "previousApkBytes": 867079008,
+  "savedBytes": 413989946,
+  "reductionPercent": 47.75,
+  "zipGroups": {
+    "other": {
+      "compressedBytes": 11545949,
+      "uncompressedBytes": 20729410
+    },
+    "dex": {
+      "compressedBytes": 29140972,
+      "uncompressedBytes": 29140972
+    },
+    "native": {
+      "compressedBytes": 104175936,
+      "uncompressedBytes": 104175936
+    },
+    "models": {
+      "compressedBytes": 261521169,
+      "uncompressedBytes": 335583457
+    },
+    "voicePrompts": {
+      "compressedBytes": 17064705,
+      "uncompressedBytes": 17085792
+    },
+    "kernel": {
+      "compressedBytes": 29352291,
+      "uncompressedBytes": 88726640
+    }
+  },
+  "modelBytes": 335583457,
+  "modelFiles": 369,
+  "scope": "Actual signed ARM64 debug APK download bytes and ZIP contents; not installed storage or RAM."
+}

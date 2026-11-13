@@ -10,7 +10,11 @@
     "studio": "remotion studio src/remotion.ts --port 3010",
     "render": "node scripts/render.mjs",
     "stills": "node scripts/stills.mjs",
-    "verify:video": "node scripts/verify-video.mjs"
+    "verify:video": "node scripts/verify-video.mjs",
+    "promo:audio": "../../.local/voice-lab/.venv/bin/python scripts/promo-audio.py",
+    "promo:render": "node scripts/promo-render.mjs",
+    "promo:stills": "node scripts/promo-render.mjs --stills",
+    "promo:verify": "node scripts/promo-verify.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.536",

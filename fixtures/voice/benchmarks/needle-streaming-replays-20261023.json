@@ -1,0 +1,188 @@
+{
+  "scope": "Synthetic paced PCM on this Mac; real Moonshine Small Streaming, embedded Silero, and local structured extractor. Not a physical-phone accuracy or latency guarantee.",
+  "records": [
+    {
+      "id": "s1-summary",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 18.24,
+      "finalizedWallMilliseconds": 20114,
+      "extractionMilliseconds": 10,
+      "replyReadyWallMilliseconds": 20124,
+      "nonemptyPartialUpdates": 109,
+      "nativePassP95Milliseconds": 172,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "s1-summary-noisy",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 18.24,
+      "finalizedWallMilliseconds": 20210,
+      "extractionMilliseconds": 2,
+      "replyReadyWallMilliseconds": 20212,
+      "nonemptyPartialUpdates": 107,
+      "nativePassP95Milliseconds": 143,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "s1-sentence-pauses",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fiber route The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fiber route The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 24.18,
+      "finalizedWallMilliseconds": 26943,
+      "extractionMilliseconds": 3,
+      "replyReadyWallMilliseconds": 26946,
+      "nonemptyPartialUpdates": 145,
+      "nativePassP95Milliseconds": 180,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "additional-delayed",
+      "transcript": "The service test passed. The job is fully completed. No further work required.",
+      "values": {
+        "actual_work": "The service test passed. The job is fully completed. No further work required.",
+        "operational_test": "passed",
+        "claimed_outcome": "completed",
+        "next_action": "No further work required"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 12.16,
+      "finalizedWallMilliseconds": 13817,
+      "extractionMilliseconds": 0,
+      "replyReadyWallMilliseconds": 13817,
+      "nonemptyPartialUpdates": 47,
+      "nativePassP95Milliseconds": 110,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "reading-fragment",
+      "transcript": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+      "values": {
+        "actual_work": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 9.78,
+      "finalizedWallMilliseconds": 11211,
+      "extractionMilliseconds": 3,
+      "replyReadyWallMilliseconds": 11214,
+      "nonemptyPartialUpdates": 54,
+      "nativePassP95Milliseconds": 180,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "paraphrased",
+      "transcript": "I finished all the work. Connectivity checks were successful. We need a return visit tomorrow.",
+      "values": {
+        "actual_work": "I finished all the work. Connectivity checks were successful. We need a return visit tomorrow.",
+        "claimed_outcome": "completed",
+        "operational_test": "passed",
+        "next_action": "return visit tomorrow"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 8.32,
+      "finalizedWallMilliseconds": 9580,
+      "extractionMilliseconds": 0,
+      "replyReadyWallMilliseconds": 9580,
+      "nonemptyPartialUpdates": 47,
+      "nativePassP95Milliseconds": 151,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "negative",
+      "transcript": "I have not completed the job. The service test did not pass.",
+      "values": {
+        "actual_work": "I have not completed the job. The service test did not pass.",
+        "claimed_outcome": null,
+        "operational_test": null
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 6.72,
+      "finalizedWallMilliseconds": 7648,
+      "extractionMilliseconds": 1,
+      "replyReadyWallMilliseconds": 7649,
+      "nonemptyPartialUpdates": 35,
+      "nativePassP95Milliseconds": 172,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "asset",
+      "transcript": "Cbt-syn-10",
+      "values": {
+        "actual_work": "Cbt-syn-10",
+        "serving_asset": "CBT-SYN-10"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 4.66,
+      "finalizedWallMilliseconds": 5409,
+      "extractionMilliseconds": 5,
+      "replyReadyWallMilliseconds": 5414,
+      "nonemptyPartialUpdates": 23,
+      "nativePassP95Milliseconds": 265,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "noise-only",
+      "transcript": "",
+      "values": {},
+      "endpointFired": true,
+      "noSpeech": true,
+      "processedAudioSeconds": 8.0,
+      "finalizedWallMilliseconds": 9202,
+      "extractionMilliseconds": 3,
+      "replyReadyWallMilliseconds": 9205,
+      "nonemptyPartialUpdates": 0,
+      "nativePassP95Milliseconds": 0,
+      "mismatches": [],
+      "passed": true
+    }
+  ],
+  "failed": 0,
+  "appVersion": "0.3.0+18",
+  "modelPackageVersion": "fv-ndl-20261023",
+  "stt": "Moonshine Small Streaming English 123M, SDK 0.1.5",
+  "vad": "Silero embedded in the Moonshine runtime",
+  "extractor": "Direct source-grounded facts plus Needle3 per-field proposals; numerical and identifier parsing remains deterministic",
+  "notMeasured": [
+    "Live physical-phone microphone accuracy",
+    "Physical-phone end-to-end latency",
+    "Unseen-paraphrase accuracy"
+  ]
+}

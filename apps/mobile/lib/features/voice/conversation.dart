@@ -40,65 +40,18 @@ Answer? directSpokenAnswer(FieldDefinition field, String transcript) {
   final numeric = directNumericAnswer(field, transcript);
   if (numeric != null) return numeric;
   final text = transcript.toLowerCase().replaceAll(RegExp(r'[.!?]'), '').trim();
-  if (isCompletionQuestion(field)) {
-    final completion = text
-        .replaceAll('’', "'")
-        .replaceFirst(
-          RegExp(
-            r"^(?:the (?:work|job|installation) is|it is|it's|i have|i've)\s+",
-          ),
-          '',
-        )
-        .replaceFirst(RegExp(r'\s+the (?:work|job|installation)$'), '');
-    String? id;
-    if (RegExp(
-      r"^(?:(?:i have|i ve|i|it is|it s) )?(?:fully|fully completed|fully complete|completed fully|completed|complete|finished|all done)$",
-    ).hasMatch(completion.replaceAll("'", ' '))) {
-      id = 'completed';
-    }
-    if (RegExp(
-      r"^(?:(?:i have|i ve|i|it is|it s) )?(?:partially|partial|partially completed|completed partially|partially complete|partly completed|partly done)$",
-    ).hasMatch(completion.replaceAll("'", ' '))) {
-      id = 'partial';
-    }
-    if ([
-      'not completed',
-      'not complete',
-      'not done',
-      'not yet',
-      'unable',
-      'unable to complete',
-      'i have not completed',
-      "i haven't completed",
-      'i could not complete',
-      "i couldn't complete",
-      'i did not complete',
-      'blocked',
-    ].contains(completion)) {
-      id = field.options
-          .firstWhere(
-            (o) => ['unable', 'blocked', 'not_completed'].contains(o.id),
-          )
-          .id;
-    }
-    if (id != null) return TextAnswer(id);
-  }
   if (field.kind == FieldKind.singleSelect) {
-    final matches = field.options
-        .where(
-          (o) => [
-            o.label.toLowerCase(),
-            o.id.toLowerCase().replaceAll('_', ' '),
-          ].contains(text),
-        )
-        .toList();
-    if (matches.length == 1) return TextAnswer(matches.single.id);
+    return spokenChoiceAnswer(field, transcript);
   }
   if (field.kind == FieldKind.boolean) {
-    if (['yes', 'yes it is', 'yes i did'].contains(text)) {
+    final booleanText = text
+        .replaceAll(RegExp(r'[,;:"“”]'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    if (['yes', 'yes it is', 'yes i did'].contains(booleanText)) {
       return const BoolAnswer(true);
     }
-    if (['no', 'no it is not', 'no i did not'].contains(text)) {
+    if (['no', 'no it is not', 'no i did not'].contains(booleanText)) {
       return const BoolAnswer(false);
     }
   }
@@ -114,23 +67,187 @@ Answer? directSpokenAnswer(FieldDefinition field, String transcript) {
   return null;
 }
 
+String _choiceText(String text) => text
+    .toLowerCase()
+    .replaceAll('’', "'")
+    .replaceAll(RegExp(r'[^a-z0-9\s\x27]'), ' ')
+    .replaceAll(RegExp(r'\s+'), ' ')
+    .trim();
+
+/// Match a whole, explicit response in the active field's vocabulary. Sentence
+/// frames are removed, never negation or qualifications. Substring/fuzzy matches
+/// could silently turn "not passed" or two alternatives into a positive result.
+Answer? spokenChoiceAnswer(FieldDefinition field, String transcript) {
+  var text = _choiceText(transcript);
+  text = text.replaceFirst(RegExp(r'^(?:yes|okay|ok)\s+'), '');
+  text = text.replaceFirst(
+    RegExp(
+      r'^(?:(?:please )?(?:select|choose|pick)|(?:the |my )?answer is)\s+',
+    ),
+    '',
+  );
+  final ordinal = RegExp(
+    r'^(?:the )?(?:(first|second|third|fourth|fifth|sixth|seventh)(?: option| one)?|option (one|two|three|four|five|six|seven|[1-7]))$',
+  ).firstMatch(text);
+  if (ordinal != null) {
+    final value = ordinal.group(1) ?? ordinal.group(2)!;
+    const ordinals = [
+      'first',
+      'second',
+      'third',
+      'fourth',
+      'fifth',
+      'sixth',
+      'seventh',
+    ];
+    const numbers = ['one', 'two', 'three', 'four', 'five', 'six', 'seven'];
+    final index = ordinals.contains(value)
+        ? ordinals.indexOf(value)
+        : numbers.contains(value)
+        ? numbers.indexOf(value)
+        : int.parse(value) - 1;
+    return index < field.options.length
+        ? TextAnswer(field.options[index].id)
+        : null;
+  }
+  final candidates = <String>{text};
+  text = text
+      .replaceFirst(
+        RegExp(r'^(?:(?:the |this )?(?:build )?stage) (?:is |was |has been )?'),
+        'stage ',
+      )
+      .replaceFirst(RegExp(r'^(?:the )?network (?:is |was )'), 'network ');
+  text = text
+      .replaceFirst(
+        RegExp(
+          r"^(?:(?:the |this )?(?:work|job|installation|visit|outcome|result)(?: is| was| has been)?|(?:the )?(?:(?:service|connectivity|operational|activation|optical) )?test(?: is| was| has been| has)?|it is|it was|it's|it has been|it has|it|i have|i've|i am|i'm|i|we have|we've|we are|we're|we)\s+",
+        ),
+        '',
+      )
+      .replaceFirst(
+        RegExp(
+          r'\s+(?:(?:all )?(?:the |this )?(?:work|job|installation|visit)|it)$',
+        ),
+        '',
+      );
+  candidates.add(text);
+  const aliases = <String, List<String>>{
+    'completed': [
+      'complete',
+      'fully',
+      'fully completed',
+      'fully complete',
+      'completed fully',
+      'finished',
+      'all done',
+      'done',
+      'fully done',
+      'work completed',
+    ],
+    'partial': [
+      'partially',
+      'partially completed',
+      'partially complete',
+      'partly completed',
+      'partly done',
+      'completed partially',
+      'partial installation',
+    ],
+    'blocked': ['blocked visit', 'not completed blocked'],
+    'hold': ['on hold'],
+    'referred': ['referral', 'referral required'],
+    'stage_completed': [
+      'stage complete',
+      'stage completed',
+      'this build stage completed',
+    ],
+    'network_ready': ['network ready', 'network ready reported'],
+    // A bounded homophone in a field which actually offers a passing result.
+    // Whole-response matching below still rejects "not past", alternatives
+    // and references to a test in the past.
+    'passed': ['pass', 'a pass', 'past', 'a past', 'successful'],
+    'failed': ['fail', 'a fail'],
+    'not_tested': ['not tested', 'not performed'],
+  };
+  const incomplete = [
+    'not completed',
+    'not complete',
+    'not done',
+    'not yet',
+    'unable',
+    'unable to complete',
+    'have not completed',
+    "haven't completed",
+    'could not complete',
+    "couldn't complete",
+    'did not complete',
+  ];
+  final matches = <String>{};
+  for (final choice in field.options) {
+    final vocabulary = {
+      _choiceText(choice.label),
+      _choiceText(choice.id),
+      _choiceText(voiceChoiceLabel(field, choice)),
+      ...?aliases[choice.id],
+      if (['unable', 'not_completed'].contains(choice.id)) ...incomplete,
+    };
+    if (candidates.any(vocabulary.contains)) matches.add(choice.id);
+  }
+  return matches.length == 1 ? TextAnswer(matches.single) : null;
+}
+
 class TurnEndpoint {
   TurnEndpoint({
     this.silence = const Duration(milliseconds: 1300),
     this.noSpeech = const Duration(seconds: 8),
+    this.adaptiveNoise = false,
   });
   final Duration silence, noSpeech;
+  final bool adaptiveNoise;
+  final _ambient = <double>[];
+  bool _calibrated = false;
+  double _noiseFloor = .001;
   Duration _previous = Duration.zero,
       _voiced = Duration.zero,
       _burst = Duration.zero,
       _lastVoice = Duration.zero;
-  bool get heardSpeech => _voiced >= const Duration(milliseconds: 180);
+  bool get heardSpeech =>
+      _voiced >= Duration(milliseconds: adaptiveNoise ? 80 : 180);
   bool observe(double level, Duration elapsed) {
     final delta = elapsed - _previous;
     _previous = elapsed;
-    // Do not raise the release threshold after a loud word: a quieter "not"
-    // or the end of a number remains part of the same answer.
-    if (level >= .004) {
+    if (adaptiveNoise && !_calibrated) {
+      // Keep all PCM, including speech during calibration. A clear opening word
+      // freezes the floor immediately; it must not become the noise baseline.
+      if (level >= .03) {
+        if (_ambient.length >= 4) {
+          final sorted = [..._ambient]..sort();
+          _noiseFloor = sorted[sorted.length ~/ 5].clamp(.0005, .025);
+        }
+        _calibrated = true;
+      } else {
+        _ambient.add(level);
+        if (elapsed >= const Duration(milliseconds: 400) &&
+            _ambient.length >= 8) {
+          final sorted = [..._ambient]..sort();
+          _noiseFloor = sorted[sorted.length ~/ 5].clamp(.0005, .025);
+          final stationary = sorted.last <= _noiseFloor * 1.35;
+          if (stationary && _noiseFloor >= .0025) {
+            _voiced = Duration.zero;
+            _burst = Duration.zero;
+          }
+          _calibrated = true;
+        }
+      }
+    }
+    final minimum = adaptiveNoise ? .0025 : .004;
+    final relative = _noiseFloor * (heardSpeech ? 1.3 : 1.8);
+    final threshold = adaptiveNoise && _calibrated && relative > minimum
+        ? relative
+        : minimum;
+    // The release floor is independent of speech peaks, preserving quiet words
+    // after a louder syllable. Steady ambient noise no longer holds a turn open.
+    if (level >= threshold) {
       _burst += Duration(milliseconds: delta.inMilliseconds.clamp(0, 200));
       _voiced = _burst > _voiced ? _burst : _voiced;
       _lastVoice = elapsed;

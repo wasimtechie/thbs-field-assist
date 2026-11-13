@@ -90,7 +90,7 @@ model OfflineEntitlement {
   assignmentRevision Int
   allowedTemplates String[]
   issuedAt DateTime
-  expiresAt DateTime
+  expiresAt DateTime?
   token String
   @@index([userId, deviceId])
 }
@@ -145,6 +145,8 @@ model Report {
   templateVersionId String @db.Uuid
   schemaHash String
   values Json
+  evidence Json?
+  closureReview Json?
   location Json?
   workOrderId String? @db.Uuid
   workOrderAssignmentRevision Int?
@@ -164,6 +166,7 @@ model WorkOrder {
   site String
   instructions String @default("")
   assetReference String @default("")
+  closureContext Json?
   assigneeId String @db.Uuid
   typeId String @db.Uuid
   priority String @default("normal")
@@ -371,4 +374,48 @@ model AiRequest {
   createdAt DateTime @default(now())
   @@index([organizationId, createdAt])
   @@index([userId, createdAt])
+}
+
+// A reviewed visit note, separate from a policy-validated operational Report.
+model VisitSummary {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  clientSummaryId String @db.Uuid
+  clientReportId String @db.Uuid
+  userId String @db.Uuid
+  workOrderId String? @db.Uuid
+  teamId String? @db.Uuid
+  values Json
+  sources Json
+  payloadHash String
+  confirmedAt DateTime
+  receivedAt DateTime @default(now())
+  @@unique([organizationId, clientSummaryId])
+  @@index([organizationId, receivedAt, id])
+}
+
+model CustomerJobStatus {
+  workOrderId String @id @db.Uuid
+  organizationId String @db.Uuid
+  customerEmail String
+  appointmentStartAt DateTime?
+  appointmentEndAt DateTime?
+  appointmentTimezone String @default("Europe/London")
+  activationStatus String @default("not_confirmed")
+  activationAt DateTime?
+  activationNote String @default("")
+  revision Int @default(1)
+  updatedBy String @db.Uuid
+  updatedAt DateTime @updatedAt
+  @@index([organizationId, customerEmail])
+}
+
+model ChatmConnectionKey {
+  id String @id @default(uuid()) @db.Uuid
+  organizationId String @db.Uuid
+  label String
+  tokenHash String @unique
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  @@index([organizationId])
 }

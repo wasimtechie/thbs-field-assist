@@ -1,0 +1,540 @@
+{
+  "scope": "Prepared synthetic prompts only; active frame RMS is not LUFS, subjective quality or a phone speaker measurement.",
+  "model": "mlx-community/VibeVoice-Realtime-0.5B-4bit",
+  "voice": "en-Emma_woman",
+  "recordings": 88,
+  "targetRms": 0.1,
+  "peakCeiling": 0.75,
+  "rawSpreadDb": 11.422558678232193,
+  "playbackSpreadDb": 0.12326898568237254,
+  "clips": [
+    {
+      "fieldId": "assistant_greeting",
+      "beforeActiveRmsDbfs": -22.40785858224061,
+      "afterActiveRmsDbfs": -20.0178710736906,
+      "afterPeak": 0.7365543842315674
+    },
+    {
+      "fieldId": "assistant_welcome_back",
+      "beforeActiveRmsDbfs": -24.95468121075207,
+      "afterActiveRmsDbfs": -20.02428264967766,
+      "afterPeak": 0.7435813546180725
+    },
+    {
+      "fieldId": "assistant_narrative_saved",
+      "beforeActiveRmsDbfs": -27.05564281552143,
+      "afterActiveRmsDbfs": -20.05898240296855,
+      "afterPeak": 0.7346796989440918
+    },
+    {
+      "fieldId": "assistant_answer_saved",
+      "beforeActiveRmsDbfs": -21.47131952313821,
+      "afterActiveRmsDbfs": -20.043663415214446,
+      "afterPeak": 0.7021651268005371
+    },
+    {
+      "fieldId": "assistant_unclear",
+      "beforeActiveRmsDbfs": -24.148547712564568,
+      "afterActiveRmsDbfs": -20.0066315777894,
+      "afterPeak": 0.6895865201950073
+    },
+    {
+      "fieldId": "assistant_complete",
+      "beforeActiveRmsDbfs": -29.662482498998134,
+      "afterActiveRmsDbfs": -20.09515411250342,
+      "afterPeak": 0.7484381794929504
+    },
+    {
+      "fieldId": "assistant_paused",
+      "beforeActiveRmsDbfs": -22.565076886969894,
+      "afterActiveRmsDbfs": -20.004324051670626,
+      "afterPeak": 0.6675649285316467
+    },
+    {
+      "fieldId": "assistant_no_speech",
+      "beforeActiveRmsDbfs": -25.20186330657386,
+      "afterActiveRmsDbfs": -20.012894381910073,
+      "afterPeak": 0.7336193919181824
+    },
+    {
+      "fieldId": "assistant_save_failed",
+      "beforeActiveRmsDbfs": -25.03369313361966,
+      "afterActiveRmsDbfs": -20.005024907161644,
+      "afterPeak": 0.6888893246650696
+    },
+    {
+      "fieldId": "identity_verified",
+      "beforeActiveRmsDbfs": -24.906169070661758,
+      "afterActiveRmsDbfs": -20.00597230176958,
+      "afterPeak": 0.6811118721961975
+    },
+    {
+      "fieldId": "claimed_outcome",
+      "beforeActiveRmsDbfs": -23.30639474210609,
+      "afterActiveRmsDbfs": -20.01569708873869,
+      "afterPeak": 0.7184809446334839
+    },
+    {
+      "fieldId": "actual_work",
+      "beforeActiveRmsDbfs": -26.699694727201514,
+      "afterActiveRmsDbfs": -20.030535163669303,
+      "afterPeak": 0.7389817237854004
+    },
+    {
+      "fieldId": "safety_hazard",
+      "beforeActiveRmsDbfs": -22.388345217820312,
+      "afterActiveRmsDbfs": -20.00195961172578,
+      "afterPeak": 0.6687799096107483
+    },
+    {
+      "fieldId": "access_permission",
+      "beforeActiveRmsDbfs": -26.969955860905465,
+      "afterActiveRmsDbfs": -20.01737851296421,
+      "afterPeak": 0.7308019995689392
+    },
+    {
+      "fieldId": "evidence_sufficient",
+      "beforeActiveRmsDbfs": -25.328198858096833,
+      "afterActiveRmsDbfs": -20.00934383903345,
+      "afterPeak": 0.7289792895317078
+    },
+    {
+      "fieldId": "work_outstanding",
+      "beforeActiveRmsDbfs": -23.45546162413401,
+      "afterActiveRmsDbfs": -20.003021070804863,
+      "afterPeak": 0.6525646448135376
+    },
+    {
+      "fieldId": "affected_party_informed",
+      "beforeActiveRmsDbfs": -26.415706081619234,
+      "afterActiveRmsDbfs": -20.01248725591576,
+      "afterPeak": 0.6866353154182434
+    },
+    {
+      "fieldId": "site_handover_safe",
+      "beforeActiveRmsDbfs": -25.280710398876018,
+      "afterActiveRmsDbfs": -20.015403511519338,
+      "afterPeak": 0.6841935515403748
+    },
+    {
+      "fieldId": "serving_asset",
+      "beforeActiveRmsDbfs": -25.702099816559883,
+      "afterActiveRmsDbfs": -20.00913976662137,
+      "afterPeak": 0.7062610983848572
+    },
+    {
+      "fieldId": "drop_route",
+      "beforeActiveRmsDbfs": -22.103257635392143,
+      "afterActiveRmsDbfs": -20.000594115201043,
+      "afterPeak": 0.5809410214424133
+    },
+    {
+      "fieldId": "route_obstructed",
+      "beforeActiveRmsDbfs": -23.077894190462523,
+      "afterActiveRmsDbfs": -20.003912178950312,
+      "afterPeak": 0.6115256547927856
+    },
+    {
+      "fieldId": "location_agreed",
+      "beforeActiveRmsDbfs": -24.489777584538714,
+      "afterActiveRmsDbfs": -20.080011643337937,
+      "afterPeak": 0.7335526943206787
+    },
+    {
+      "fieldId": "drilling_consent",
+      "beforeActiveRmsDbfs": -24.95448387020936,
+      "afterActiveRmsDbfs": -20.035726178695707,
+      "afterPeak": 0.7144545912742615
+    },
+    {
+      "fieldId": "external_connection",
+      "beforeActiveRmsDbfs": -24.65799195345311,
+      "afterActiveRmsDbfs": -20.010260415150594,
+      "afterPeak": 0.6794432997703552
+    },
+    {
+      "fieldId": "internal_fibre",
+      "beforeActiveRmsDbfs": -26.75032330698904,
+      "afterActiveRmsDbfs": -20.029373667985837,
+      "afterPeak": 0.7430945634841919
+    },
+    {
+      "fieldId": "ont_serial",
+      "beforeActiveRmsDbfs": -23.736449148370262,
+      "afterActiveRmsDbfs": -20.012867111780974,
+      "afterPeak": 0.6909348368644714
+    },
+    {
+      "fieldId": "ont_status_checked",
+      "beforeActiveRmsDbfs": -28.65860461309514,
+      "afterActiveRmsDbfs": -20.073535735305036,
+      "afterPeak": 0.7384210228919983
+    },
+    {
+      "fieldId": "optical_test",
+      "beforeActiveRmsDbfs": -23.30112900274915,
+      "afterActiveRmsDbfs": -20.023464605867133,
+      "afterPeak": 0.6916725635528564
+    },
+    {
+      "fieldId": "service_live",
+      "beforeActiveRmsDbfs": -23.077520687864112,
+      "afterActiveRmsDbfs": -20.010567291151737,
+      "afterPeak": 0.7154279351234436
+    },
+    {
+      "fieldId": "customer_handover",
+      "beforeActiveRmsDbfs": -24.869045648701636,
+      "afterActiveRmsDbfs": -20.008143721346784,
+      "afterPeak": 0.6758660674095154
+    },
+    {
+      "fieldId": "property_damage",
+      "beforeActiveRmsDbfs": -24.580024594720292,
+      "afterActiveRmsDbfs": -20.006964402111812,
+      "afterPeak": 0.7144017219543457
+    },
+    {
+      "fieldId": "reinstatement_accepted",
+      "beforeActiveRmsDbfs": -22.8936096403893,
+      "afterActiveRmsDbfs": -20.021451715064526,
+      "afterPeak": 0.7415007948875427
+    },
+    {
+      "fieldId": "underground_route",
+      "beforeActiveRmsDbfs": -21.169833076340105,
+      "afterActiveRmsDbfs": -20.002524699853073,
+      "afterPeak": 0.6145367622375488
+    },
+    {
+      "fieldId": "obstruction_section",
+      "beforeActiveRmsDbfs": -21.656919771681142,
+      "afterActiveRmsDbfs": -20.009162000682455,
+      "afterPeak": 0.662839949131012
+    },
+    {
+      "fieldId": "safe_attempt",
+      "beforeActiveRmsDbfs": -23.429787919602138,
+      "afterActiveRmsDbfs": -20.01692708491244,
+      "afterPeak": 0.7062900066375732
+    },
+    {
+      "fieldId": "obstruction_type",
+      "beforeActiveRmsDbfs": -24.600805182897005,
+      "afterActiveRmsDbfs": -20.042856095619907,
+      "afterPeak": 0.6843278408050537
+    },
+    {
+      "fieldId": "blockage_distance",
+      "beforeActiveRmsDbfs": -21.072816582947844,
+      "afterActiveRmsDbfs": -20.000065802429432,
+      "afterPeak": 0.5347540378570557
+    },
+    {
+      "fieldId": "clearable_in_scope",
+      "beforeActiveRmsDbfs": -26.375117431771272,
+      "afterActiveRmsDbfs": -20.04146145529965,
+      "afterPeak": 0.6793195009231567
+    },
+    {
+      "fieldId": "alternate_route_feasible",
+      "beforeActiveRmsDbfs": -24.648092998025273,
+      "afterActiveRmsDbfs": -20.02865163278212,
+      "afterPeak": 0.729823648929596
+    },
+    {
+      "fieldId": "civils_required",
+      "beforeActiveRmsDbfs": -22.68400535023532,
+      "afterActiveRmsDbfs": -20.01584861389522,
+      "afterPeak": 0.7005075216293335
+    },
+    {
+      "fieldId": "permit_dependencies",
+      "beforeActiveRmsDbfs": -28.473149258117893,
+      "afterActiveRmsDbfs": -20.123334788111805,
+      "afterPeak": 0.7309333086013794
+    },
+    {
+      "fieldId": "follow_on_ref",
+      "beforeActiveRmsDbfs": -25.76601586201736,
+      "afterActiveRmsDbfs": -20.051133297634596,
+      "afterPeak": 0.6998447775840759
+    },
+    {
+      "fieldId": "next_owner",
+      "beforeActiveRmsDbfs": -25.69682813544076,
+      "afterActiveRmsDbfs": -20.010579608270174,
+      "afterPeak": 0.7171577215194702
+    },
+    {
+      "fieldId": "other_premises_affected",
+      "beforeActiveRmsDbfs": -22.68888647602393,
+      "afterActiveRmsDbfs": -20.044571118837094,
+      "afterPeak": 0.6445445418357849
+    },
+    {
+      "fieldId": "ont_fitted",
+      "beforeActiveRmsDbfs": -24.691324055527126,
+      "afterActiveRmsDbfs": -20.006165468808902,
+      "afterPeak": 0.6754530072212219
+    },
+    {
+      "fieldId": "expected_cbt",
+      "beforeActiveRmsDbfs": -19.911502410845568,
+      "afterActiveRmsDbfs": -20.007017157543938,
+      "afterPeak": 0.6809791922569275
+    },
+    {
+      "fieldId": "observed_cbt",
+      "beforeActiveRmsDbfs": -22.37932828442326,
+      "afterActiveRmsDbfs": -20.02629260616535,
+      "afterPeak": 0.707658052444458
+    },
+    {
+      "fieldId": "serving_location_correct",
+      "beforeActiveRmsDbfs": -22.734474068026202,
+      "afterActiveRmsDbfs": -20.02869105223475,
+      "afterPeak": 0.7063719630241394
+    },
+    {
+      "fieldId": "cbt_present",
+      "beforeActiveRmsDbfs": -26.13761881706491,
+      "afterActiveRmsDbfs": -20.006345304543228,
+      "afterPeak": 0.6894456744194031
+    },
+    {
+      "fieldId": "cbt_safe_access",
+      "beforeActiveRmsDbfs": -25.41832106875294,
+      "afterActiveRmsDbfs": -20.009755495256968,
+      "afterPeak": 0.7039858102798462
+    },
+    {
+      "fieldId": "cbt_port_verified",
+      "beforeActiveRmsDbfs": -23.69119794585662,
+      "afterActiveRmsDbfs": -20.004131152928487,
+      "afterPeak": 0.666265070438385
+    },
+    {
+      "fieldId": "mapping_matches",
+      "beforeActiveRmsDbfs": -24.23960457858717,
+      "afterActiveRmsDbfs": -20.00734542444578,
+      "afterPeak": 0.6854316592216492
+    },
+    {
+      "fieldId": "alternative_cbt",
+      "beforeActiveRmsDbfs": -24.568228855956928,
+      "afterActiveRmsDbfs": -20.03807182241125,
+      "afterPeak": 0.7273270487785339
+    },
+    {
+      "fieldId": "alternative_authorised",
+      "beforeActiveRmsDbfs": -21.145134968721262,
+      "afterActiveRmsDbfs": -20.005731115961638,
+      "afterPeak": 0.7271283268928528
+    },
+    {
+      "fieldId": "records_correction",
+      "beforeActiveRmsDbfs": -18.23992382076594,
+      "afterActiveRmsDbfs": -20.00086144032038,
+      "afterPeak": 0.587894082069397
+    },
+    {
+      "fieldId": "customer_service_affected",
+      "beforeActiveRmsDbfs": -23.648927985576467,
+      "afterActiveRmsDbfs": -20.013991301751933,
+      "afterPeak": 0.7145751118659973
+    },
+    {
+      "fieldId": "reappointment_held",
+      "beforeActiveRmsDbfs": -25.544572879459366,
+      "afterActiveRmsDbfs": -20.000850960802396,
+      "afterPeak": 0.5999035239219666
+    },
+    {
+      "fieldId": "fibre_connected",
+      "beforeActiveRmsDbfs": -25.33142636629971,
+      "afterActiveRmsDbfs": -20.00445046785233,
+      "afterPeak": 0.684727668762207
+    },
+    {
+      "fieldId": "optical_rx_dbm",
+      "beforeActiveRmsDbfs": -26.605236825710012,
+      "afterActiveRmsDbfs": -20.026099897733786,
+      "afterPeak": 0.694256603717804
+    },
+    {
+      "fieldId": "activation_attempted",
+      "beforeActiveRmsDbfs": -23.843083954452723,
+      "afterActiveRmsDbfs": -20.00628835560639,
+      "afterPeak": 0.7073643803596497
+    },
+    {
+      "fieldId": "issue_type",
+      "beforeActiveRmsDbfs": -25.48799358621657,
+      "afterActiveRmsDbfs": -20.01819340872507,
+      "afterPeak": 0.7312924861907959
+    },
+    {
+      "fieldId": "customer_not_live_informed",
+      "beforeActiveRmsDbfs": -21.42977532635671,
+      "afterActiveRmsDbfs": -20.006606544767333,
+      "afterPeak": 0.7177475094795227
+    },
+    {
+      "fieldId": "survey_reference",
+      "beforeActiveRmsDbfs": -22.109784082098024,
+      "afterActiveRmsDbfs": -20.005473656936317,
+      "afterPeak": 0.6374518275260925
+    },
+    {
+      "fieldId": "design_accepted",
+      "beforeActiveRmsDbfs": -21.907186310822507,
+      "afterActiveRmsDbfs": -20.00032430560383,
+      "afterPeak": 0.5626218318939209
+    },
+    {
+      "fieldId": "route_distance",
+      "beforeActiveRmsDbfs": -24.640719850113403,
+      "afterActiveRmsDbfs": -20.010608542525002,
+      "afterPeak": 0.7203112840652466
+    },
+    {
+      "fieldId": "wayleave_required",
+      "beforeActiveRmsDbfs": -26.113098145447303,
+      "afterActiveRmsDbfs": -20.011151310614675,
+      "afterPeak": 0.7218061685562134
+    },
+    {
+      "fieldId": "wayleave_granted",
+      "beforeActiveRmsDbfs": -20.029858764252243,
+      "afterActiveRmsDbfs": -20.000927167596647,
+      "afterPeak": 0.5959666967391968
+    },
+    {
+      "fieldId": "civils_segments",
+      "beforeActiveRmsDbfs": -25.468489022506585,
+      "afterActiveRmsDbfs": -20.106372904846626,
+      "afterPeak": 0.7032172083854675
+    },
+    {
+      "fieldId": "civils_to_design",
+      "beforeActiveRmsDbfs": -23.46716255108143,
+      "afterActiveRmsDbfs": -20.00277363657877,
+      "afterPeak": 0.6565811634063721
+    },
+    {
+      "fieldId": "fibre_placed_spliced",
+      "beforeActiveRmsDbfs": -22.344073110714657,
+      "afterActiveRmsDbfs": -20.004195404244683,
+      "afterPeak": 0.6449849009513855
+    },
+    {
+      "fieldId": "splice_tests_accepted",
+      "beforeActiveRmsDbfs": -24.20126783656029,
+      "afterActiveRmsDbfs": -20.04997553306574,
+      "afterPeak": 0.7037485241889954
+    },
+    {
+      "fieldId": "terminal_available_mapped",
+      "beforeActiveRmsDbfs": -24.936114398115283,
+      "afterActiveRmsDbfs": -20.02113348967193,
+      "afterPeak": 0.7400714159011841
+    },
+    {
+      "fieldId": "as_built_accepted",
+      "beforeActiveRmsDbfs": -24.265185007935056,
+      "afterActiveRmsDbfs": -20.007117713437893,
+      "afterPeak": 0.6347044110298157
+    },
+    {
+      "fieldId": "downstream_handoff",
+      "beforeActiveRmsDbfs": -20.192993088217044,
+      "afterActiveRmsDbfs": -20.00448446604568,
+      "afterPeak": 0.6440992951393127
+    },
+    {
+      "fieldId": "premises_ready",
+      "beforeActiveRmsDbfs": -24.444202015454835,
+      "afterActiveRmsDbfs": -20.002556664520306,
+      "afterPeak": 0.6763620972633362
+    },
+    {
+      "fieldId": "customer_facing",
+      "beforeActiveRmsDbfs": -26.842409084107658,
+      "afterActiveRmsDbfs": -20.011921860248556,
+      "afterPeak": 0.7219066619873047
+    },
+    {
+      "fieldId": "physical_work_attempted",
+      "beforeActiveRmsDbfs": -26.422021594466695,
+      "afterActiveRmsDbfs": -20.0105504329588,
+      "afterPeak": 0.7293571829795837
+    },
+    {
+      "fieldId": "penetration_required",
+      "beforeActiveRmsDbfs": -24.10304729393989,
+      "afterActiveRmsDbfs": -20.008086761057868,
+      "afterPeak": 0.6940065622329712
+    },
+    {
+      "fieldId": "hazard_mitigated",
+      "beforeActiveRmsDbfs": -23.492226391093315,
+      "afterActiveRmsDbfs": -20.003385691721746,
+      "afterPeak": 0.6470023989677429
+    },
+    {
+      "fieldId": "safety_escalation",
+      "beforeActiveRmsDbfs": -26.39800158213114,
+      "afterActiveRmsDbfs": -20.044662307959907,
+      "afterPeak": 0.7163558602333069
+    },
+    {
+      "fieldId": "next_action",
+      "beforeActiveRmsDbfs": -26.55401050221359,
+      "afterActiveRmsDbfs": -20.051355229250476,
+      "afterPeak": 0.7054473757743835
+    },
+    {
+      "fieldId": "excavation_performed",
+      "beforeActiveRmsDbfs": -25.9974536884355,
+      "afterActiveRmsDbfs": -20.01459612635905,
+      "afterPeak": 0.7019233107566833
+    },
+    {
+      "fieldId": "excavation_required",
+      "beforeActiveRmsDbfs": -21.925144062994192,
+      "afterActiveRmsDbfs": -20.00671854571901,
+      "afterPeak": 0.7083982825279236
+    },
+    {
+      "fieldId": "operational_test",
+      "beforeActiveRmsDbfs": -24.72074719733231,
+      "afterActiveRmsDbfs": -20.05577839390293,
+      "afterPeak": 0.7065063118934631
+    },
+    {
+      "fieldId": "tester_reference",
+      "beforeActiveRmsDbfs": -26.219242185384775,
+      "afterActiveRmsDbfs": -20.023197356088396,
+      "afterPeak": 0.7343360185623169
+    },
+    {
+      "fieldId": "shared_duct",
+      "beforeActiveRmsDbfs": -19.92382466577334,
+      "afterActiveRmsDbfs": -20.0011631345791,
+      "afterPeak": 0.5935288071632385
+    },
+    {
+      "fieldId": "route_constraints",
+      "beforeActiveRmsDbfs": -24.783656202424098,
+      "afterActiveRmsDbfs": -20.016343587247427,
+      "afterPeak": 0.7195136547088623
+    },
+    {
+      "fieldId": "all_network_stages_accepted",
+      "beforeActiveRmsDbfs": -25.273040450229896,
+      "afterActiveRmsDbfs": -20.019387742718926,
+      "afterPeak": 0.722486138343811
+    }
+  ]
+}

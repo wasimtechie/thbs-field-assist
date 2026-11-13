@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-25",
+  "stt": "Unchanged Moonshine Small Streaming English SDK 0.1.5",
+  "fineTuned": false,
+  "flutterRegressionTestsPassed": 136,
+  "flutterAnalysis": "No issues found",
+  "serverContractTestsPassed": 4,
+  "trainingSetupTestsPassed": 7,
+  "nativeReplay": [
+    {
+      "platform": "Android ARM64 emulator",
+      "frozenMoonshineTranscripts": true,
+      "correctReadings": 17,
+      "requiresClarification": 1,
+      "correctlyAbsentReadings": 4
+    },
+    {
+      "platform": "iOS simulator, published Moonshine runtime",
+      "frozenMoonshineTranscripts": true,
+      "correctReadings": 17,
+      "requiresClarification": 1,
+      "correctlyAbsentReadings": 4
+    },
+    {
+      "id": "corrected-reading",
+      "synthetic": true,
+      "nativeHostReplay": true,
+      "transcript": "The optical receive reading was 18.2 dBm, no no sorry the optical receive reading was -18.19 dBm.",
+      "values": {
+        "actual_work": "the optical receive reading was -18.19 dBm.",
+        "optical_rx_dbm": -18.19
+      },
+      "mismatches": []
+    },
+    {
+      "id": "received-measurement",
+      "synthetic": true,
+      "nativeHostReplay": true,
+      "transcript": "The optical received measurement was -17.8 dBm.",
+      "values": {
+        "actual_work": "The optical received measurement was -17.8 dBm.",
+        "optical_rx_dbm": -17.8
+      },
+      "mismatches": []
+    },
+    {
+      "id": "delayed-addition",
+      "synthetic": true,
+      "nativeHostReplay": true,
+      "transcript": "The serving asset is CBT-SYN-10. No further work required.",
+      "values": {
+        "actual_work": "The serving asset is CBT-SYN-10. No further work required.",
+        "serving_asset": "CBT-SYN-10",
+        "next_action": "No further work required"
+      },
+      "mismatches": []
+    }
+  ],
+  "nativeReplayScope": "Fresh synthetic audio on the Mac native Moonshine runtime; frozen simulator transcripts replayed through the new parser. Not real engineer microphone or physical phone acceptance testing.",
+  "apiAndBrowserCheck": "Corrected measurement, raw speech and repair trace accepted; dashboard list/detail, stable receipts, conflict rejection and account/organisation isolation passed. Temporary test data cleaned up.",
+  "apk": {
+    "apk": "field-assist-demo-v0.3.1-arm64.apk",
+    "bytes": 453105738,
+    "sha256": "3dc22d28384ac964fa4008a715eda671178b4d30764b2565b7e632f8e8d58e7f",
+    "modelFiles": 369,
+    "modelBytes": 335583457,
+    "chunks": 21,
+    "verifiedPrompts": 91,
+    "nativeLibraries": 19,
+    "arm64Only": true,
+    "offlineModelIntegrityVerified": true,
+    "regularApplication": true,
+    "version": "0.3.1",
+    "buildNumber": 19,
+    "androidVersionCode": 2019,
+    "modelChanged": false,
+    "stt": "Moonshine Small Streaming English 0.1.5",
+    "changes": [
+      "Explicit spoken repairs resolve the corrected answer while retaining raw speech",
+      "Reading paraphrases, signs, decimal groups and conflicts handled before form mapping",
+      "Additions after Anything else retained; ask only missing/invalid fields",
+      "Server accepts bounded correction provenance"
+    ],
+    "tests": {
+      "flutterRegressionTestsPassed": 136,
+      "nativeSyntheticMoonshineReplaysPassed": 3,
+      "trainingSetupTestsPassed": 7,
+      "contractTestsPassed": 4,
+      "flutterAnalysis": "No issues found",
+      "apkSignatureV2Verified": true,
+      "androidEmulatorInstalledVersion": "0.3.1 (2019)",
+      "apiAndDashboardCorrectionEvidence": "passed; temporary test data cleaned up"
+    }
+  },
+  "trainingPack": {
+    "prompts": 72,
+    "plannedSpeakers": 16,
+    "verifiedAudioClips": 0,
+    "modelTrained": false,
+    "bytes": 50285,
+    "sha256": "ac7d723dd23022b4e0a700d938bdcbb7155520cbaa892d1b3406d4c5bd1c9e14"
+  },
+  "sourceSha256": {
+    "apps/mobile/lib/features/voice/speech_repair.dart": "6a5d46dce2e82b9c49f03afac828ac68609d785e6440f2fc19d7fdc132a805df",
+    "apps/mobile/lib/features/voice/streaming_capture.dart": "785091fbcb739ef420f643678ec846281b3fb9ffdfe1176ec81fb72cd7a51db4",
+    "apps/mobile/lib/features/voice/spoken_numbers.dart": "27e2baafdb0b2ba6cd87300a27b45fa7e71fe9095eb110ee2f70cf04d67249e1",
+    "apps/mobile/lib/features/closure/compact_narrative.dart": "60a96a666e536bd5a42acf5b18bc0cced9ac6d5cb73eeb82ecdc1d66b2d1295a",
+    "apps/mobile/lib/features/closure/optical_reading.dart": "6b02c7dd36f1c1ea11966f5e001745bc5df9d4b863ba226c78cb1ac80454f5a9",
+    "apps/mobile/lib/features/closure/closure_speech.dart": "a3b2fdcc6c65f71fb2ff39aaa2014bd02757dd4645e831a10a8b257c6742ef15",
+    "apps/mobile/lib/features/closure/compact_closure_screen.dart": "b1fa73dddc427ac2249c4c6866bfb5d23d8228ab9afa511b7eb66403920067f5",
+    "apps/mobile/lib/features/closure/closure_voice_assistant.dart": "7364f12b2662f56e800c71b1c12226bad55fdd050712562435e8198920750cd2",
+    "apps/mobile/lib/features/closure/structured_visit_extraction.dart": "810065f37b19fcb2cdb2bb08795e61dc8c4f31a333c1953796c553ef37dc8feb",
+    "packages/contracts/src/visit-summary.ts": "88fbd4fbbe00c233b8baccc9d948a08295210bb2b40b20c690992ae075e89e29",
+    "scripts/check-speech-repairs.dart": "855d947e5bd28773970571fc6f648a60c6f5bee7bce80a33229c1c90ee64088d"
+  }
+}

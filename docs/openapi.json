@@ -3,7 +3,7 @@
   "info": {
     "title": "THBS Field Assist API",
     "version": "0.1.0",
-    "description": "Synthetic demo service. Cookie mutations require an exact allowed Origin. IDs and cursors are UUIDs. Lists order by creation/receipt timestamp descending, then ID. Optional dashboard AI endpoints call OpenAI on demand with scoped text only; mobile offline inference is unchanged. AI has no write tools, stores API responses with store:false, validates source IDs, caches matching answers for five minutes, and enforces six attempts per user per five minutes plus 100 per workspace per UTC day. The server key is never returned to clients. Dashboard RBAC: ADMIN manages accounts and all operations; OPERATIONS_MANAGER assigns jobs and reviews reports; TEMPLATE_MANAGER manages forms/types and reads engineer/device directories; VIEWER reads operational summaries, reports, jobs and assets. TEAM_LEAD is restricted to led squads; SALES can route clients and assign client-linked squad jobs without report evidence; ENGINEER can sign in to mobile and a dashboard restricted to own jobs, clients, reports and assets. All roles can message active organisation colleagues; private conversations require participation. New jobs require engineer acceptance before a linked report is uploaded. Existing pre-feature jobs retain legacy acceptance. Team leads can create named squad project boards. Profile avatars are selected from a local catalogue. Engineer site check-in, breaks and check-out are immutable ordered actions with stable request IDs; one active visit per engineer, foreground arrival/departure location, device action timestamps and separate server receipt timestamps. Time visibility is limited to the engineer, responsible leads and permitted operational roles. No continuous tracking or closed-app push is claimed. Assignment responses retain their original brief and reports retain their assignment generation. Account changes are audited; pause/removal and credential changes revoke online sessions. Already-offline clients remain bounded by their existing signed lease."
+    "description": "Synthetic demo service. Cookie mutations require an exact allowed Origin. IDs and cursors are UUIDs. Lists order by creation/receipt timestamp descending, then ID. Optional dashboard AI endpoints call OpenAI on demand with scoped text only; mobile offline inference is unchanged. AI has no write tools, stores API responses with store:false, validates source IDs, caches matching answers for five minutes, and enforces six attempts per user per five minutes plus 100 per workspace per UTC day. The server key is never returned to clients. Dashboard RBAC: ADMIN manages accounts and all operations; OPERATIONS_MANAGER assigns jobs and reviews reports; TEMPLATE_MANAGER manages forms/types and reads engineer/device directories; VIEWER reads operational summaries, reports, jobs and assets. TEAM_LEAD is restricted to led squads; SALES can route clients and assign client-linked squad jobs without report evidence; ENGINEER can sign in to mobile and a dashboard restricted to own jobs, clients, reports and assets. All roles can message active organisation colleagues; private conversations require participation. New jobs require engineer acceptance before a linked report is uploaded. Existing pre-feature jobs retain legacy acceptance. Team leads can create named squad project boards. Profile avatars are selected from a local catalogue. Engineer site check-in, breaks and check-out are immutable ordered actions with stable request IDs; one active visit per engineer, foreground arrival/departure location, device action timestamps and separate server receipt timestamps. Time visibility is limited to the engineer, responsible leads and permitted operational roles. No continuous tracking or closed-app push is claimed. Assignment responses retain their original brief and reports retain their assignment generation. Account changes are audited; pause/removal and credential changes revoke online sessions. Ordinary offline clients remain bounded by their existing signed lease. An explicitly enabled local synthetic closure demo may use a signed grant without expiry; online session and account checks remain enforced."
   },
   "servers": [
     {
@@ -11,6 +11,628 @@
     }
   ],
   "paths": {
+    "/visit-summaries": {
+      "post": {
+        "summary": "Receive a human-reviewed visit summary with a stable retry receipt; does not approve operational closure",
+        "operationId": "post__visit-summaries",
+        "security": [
+          {
+            "mobileBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitSummaryInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitSummaryReceipt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disabled or forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unavailable or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale revision, cancelled attempt or idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Schema or field validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Transient service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/visit-summaries": {
+      "get": {
+        "summary": "List received visit summaries within engineer, team and organisation scope",
+        "operationId": "get__admin_visit-summaries",
+        "security": [
+          {
+            "cookieSession": []
+          },
+          {
+            "mobileBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "nextCursor": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "nextCursor"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disabled or forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unavailable or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale revision, cancelled attempt or idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Schema or field validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Transient service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/visit-summaries/{id}": {
+      "get": {
+        "summary": "Reviewed summary, engineer source spans and server receipt; operational closure remains separate",
+        "operationId": "get__admin_visit-summaries_id",
+        "security": [
+          {
+            "cookieSession": []
+          },
+          {
+            "mobileBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disabled or forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unavailable or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale revision, cancelled attempt or idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Schema or field validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Transient service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/work-orders/{id}/customer-status": {
+      "put": {
+        "summary": "Record a customer email link and explicit confirmed visit/provider activation facts; does not reassign or close a job",
+        "operationId": "put__admin_work-orders_id_customer-status",
+        "security": [
+          {
+            "cookieSession": []
+          },
+          {
+            "mobileBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerJobStatusInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disabled or forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unavailable or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale revision, cancelled attempt or idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Schema or field validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Transient service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/chatm/customers/{customerEmail}/jobs": {
+      "get": {
+        "summary": "Read customer-linked jobs and latest submitted visits using an organization-bound revocable read-only key. Due dates do not establish appointments; passed tests do not establish activation. Bounded response marks truncation.",
+        "operationId": "get__integrations_chatm_customers_customerEmail_jobs",
+        "security": [
+          {
+            "chatmReadOnly": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "customerEmail",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "email"
+            },
+            "description": "Percent-encoded exact customer email from the trusted chatbot verification context."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Session required or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Disabled or forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unavailable or inaccessible resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Stale revision, cancelled attempt or idempotency conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Schema or field validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Transient service unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/ai/status": {
       "get": {
         "summary": "Dashboard-only AI configuration, feature permissions and limits; no API key returned",
@@ -3302,6 +3924,38 @@
                     "default": "",
                     "type": "string",
                     "maxLength": 2000
+                  },
+                  "closureContext": {
+                    "type": "object",
+                    "properties": {
+                      "scenario": {
+                        "type": "string",
+                        "enum": [
+                          "S1",
+                          "S2",
+                          "S3",
+                          "S4",
+                          "S5"
+                        ]
+                      },
+                      "workStage": {
+                        "type": "string",
+                        "enum": [
+                          "survey",
+                          "design",
+                          "civils",
+                          "fibre",
+                          "distribution",
+                          "network_acceptance",
+                          "final_provision"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "scenario",
+                      "workStage"
+                    ],
+                    "additionalProperties": false
                   },
                   "assetReference": {
                     "default": "",
@@ -7453,7 +8107,7 @@
                       }
                     },
                     "fields": {
-                      "maxItems": 30,
+                      "maxItems": 130,
                       "type": "array",
                       "items": {
                         "type": "object",
@@ -7637,6 +8291,22 @@
                               }
                             ]
                           },
+                          "activation": {
+                            "$ref": "#/$defs/__schema0"
+                          },
+                          "capture": {
+                            "type": "string",
+                            "const": "evidence"
+                          },
+                          "evidenceStage": {
+                            "type": "string",
+                            "enum": [
+                              "before",
+                              "installation",
+                              "test",
+                              "blocker"
+                            ]
+                          },
                           "scan": {
                             "type": "object",
                             "properties": {
@@ -7708,6 +8378,164 @@
                         "additionalProperties": false
                       }
                     },
+                    "closurePolicy": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "const": "fttp-closure-mvp"
+                        },
+                        "version": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "banks": {
+                          "minItems": 5,
+                          "maxItems": 5,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "enum": [
+                                  "S1",
+                                  "S2",
+                                  "S3",
+                                  "S4",
+                                  "S5"
+                                ]
+                              },
+                              "version": {
+                                "type": "number",
+                                "const": 1
+                              },
+                              "title": {
+                                "type": "string"
+                              },
+                              "questions": {
+                                "minItems": 25,
+                                "maxItems": 25,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "questionId": {
+                                      "type": "string"
+                                    },
+                                    "fieldId": {
+                                      "type": "string"
+                                    },
+                                    "question": {
+                                      "type": "string"
+                                    },
+                                    "sourceShowWhen": {
+                                      "type": "string"
+                                    },
+                                    "status": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "questionId",
+                                    "fieldId",
+                                    "question",
+                                    "sourceShowWhen",
+                                    "status"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "version",
+                              "title",
+                              "questions"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "rules": {
+                          "maxItems": 100,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "when": {
+                                "$ref": "#/$defs/__schema0"
+                              },
+                              "assert": {
+                                "$ref": "#/$defs/__schema0"
+                              },
+                              "message": {
+                                "type": "string"
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "when",
+                              "assert",
+                              "message",
+                              "code"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "dispositions": {
+                          "maxItems": 30,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "when": {
+                                "$ref": "#/$defs/__schema0"
+                              },
+                              "outcome": {
+                                "type": "string",
+                                "enum": [
+                                  "hold",
+                                  "blocked",
+                                  "referred",
+                                  "partial",
+                                  "stage_completed",
+                                  "network_ready",
+                                  "completed"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "when",
+                              "outcome"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "holdRequired": {
+                          "maxItems": 20,
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version",
+                        "banks",
+                        "rules",
+                        "dispositions",
+                        "holdRequired"
+                      ],
+                      "additionalProperties": false
+                    },
                     "versionId": {
                       "type": "string",
                       "format": "uuid"
@@ -7731,7 +8559,91 @@
                     "versionNumber",
                     "schemaHash"
                   ],
-                  "additionalProperties": false
+                  "additionalProperties": false,
+                  "$defs": {
+                    "__schema0": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "field": {
+                              "type": "string",
+                              "pattern": "^[a-zA-Z0-9_-]{1,100}$"
+                            },
+                            "op": {
+                              "type": "string",
+                              "enum": [
+                                "eq",
+                                "neq",
+                                "in",
+                                "present",
+                                "missing"
+                              ]
+                            },
+                            "value": {
+                              "anyOf": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "number"
+                                },
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "maxItems": 20,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "field",
+                            "op"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "all": {
+                              "minItems": 1,
+                              "maxItems": 20,
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/$defs/__schema0"
+                              }
+                            }
+                          },
+                          "required": [
+                            "all"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "any": {
+                              "minItems": 1,
+                              "maxItems": 20,
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/$defs/__schema0"
+                              }
+                            }
+                          },
+                          "required": [
+                            "any"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -8756,6 +9668,11 @@
   },
   "components": {
     "securitySchemes": {
+      "chatmReadOnly": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Separate fa_chatm_ connection key; only customer job reads, never a dashboard/mobile login."
+      },
       "cookieSession": {
         "type": "apiKey",
         "in": "cookie",
@@ -8767,6 +9684,548 @@
       }
     },
     "schemas": {
+      "CustomerJobStatusInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "customerEmail": {
+            "type": "string",
+            "maxLength": 254,
+            "format": "email",
+            "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+          },
+          "appointmentStartAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentEndAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "appointmentTimezone": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "activationStatus": {
+            "type": "string",
+            "enum": [
+              "not_confirmed",
+              "scheduled",
+              "active",
+              "blocked"
+            ]
+          },
+          "activationAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "activationNote": {
+            "default": "",
+            "type": "string",
+            "maxLength": 1500
+          }
+        },
+        "required": [
+          "expectedRevision",
+          "customerEmail",
+          "appointmentStartAt",
+          "appointmentEndAt",
+          "appointmentTimezone",
+          "activationStatus",
+          "activationAt"
+        ],
+        "additionalProperties": false
+      },
+      "VisitSummaryInput": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "clientSummaryId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "clientReportId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "workOrderId": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confirmedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "values": {
+            "type": "object",
+            "properties": {
+              "actual_work": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000
+              },
+              "claimed_outcome": {
+                "type": "string",
+                "enum": [
+                  "completed",
+                  "partial",
+                  "blocked",
+                  "referred",
+                  "hold",
+                  "stage_completed",
+                  "network_ready"
+                ]
+              },
+              "serving_asset": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "access_permission": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "location_agreed": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "drop_route": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "existing",
+                      "underground",
+                      "overhead"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "external_connection": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "internal_fibre": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "ont_fitted": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "ont_status_checked": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "service_live": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "customer_handover": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "site_handover_safe": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "optical_rx_dbm": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": -100,
+                    "maximum": 100
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "operational_test": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "passed",
+                      "failed",
+                      "not_tested",
+                      "not_applicable"
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "next_action": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 8000
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "actual_work",
+              "claimed_outcome"
+            ],
+            "additionalProperties": false
+          },
+          "sources": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "actual_work",
+                "claimed_outcome",
+                "access_permission",
+                "location_agreed",
+                "drop_route",
+                "external_connection",
+                "internal_fibre",
+                "ont_fitted",
+                "ont_status_checked",
+                "optical_rx_dbm",
+                "operational_test",
+                "service_live",
+                "customer_handover",
+                "site_handover_safe",
+                "next_action",
+                "serving_asset"
+              ]
+            },
+            "additionalProperties": {
+              "type": "object",
+              "properties": {
+                "sourceType": {
+                  "type": "string",
+                  "enum": [
+                    "speech",
+                    "manual",
+                    "text"
+                  ]
+                },
+                "sourceSpan": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "question": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "fieldId": {
+                  "type": "string"
+                },
+                "value": {},
+                "confidence": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "verificationStatus": {
+                  "type": "string"
+                },
+                "ambiguityReason": {
+                  "type": "string"
+                },
+                "derivedFrom": {
+                  "type": "string",
+                  "const": "actual_work"
+                },
+                "derivedSummary": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "requiresConfirmation": {
+                  "type": "boolean"
+                },
+                "unitNeedsConfirmation": {
+                  "type": "boolean"
+                },
+                "unitSource": {
+                  "type": "string",
+                  "const": "field_definition"
+                },
+                "confirmationSpan": {
+                  "type": "string",
+                  "maxLength": 2000
+                },
+                "rawTranscript": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "interpretedSpan": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "speechRepairs": {
+                  "maxItems": 24,
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "discarded": {
+                        "type": "string",
+                        "maxLength": 8000
+                      },
+                      "cue": {
+                        "type": "string",
+                        "maxLength": 160
+                      },
+                      "replacement": {
+                        "type": "string",
+                        "maxLength": 8000
+                      }
+                    },
+                    "required": [
+                      "discarded",
+                      "cue",
+                      "replacement"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "inputMethod": {
+                  "type": "string",
+                  "enum": [
+                    "speech",
+                    "option",
+                    "typed",
+                    "transcript_edit"
+                  ]
+                },
+                "originalSpeech": {
+                  "type": "object",
+                  "properties": {
+                    "sourceType": {
+                      "type": "string",
+                      "enum": [
+                        "speech",
+                        "manual",
+                        "text"
+                      ]
+                    },
+                    "sourceSpan": {
+                      "type": "string",
+                      "maxLength": 8000
+                    },
+                    "question": {
+                      "type": "string",
+                      "maxLength": 2000
+                    },
+                    "fieldId": {
+                      "type": "string"
+                    },
+                    "value": {},
+                    "confidence": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "verificationStatus": {
+                      "type": "string"
+                    },
+                    "ambiguityReason": {
+                      "type": "string"
+                    },
+                    "derivedFrom": {
+                      "type": "string",
+                      "const": "actual_work"
+                    },
+                    "derivedSummary": {
+                      "type": "string",
+                      "maxLength": 8000
+                    },
+                    "requiresConfirmation": {
+                      "type": "boolean"
+                    },
+                    "unitNeedsConfirmation": {
+                      "type": "boolean"
+                    },
+                    "unitSource": {
+                      "type": "string",
+                      "const": "field_definition"
+                    },
+                    "confirmationSpan": {
+                      "type": "string",
+                      "maxLength": 2000
+                    },
+                    "rawTranscript": {
+                      "type": "string",
+                      "maxLength": 8000
+                    },
+                    "interpretedSpan": {
+                      "type": "string",
+                      "maxLength": 8000
+                    },
+                    "speechRepairs": {
+                      "maxItems": 24,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "discarded": {
+                            "type": "string",
+                            "maxLength": 8000
+                          },
+                          "cue": {
+                            "type": "string",
+                            "maxLength": 160
+                          },
+                          "replacement": {
+                            "type": "string",
+                            "maxLength": 8000
+                          }
+                        },
+                        "required": [
+                          "discarded",
+                          "cue",
+                          "replacement"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "sourceType",
+                    "sourceSpan"
+                  ],
+                  "additionalProperties": false
+                },
+                "previousTranscript": {
+                  "type": "string",
+                  "maxLength": 8000
+                },
+                "editedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": [
+                "sourceType",
+                "sourceSpan"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "clientSummaryId",
+          "clientReportId",
+          "workOrderId",
+          "confirmedAt",
+          "values",
+          "sources"
+        ],
+        "additionalProperties": false
+      },
+      "VisitSummaryReceipt": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "clientSummaryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "receivedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "kind": {
+            "const": "visit_summary"
+          },
+          "operationalClosureApproved": {
+            "const": false
+          }
+        },
+        "required": [
+          "id",
+          "clientSummaryId",
+          "receivedAt",
+          "kind",
+          "operationalClosureApproved"
+        ],
+        "additionalProperties": false
+      },
       "TemplateSchema": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
@@ -8823,7 +10282,7 @@
             }
           },
           "fields": {
-            "maxItems": 30,
+            "maxItems": 130,
             "type": "array",
             "items": {
               "type": "object",
@@ -9007,6 +10466,22 @@
                     }
                   ]
                 },
+                "activation": {
+                  "$ref": "#/$defs/__schema0"
+                },
+                "capture": {
+                  "type": "string",
+                  "const": "evidence"
+                },
+                "evidenceStage": {
+                  "type": "string",
+                  "enum": [
+                    "before",
+                    "installation",
+                    "test",
+                    "blocker"
+                  ]
+                },
                 "scan": {
                   "type": "object",
                   "properties": {
@@ -9077,6 +10552,164 @@
               ],
               "additionalProperties": false
             }
+          },
+          "closurePolicy": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "const": "fttp-closure-mvp"
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "banks": {
+                "minItems": 5,
+                "maxItems": 5,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "enum": [
+                        "S1",
+                        "S2",
+                        "S3",
+                        "S4",
+                        "S5"
+                      ]
+                    },
+                    "version": {
+                      "type": "number",
+                      "const": 1
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "questions": {
+                      "minItems": 25,
+                      "maxItems": 25,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "questionId": {
+                            "type": "string"
+                          },
+                          "fieldId": {
+                            "type": "string"
+                          },
+                          "question": {
+                            "type": "string"
+                          },
+                          "sourceShowWhen": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "questionId",
+                          "fieldId",
+                          "question",
+                          "sourceShowWhen",
+                          "status"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "version",
+                    "title",
+                    "questions"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "rules": {
+                "maxItems": 100,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "when": {
+                      "$ref": "#/$defs/__schema0"
+                    },
+                    "assert": {
+                      "$ref": "#/$defs/__schema0"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "when",
+                    "assert",
+                    "message",
+                    "code"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "dispositions": {
+                "maxItems": 30,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "when": {
+                      "$ref": "#/$defs/__schema0"
+                    },
+                    "outcome": {
+                      "type": "string",
+                      "enum": [
+                        "hold",
+                        "blocked",
+                        "referred",
+                        "partial",
+                        "stage_completed",
+                        "network_ready",
+                        "completed"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "when",
+                    "outcome"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "holdRequired": {
+                "maxItems": 20,
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "version",
+              "banks",
+              "rules",
+              "dispositions",
+              "holdRequired"
+            ],
+            "additionalProperties": false
           }
         },
         "required": [
@@ -9087,7 +10720,91 @@
           "sections",
           "fields"
         ],
-        "additionalProperties": false
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z0-9_-]{1,100}$"
+                  },
+                  "op": {
+                    "type": "string",
+                    "enum": [
+                      "eq",
+                      "neq",
+                      "in",
+                      "present",
+                      "missing"
+                    ]
+                  },
+                  "value": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "maxItems": 20,
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "field",
+                  "op"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "all": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/__schema0"
+                    }
+                  }
+                },
+                "required": [
+                  "all"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "any": {
+                    "minItems": 1,
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/__schema0"
+                    }
+                  }
+                },
+                "required": [
+                  "any"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
       },
       "FrozenReport": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -9180,6 +10897,295 @@
             ],
             "additionalProperties": false
           },
+          "evidence": {
+            "maxItems": 4,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "stage": {
+                  "type": "string",
+                  "enum": [
+                    "before",
+                    "installation",
+                    "test",
+                    "blocker"
+                  ]
+                },
+                "caption": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "mimeType": {
+                  "type": "string",
+                  "enum": [
+                    "image/jpeg",
+                    "image/png"
+                  ]
+                },
+                "data": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 160000,
+                  "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "capturedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "synthetic": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "stage",
+                "caption",
+                "mimeType",
+                "data",
+                "sha256",
+                "capturedAt",
+                "synthetic"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "closureReview": {
+            "type": "object",
+            "properties": {
+              "policyId": {
+                "type": "string",
+                "const": "fttp-closure-mvp"
+              },
+              "policyVersion": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "humanConfirmed": {
+                "type": "boolean",
+                "const": true
+              },
+              "transcript": {
+                "type": "string",
+                "maxLength": 4000
+              },
+              "transcriptHistory": {
+                "default": [],
+                "maxItems": 8,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 4000
+                }
+              },
+              "candidates": {
+                "maxItems": 130,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "questionId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "pattern": "^[a-zA-Z0-9_-]+$"
+                    },
+                    "fieldId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "pattern": "^[a-zA-Z0-9_-]+$"
+                    },
+                    "evidenceId": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "value": {
+                      "type": [
+                        "string",
+                        "number",
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "sourceSpan": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 4000
+                    },
+                    "sourceType": {
+                      "type": "string",
+                      "enum": [
+                        "speech",
+                        "text",
+                        "job_pack",
+                        "manual",
+                        "demo_example"
+                      ]
+                    },
+                    "confidence": {
+                      "anyOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "verificationStatus": {
+                      "type": "string",
+                      "enum": [
+                        "candidate",
+                        "accepted",
+                        "rejected"
+                      ]
+                    },
+                    "ambiguityReason": {
+                      "type": "string",
+                      "maxLength": 300
+                    }
+                  },
+                  "required": [
+                    "questionId",
+                    "fieldId",
+                    "value",
+                    "sourceSpan",
+                    "sourceType",
+                    "confidence",
+                    "verificationStatus",
+                    "ambiguityReason"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "questionStates": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string",
+                  "enum": [
+                    "NOT_SHOWN",
+                    "ACTIVE_UNANSWERED",
+                    "ANSWERED_UNVERIFIED",
+                    "VERIFIED",
+                    "NOT_APPLICABLE"
+                  ]
+                }
+              },
+              "branchEvents": {
+                "maxItems": 200,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "fieldId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "pattern": "^[a-zA-Z0-9_-]+$"
+                    },
+                    "from": {
+                      "type": "string"
+                    },
+                    "to": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "at",
+                    "fieldId",
+                    "from",
+                    "to"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "metrics": {
+                "type": "object",
+                "properties": {
+                  "startedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                  },
+                  "reviewedAt": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                  },
+                  "elapsedMs": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "extractionMs": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "promptsShown": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "corrections": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "startedAt",
+                  "reviewedAt",
+                  "elapsedMs",
+                  "extractionMs",
+                  "promptsShown",
+                  "corrections"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "policyId",
+              "policyVersion",
+              "humanConfirmed",
+              "transcript",
+              "transcriptHistory",
+              "candidates",
+              "questionStates",
+              "branchEvents",
+              "metrics"
+            ],
+            "additionalProperties": false
+          },
           "workOrderId": {
             "type": "string",
             "format": "uuid",
@@ -9239,6 +11245,293 @@
           "accuracyMeters",
           "capturedAt",
           "isMocked"
+        ],
+        "additionalProperties": false
+      },
+      "ReportEvidence": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "before",
+              "installation",
+              "test",
+              "blocker"
+            ]
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/jpeg",
+              "image/png"
+            ]
+          },
+          "data": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160000,
+            "pattern": "^[A-Za-z0-9+/]+={0,2}$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "capturedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "synthetic": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "stage",
+          "caption",
+          "mimeType",
+          "data",
+          "sha256",
+          "capturedAt",
+          "synthetic"
+        ],
+        "additionalProperties": false
+      },
+      "ClosureReview": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "policyId": {
+            "type": "string",
+            "const": "fttp-closure-mvp"
+          },
+          "policyVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "humanConfirmed": {
+            "type": "boolean",
+            "const": true
+          },
+          "transcript": {
+            "type": "string",
+            "maxLength": 4000
+          },
+          "transcriptHistory": {
+            "default": [],
+            "maxItems": 8,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 4000
+            }
+          },
+          "candidates": {
+            "maxItems": 130,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "questionId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "fieldId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "evidenceId": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "uuid",
+                      "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "sourceSpan": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4000
+                },
+                "sourceType": {
+                  "type": "string",
+                  "enum": [
+                    "speech",
+                    "text",
+                    "job_pack",
+                    "manual",
+                    "demo_example"
+                  ]
+                },
+                "confidence": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "verificationStatus": {
+                  "type": "string",
+                  "enum": [
+                    "candidate",
+                    "accepted",
+                    "rejected"
+                  ]
+                },
+                "ambiguityReason": {
+                  "type": "string",
+                  "maxLength": 300
+                }
+              },
+              "required": [
+                "questionId",
+                "fieldId",
+                "value",
+                "sourceSpan",
+                "sourceType",
+                "confidence",
+                "verificationStatus",
+                "ambiguityReason"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "questionStates": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "NOT_SHOWN",
+                "ACTIVE_UNANSWERED",
+                "ANSWERED_UNVERIFIED",
+                "VERIFIED",
+                "NOT_APPLICABLE"
+              ]
+            }
+          },
+          "branchEvents": {
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "fieldId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 100,
+                  "pattern": "^[a-zA-Z0-9_-]+$"
+                },
+                "from": {
+                  "type": "string"
+                },
+                "to": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "at",
+                "fieldId",
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "startedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              "reviewedAt": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+              },
+              "elapsedMs": {
+                "type": "number",
+                "minimum": 0
+              },
+              "extractionMs": {
+                "type": "number",
+                "minimum": 0
+              },
+              "promptsShown": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "corrections": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "startedAt",
+              "reviewedAt",
+              "elapsedMs",
+              "extractionMs",
+              "promptsShown",
+              "corrections"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "policyId",
+          "policyVersion",
+          "humanConfirmed",
+          "transcript",
+          "transcriptHistory",
+          "candidates",
+          "questionStates",
+          "branchEvents",
+          "metrics"
         ],
         "additionalProperties": false
       },
@@ -9651,11 +11944,18 @@
               "upstream_21",
               "upstream_22"
             ]
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          },
+          "expectedRevision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
           }
         },
-        "required": [
-          "avatarId"
-        ],
         "additionalProperties": false
       },
       "BoardInput": {
@@ -9808,6 +12108,38 @@
             "default": "",
             "type": "string",
             "maxLength": 2000
+          },
+          "closureContext": {
+            "type": "object",
+            "properties": {
+              "scenario": {
+                "type": "string",
+                "enum": [
+                  "S1",
+                  "S2",
+                  "S3",
+                  "S4",
+                  "S5"
+                ]
+              },
+              "workStage": {
+                "type": "string",
+                "enum": [
+                  "survey",
+                  "design",
+                  "civils",
+                  "fibre",
+                  "distribution",
+                  "network_acceptance",
+                  "final_provision"
+                ]
+              }
+            },
+            "required": [
+              "scenario",
+              "workStage"
+            ],
+            "additionalProperties": false
           },
           "assetReference": {
             "default": "",
@@ -10781,6 +13113,32 @@
               }
             ]
           },
+          "evidence": {
+            "anyOf": [
+              {
+                "type": "array",
+                "maxItems": 4,
+                "items": {
+                  "$ref": "#/components/schemas/ReportEvidence"
+                }
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Included in report detail; omitted from report lists."
+          },
+          "closureReview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ClosureReview"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Engineer source trace and branch audit; report detail only."
+          },
           "confirmedAt": {
             "type": "string",
             "format": "date-time"
@@ -10868,26 +13226,37 @@
         "additionalProperties": false
       },
       "Provision": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
           "deviceId": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
           },
           "platform": {
+            "type": "string",
             "enum": [
               "ios",
               "android"
             ]
           },
           "appVersion": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
           },
           "osVersion": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
           },
           "model": {
-            "type": "string"
+            "type": "string",
+            "maxLength": 100
+          },
+          "nonExpiringDemo": {
+            "type": "boolean"
           }
         },
         "required": [
@@ -10916,8 +13285,16 @@
             "format": "date-time"
           },
           "expiresAt": {
-            "type": "string",
-            "format": "date-time"
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null only for an explicitly authorised local synthetic demo."
           },
           "manifest": {
             "type": "object"
@@ -10978,7 +13355,7 @@
                 }
               },
               "fields": {
-                "maxItems": 30,
+                "maxItems": 130,
                 "type": "array",
                 "items": {
                   "type": "object",
@@ -11162,6 +13539,22 @@
                         }
                       ]
                     },
+                    "activation": {
+                      "$ref": "#/$defs/__schema0"
+                    },
+                    "capture": {
+                      "type": "string",
+                      "const": "evidence"
+                    },
+                    "evidenceStage": {
+                      "type": "string",
+                      "enum": [
+                        "before",
+                        "installation",
+                        "test",
+                        "blocker"
+                      ]
+                    },
                     "scan": {
                       "type": "object",
                       "properties": {
@@ -11233,6 +13626,164 @@
                   "additionalProperties": false
                 }
               },
+              "closurePolicy": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "const": "fttp-closure-mvp"
+                  },
+                  "version": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  },
+                  "banks": {
+                    "minItems": 5,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "enum": [
+                            "S1",
+                            "S2",
+                            "S3",
+                            "S4",
+                            "S5"
+                          ]
+                        },
+                        "version": {
+                          "type": "number",
+                          "const": 1
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "questions": {
+                          "minItems": 25,
+                          "maxItems": 25,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "questionId": {
+                                "type": "string"
+                              },
+                              "fieldId": {
+                                "type": "string"
+                              },
+                              "question": {
+                                "type": "string"
+                              },
+                              "sourceShowWhen": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "questionId",
+                              "fieldId",
+                              "question",
+                              "sourceShowWhen",
+                              "status"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "version",
+                        "title",
+                        "questions"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "rules": {
+                    "maxItems": 100,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "when": {
+                          "$ref": "#/$defs/__schema0"
+                        },
+                        "assert": {
+                          "$ref": "#/$defs/__schema0"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "when",
+                        "assert",
+                        "message",
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "dispositions": {
+                    "maxItems": 30,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "when": {
+                          "$ref": "#/$defs/__schema0"
+                        },
+                        "outcome": {
+                          "type": "string",
+                          "enum": [
+                            "hold",
+                            "blocked",
+                            "referred",
+                            "partial",
+                            "stage_completed",
+                            "network_ready",
+                            "completed"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "when",
+                        "outcome"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "holdRequired": {
+                    "maxItems": 20,
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "version",
+                  "banks",
+                  "rules",
+                  "dispositions",
+                  "holdRequired"
+                ],
+                "additionalProperties": false
+              },
               "versionId": {
                 "type": "string",
                 "format": "uuid"
@@ -11256,7 +13807,91 @@
               "versionNumber",
               "schemaHash"
             ],
-            "additionalProperties": false
+            "additionalProperties": false,
+            "$defs": {
+              "__schema0": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "pattern": "^[a-zA-Z0-9_-]{1,100}$"
+                      },
+                      "op": {
+                        "type": "string",
+                        "enum": [
+                          "eq",
+                          "neq",
+                          "in",
+                          "present",
+                          "missing"
+                        ]
+                      },
+                      "value": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "maxItems": 20,
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field",
+                      "op"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "all": {
+                        "minItems": 1,
+                        "maxItems": 20,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/__schema0"
+                        }
+                      }
+                    },
+                    "required": [
+                      "all"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "any": {
+                        "minItems": 1,
+                        "maxItems": 20,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/__schema0"
+                        }
+                      }
+                    },
+                    "required": [
+                      "any"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
           }
         },
         "required": [

@@ -8,6 +8,8 @@ import * as accounts from '@/server/accounts';
 import * as collab from '@/server/collaboration';
 import * as workspace from '@/server/workspace';
 import * as people from '@/server/people';
+import * as summaries from '@/server/visit-summaries';
+import * as customerJobs from '@/server/customer-jobs';
 import {assetResponse} from '@/server/assets';
 import {z} from 'zod';
 export const runtime='nodejs';
@@ -16,7 +18,7 @@ async function handle(request:Request){
   try{
     const url=new URL(request.url);const p=url.pathname.replace('/api/v1/','');const method=request.method;
     const ids:string[]=[];
-    if(/^admin\/(templates|engineers|engineer-types|submissions|work-orders|users|clients|teams|boards)\/[^/]+/.test(p))ids.push(p.split('/')[2]);
+    if(/^admin\/(templates|engineers|engineer-types|submissions|visit-summaries|work-orders|users|clients|teams|boards)\/[^/]+/.test(p))ids.push(p.split('/')[2]);
     if(/^(conversations|notifications|work-orders|directory)\/[^/]+/.test(p))ids.push(p.split('/')[1]);
     if(/^templates\/[^/]+\/versions\/[^/]+$/.test(p))ids.push(p.split('/')[1],p.split('/')[3]);
     if(/^submissions\/status\/[^/]+$/.test(p))ids.push(p.split('/')[2]);
@@ -24,6 +26,12 @@ async function handle(request:Request){
     for(const name of ['typeId','engineerId','deviceId','clientId','jobId','boardId','userId','teamId']){const value=url.searchParams.get(name);if(value)ids.push(value);}
     if(ids.some(id=>!z.uuid().safeParse(id).success)||p==='sync/manifest'&&!url.searchParams.get('deviceId'))throw new ApiError(400,'INVALID_IDENTIFIER','Use a valid UUID identifier.');
     if(p==='health'&&method==='GET'){await db.$queryRaw`SELECT 1`;return Response.json({status:'ready',database:'postgresql'});}
+    if(p.startsWith('integrations/chatm/')){
+      const match=p.match(/^integrations\/chatm\/customers\/([^/]+)\/jobs$/);
+      if(method!=='GET'||!match||url.search)throw new ApiError(404,'NOT_FOUND','This backend operation is unavailable.');
+      let email:string;try{email=decodeURIComponent(match[1]);}catch{throw new ApiError(400,'INVALID_INPUT','Use a valid customer email.');}
+      return Response.json(await customerJobs.readChatmCustomerJobs(request,email),{headers:{'Cache-Control':'no-store'}});
+    }
     let raw='';if(!['GET','HEAD'].includes(method)){
       if(Number(request.headers.get('content-length')??0)>1048576)throw new ApiError(400,'BODY_TOO_LARGE','Maximum JSON body size is 1 MiB.');
       const reader=request.body?.getReader();const chunks:Uint8Array[]=[];let size=0;
@@ -72,6 +80,7 @@ async function handle(request:Request){
     else if(p==='admin/work-orders'&&method==='GET')result=await ops.listWorkOrders(ctx,url);
     else if(p==='admin/work-orders'&&method==='POST'){result=await ops.saveWorkOrder(ctx,body());status=201;}
     else if(/^admin\/work-orders\/[^/]+$/.test(p)&&method==='PATCH')result=await ops.saveWorkOrder(ctx,body(),p.split('/')[2]);
+    else if(/^admin\/work-orders\/[^/]+\/customer-status$/.test(p)&&method==='PUT')result=await customerJobs.saveCustomerJobStatus(ctx,p.split('/')[2],body());
     else if(p==='admin/reviews'&&method==='GET')result=await ops.listReviews(ctx,url);
     else if(/^admin\/submissions\/[^/]+\/review$/.test(p)&&method==='POST')result=await ops.reviewReport(ctx,p.split('/')[2],body());
     else if(p==='admin/asset-history'&&method==='GET')result=await ops.assetHistory(ctx,url);
@@ -97,6 +106,9 @@ async function handle(request:Request){
     else if(/^submissions\/status\/[^/]+$/.test(p)&&method==='GET')result=await s.submissionStatus(ctx,p.split('/')[2]);
     else if(/^submission-attempts\/[^/]+\/cancel$/.test(p)&&method==='POST')result=await s.cancelAttempt(ctx,p.split('/')[1],body());
     else if(p==='admin/submissions'&&method==='GET')result=await s.listSubmissions(ctx,url);
+    else if(p==='visit-summaries'&&method==='POST'){result=await summaries.submitVisitSummary(ctx,body());status=201;}
+    else if(p==='admin/visit-summaries'&&method==='GET')result=await summaries.listVisitSummaries(ctx,url);
+    else if(/^admin\/visit-summaries\/[^/]+$/.test(p)&&method==='GET')result=await summaries.visitSummaryDetail(ctx,p.split('/')[2]);
     else if(/^admin\/submissions\/[^/]+$/.test(p)&&method==='GET')result=await s.submissionDetail(ctx,p.split('/')[2]);
     else throw new ApiError(404,'NOT_FOUND','This API operation is unavailable.');
     return Response.json(result,{status,headers:{'Cache-Control':'no-store'}});

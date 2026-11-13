@@ -1,0 +1,790 @@
+{
+  "version": 1,
+  "banks": [
+    {
+      "id": "S1",
+      "version": 1,
+      "title": "Standard FTTP provision",
+      "questions": [
+        {
+          "questionId": "S1-Q01",
+          "question": "Work order and premises identity verified?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q02",
+          "question": "Assigned work stage?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q03",
+          "question": "What outcome is claimed for THIS work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q04",
+          "question": "Actual work completed?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q05",
+          "question": "Any safety hazard or incident?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q06",
+          "question": "Were access / permissions adequate?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q07",
+          "question": "Is attached evidence sufficient and linked to work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q08",
+          "question": "Is any work outstanding?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q09",
+          "question": "Was affected customer or next team informed?",
+          "sourceShowWhen": "IF customer-facing OR dependency",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q10",
+          "question": "Is the site safe and tidy or properly handed over?",
+          "sourceShowWhen": "IF physical work attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q11",
+          "question": "Serving CBT/pole/chamber reference recorded?",
+          "sourceShowWhen": "IF installation",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q12",
+          "question": "Drop route type?",
+          "sourceShowWhen": "IF installation",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q13",
+          "question": "Route usable without obstruction?",
+          "sourceShowWhen": "IF drop attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q14",
+          "question": "Customer approved cable and ONT location?",
+          "sourceShowWhen": "IF property entry",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q15",
+          "question": "Entry / drilling consent obtained?",
+          "sourceShowWhen": "IF penetration required",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q16",
+          "question": "External fibre and connection point installed?",
+          "sourceShowWhen": "IF drop attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q17",
+          "question": "Internal fibre fitted to ONT?",
+          "sourceShowWhen": "IF ONT stage",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q18",
+          "question": "ONT serial / identifier captured?",
+          "sourceShowWhen": "IF ONT fitted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q19",
+          "question": "ONT power/status checked?",
+          "sourceShowWhen": "IF ONT fitted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q20",
+          "question": "Optical test evidence and result?",
+          "sourceShowWhen": "IF fibre connected",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q21",
+          "question": "Service operating / provider activation confirmed?",
+          "sourceShowWhen": "IF optical pass",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q22",
+          "question": "Customer handover completed?",
+          "sourceShowWhen": "IF service live",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q23",
+          "question": "Photo evidence of installation?",
+          "sourceShowWhen": "IF equipment installed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q24",
+          "question": "Any surface/property damage?",
+          "sourceShowWhen": "IF drilling/external work",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S1-Q25",
+          "question": "Reinstatement accepted?",
+          "sourceShowWhen": "IF damage or excavation",
+          "status": "synthetic proposal"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "version": 1,
+      "title": "Blocked underground duct",
+      "questions": [
+        {
+          "questionId": "S2-Q01",
+          "question": "Work order and premises identity verified?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q02",
+          "question": "Assigned work stage?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q03",
+          "question": "What outcome is claimed for THIS work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q04",
+          "question": "Actual work completed?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q05",
+          "question": "Any safety hazard or incident?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q06",
+          "question": "Were access / permissions adequate?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q07",
+          "question": "Is attached evidence sufficient and linked to work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q08",
+          "question": "Is any work outstanding?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q09",
+          "question": "Was affected customer or next team informed?",
+          "sourceShowWhen": "IF customer-facing OR dependency",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q10",
+          "question": "Is the site safe and tidy or properly handed over?",
+          "sourceShowWhen": "IF physical work attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q11",
+          "question": "Underground route confirmed?",
+          "sourceShowWhen": "IF duct path",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q12",
+          "question": "Exact obstruction section / chamber IDs?",
+          "sourceShowWhen": "IF blocked",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q13",
+          "question": "Rod/rope/pull attempted safely?",
+          "sourceShowWhen": "IF duct work",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q14",
+          "question": "Type of obstruction suspected?",
+          "sourceShowWhen": "IF blocked",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q15",
+          "question": "Estimated location / measured distance?",
+          "sourceShowWhen": "IF blocked",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q16",
+          "question": "Can obstruction be safely cleared in scope?",
+          "sourceShowWhen": "IF blocked",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q17",
+          "question": "Temporary mitigation or alternate route feasible?",
+          "sourceShowWhen": "IF blocked",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q18",
+          "question": "Dig/civils work required?",
+          "sourceShowWhen": "IF cannot clear",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q19",
+          "question": "Dig category and permit dependencies?",
+          "sourceShowWhen": "IF civils needed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q20",
+          "question": "Site made safe after attempt?",
+          "sourceShowWhen": "IF physical work",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q21",
+          "question": "Civils task/reference created?",
+          "sourceShowWhen": "IF civils needed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q22",
+          "question": "Named owning team and priority?",
+          "sourceShowWhen": "IF civils needed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q23",
+          "question": "Other premises affected?",
+          "sourceShowWhen": "IF shared duct",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q24",
+          "question": "Was any ONT/CSP fitted before blockage found?",
+          "sourceShowWhen": "IF partial install",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S2-Q25",
+          "question": "Is optical/service activation confirmed?",
+          "sourceShowWhen": "IF fibre fully connected",
+          "status": "synthetic proposal"
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "version": 1,
+      "title": "Missing or incorrect CBT",
+      "questions": [
+        {
+          "questionId": "S3-Q01",
+          "question": "Work order and premises identity verified?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q02",
+          "question": "Assigned work stage?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q03",
+          "question": "What outcome is claimed for THIS work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q04",
+          "question": "Actual work completed?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q05",
+          "question": "Any safety hazard or incident?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q06",
+          "question": "Were access / permissions adequate?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q07",
+          "question": "Is attached evidence sufficient and linked to work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q08",
+          "question": "Is any work outstanding?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q09",
+          "question": "Was affected customer or next team informed?",
+          "sourceShowWhen": "IF customer-facing OR dependency",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q10",
+          "question": "Is the site safe and tidy or properly handed over?",
+          "sourceShowWhen": "IF physical work attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q11",
+          "question": "Expected CBT asset ID?",
+          "sourceShowWhen": "IF provision",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q12",
+          "question": "Observed asset ID or not found?",
+          "sourceShowWhen": "IF on-site",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q13",
+          "question": "Correct serving pole/chamber?",
+          "sourceShowWhen": "IF on-site",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q14",
+          "question": "CBT physically present?",
+          "sourceShowWhen": "IF asset check",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q15",
+          "question": "CBT reachable and safe?",
+          "sourceShowWhen": "IF present",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q16",
+          "question": "CBT capacity/port available per verified record?",
+          "sourceShowWhen": "IF present",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q17",
+          "question": "Asset-to-premises mapping match?",
+          "sourceShowWhen": "IF observed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q18",
+          "question": "Photographic/location evidence attached?",
+          "sourceShowWhen": "IF mismatch",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q19",
+          "question": "Possible alternative terminal identified?",
+          "sourceShowWhen": "IF mismatch",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q20",
+          "question": "Alternative approved for use?",
+          "sourceShowWhen": "IF alternative",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q21",
+          "question": "Records correction requested?",
+          "sourceShowWhen": "IF mismatch",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q22",
+          "question": "Ticket / escalation reference?",
+          "sourceShowWhen": "IF correction needed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q23",
+          "question": "Assigned network-build owner?",
+          "sourceShowWhen": "IF terminal absent",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q24",
+          "question": "Customer service affected?",
+          "sourceShowWhen": "IF failed provision",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S3-Q25",
+          "question": "Is reappointment held pending readiness?",
+          "sourceShowWhen": "IF unavailable",
+          "status": "synthetic proposal"
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "version": 1,
+      "title": "ONT fitted, service not active",
+      "questions": [
+        {
+          "questionId": "S4-Q01",
+          "question": "Work order and premises identity verified?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q02",
+          "question": "Assigned work stage?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q03",
+          "question": "What outcome is claimed for THIS work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q04",
+          "question": "Actual work completed?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q05",
+          "question": "Any safety hazard or incident?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q06",
+          "question": "Were access / permissions adequate?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q07",
+          "question": "Is attached evidence sufficient and linked to work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q08",
+          "question": "Is any work outstanding?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q09",
+          "question": "Was affected customer or next team informed?",
+          "sourceShowWhen": "IF customer-facing OR dependency",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q10",
+          "question": "Is the site safe and tidy or properly handed over?",
+          "sourceShowWhen": "IF physical work attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q11",
+          "question": "ONT installed?",
+          "sourceShowWhen": "IF indoor work",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q12",
+          "question": "ONT serial captured?",
+          "sourceShowWhen": "IF ONT installed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q13",
+          "question": "Customer agreed ONT location?",
+          "sourceShowWhen": "IF ONT installed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q14",
+          "question": "External CSP installed?",
+          "sourceShowWhen": "IF drop work",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q15",
+          "question": "External fibre actually connected end-to-end?",
+          "sourceShowWhen": "IF CSP/drop",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q16",
+          "question": "Power/LOS indicators checked?",
+          "sourceShowWhen": "IF ONT installed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q17",
+          "question": "Optical reading captured?",
+          "sourceShowWhen": "IF end-to-end connected",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q18",
+          "question": "Optical test result?",
+          "sourceShowWhen": "IF connected",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q19",
+          "question": "Provisioning / authentication attempted?",
+          "sourceShowWhen": "IF optical pass",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q20",
+          "question": "Service activated/operational?",
+          "sourceShowWhen": "IF activation attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q21",
+          "question": "Issue type isolated?",
+          "sourceShowWhen": "IF service not live",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q22",
+          "question": "Diagnostic evidence attached?",
+          "sourceShowWhen": "IF failed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q23",
+          "question": "Owner for next action?",
+          "sourceShowWhen": "IF failed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q24",
+          "question": "Follow-on ticket / appointment?",
+          "sourceShowWhen": "IF failed",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S4-Q25",
+          "question": "Customer informed service NOT live?",
+          "sourceShowWhen": "IF service not live",
+          "status": "synthetic proposal"
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "version": 1,
+      "title": "Remote property multi-stage build",
+      "questions": [
+        {
+          "questionId": "S5-Q01",
+          "question": "Work order and premises identity verified?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q02",
+          "question": "Assigned work stage?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q03",
+          "question": "What outcome is claimed for THIS work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q04",
+          "question": "Actual work completed?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q05",
+          "question": "Any safety hazard or incident?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q06",
+          "question": "Were access / permissions adequate?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q07",
+          "question": "Is attached evidence sufficient and linked to work order?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q08",
+          "question": "Is any work outstanding?",
+          "sourceShowWhen": "ALWAYS",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q09",
+          "question": "Was affected customer or next team informed?",
+          "sourceShowWhen": "IF customer-facing OR dependency",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q10",
+          "question": "Is the site safe and tidy or properly handed over?",
+          "sourceShowWhen": "IF physical work attempted",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q11",
+          "question": "Current build stage?",
+          "sourceShowWhen": "IF remote program",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q12",
+          "question": "Network endpoint and survey reference?",
+          "sourceShowWhen": "IF survey",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q13",
+          "question": "Design version accepted?",
+          "sourceShowWhen": "IF design review",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q14",
+          "question": "Route distance and constraints confirmed?",
+          "sourceShowWhen": "IF survey",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q15",
+          "question": "Wayleave / access permission required?",
+          "sourceShowWhen": "IF route crosses third-party",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q16",
+          "question": "Wayleave/permit granted?",
+          "sourceShowWhen": "IF permission required",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q17",
+          "question": "Civils segment(s) identified?",
+          "sourceShowWhen": "IF build",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q18",
+          "question": "Duct / chamber works completed to design?",
+          "sourceShowWhen": "IF civils stage",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q19",
+          "question": "Reinstatement / safety evidence accepted?",
+          "sourceShowWhen": "IF civils stage",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q20",
+          "question": "Fibre cable placed and spliced?",
+          "sourceShowWhen": "IF fibre stage",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q21",
+          "question": "Splice/segment test evidence accepted?",
+          "sourceShowWhen": "IF fibre complete",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q22",
+          "question": "CBT/terminal available and mapped?",
+          "sourceShowWhen": "IF distribution stage",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q23",
+          "question": "As-built records accepted?",
+          "sourceShowWhen": "IF stage acceptance",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q24",
+          "question": "Named downstream owner / handoff accepted?",
+          "sourceShowWhen": "IF stage completion",
+          "status": "synthetic proposal"
+        },
+        {
+          "questionId": "S5-Q25",
+          "question": "Premises marked ready for final provision?",
+          "sourceShowWhen": "IF network acceptance",
+          "status": "synthetic proposal"
+        }
+      ]
+    }
+  ]
+}

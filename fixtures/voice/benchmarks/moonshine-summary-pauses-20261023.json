@@ -1,0 +1,182 @@
+{
+  "scope": "Synthetic paced PCM through real Moonshine/Silero and local Qwen on this Mac, including 1.2-second sentence pauses and 4.5-second delayed additions. Not a physical-phone microphone or latency guarantee.",
+  "records": [
+    {
+      "id": "s1-summary",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 18.06,
+      "finalizedWallMilliseconds": 20717,
+      "extractionMilliseconds": 13,
+      "replyReadyWallMilliseconds": 20730,
+      "nonemptyPartialUpdates": 104,
+      "nativePassP95Milliseconds": 235,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "s1-summary-noisy",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 18.24,
+      "finalizedWallMilliseconds": 20378,
+      "extractionMilliseconds": 1,
+      "replyReadyWallMilliseconds": 20379,
+      "nonemptyPartialUpdates": 107,
+      "nativePassP95Milliseconds": 125,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "s1-sentence-pauses",
+      "transcript": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment",
+      "values": {
+        "actual_work": "I installed the ONT in the living room. I used the existing duct for the fibre route. The optical receive reading was -18.2 dBm. The service test passed. The job is fully completed. I showed the customer the equipment",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 24.32,
+      "finalizedWallMilliseconds": 26887,
+      "extractionMilliseconds": 3,
+      "replyReadyWallMilliseconds": 26890,
+      "nonemptyPartialUpdates": 147,
+      "nativePassP95Milliseconds": 150,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "additional-delayed",
+      "transcript": "The service test passed. The job is fully completed. No further work required.",
+      "values": {
+        "actual_work": "The service test passed. The job is fully completed. No further work required.",
+        "operational_test": "passed",
+        "claimed_outcome": "completed",
+        "next_action": "No further work required"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 12.16,
+      "finalizedWallMilliseconds": 13417,
+      "extractionMilliseconds": 0,
+      "replyReadyWallMilliseconds": 13417,
+      "nonemptyPartialUpdates": 47,
+      "nativePassP95Milliseconds": 107,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "reading-fragment",
+      "transcript": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+      "values": {
+        "actual_work": "The reading was minus 18.2 dBm. The service test passed. The job is fully completed.",
+        "operational_test": "passed",
+        "optical_rx_dbm": -18.2,
+        "claimed_outcome": "completed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 9.68,
+      "finalizedWallMilliseconds": 10719,
+      "extractionMilliseconds": 3,
+      "replyReadyWallMilliseconds": 10722,
+      "nonemptyPartialUpdates": 52,
+      "nativePassP95Milliseconds": 346,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "paraphrased",
+      "transcript": "I finished all the work. Connectivity checks were successful. We need a return visit tomorrow.",
+      "values": {
+        "actual_work": "I finished all the work. Connectivity checks were successful. We need a return visit tomorrow.",
+        "next_action": "return visit tomorrow",
+        "claimed_outcome": "completed",
+        "operational_test": "passed"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 8.44,
+      "finalizedWallMilliseconds": 9360,
+      "extractionMilliseconds": 626,
+      "replyReadyWallMilliseconds": 9986,
+      "nonemptyPartialUpdates": 47,
+      "nativePassP95Milliseconds": 173,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "negative",
+      "transcript": "I have not completed the job. The service test did not pass.",
+      "values": {
+        "actual_work": "I have not completed the job. The service test did not pass.",
+        "claimed_outcome": null,
+        "operational_test": null
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 6.72,
+      "finalizedWallMilliseconds": 7421,
+      "extractionMilliseconds": 2,
+      "replyReadyWallMilliseconds": 7423,
+      "nonemptyPartialUpdates": 35,
+      "nativePassP95Milliseconds": 112,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "asset",
+      "transcript": "Cbt-syn-10",
+      "values": {
+        "actual_work": "Cbt-syn-10",
+        "serving_asset": "CBT-SYN-10"
+      },
+      "endpointFired": true,
+      "noSpeech": false,
+      "processedAudioSeconds": 4.48,
+      "finalizedWallMilliseconds": 4955,
+      "extractionMilliseconds": 5,
+      "replyReadyWallMilliseconds": 4960,
+      "nonemptyPartialUpdates": 23,
+      "nativePassP95Milliseconds": 127,
+      "mismatches": [],
+      "passed": true
+    },
+    {
+      "id": "noise-only",
+      "transcript": "",
+      "values": {},
+      "endpointFired": true,
+      "noSpeech": true,
+      "processedAudioSeconds": 8.0,
+      "finalizedWallMilliseconds": 8812,
+      "extractionMilliseconds": 0,
+      "replyReadyWallMilliseconds": 8812,
+      "nonemptyPartialUpdates": 0,
+      "nativePassP95Milliseconds": 0,
+      "mismatches": [],
+      "passed": true
+    }
+  ],
+  "failed": 0,
+  "buildVersion": "0.2.2+17",
+  "summaryPauseMilliseconds": 1800,
+  "focusedPauseMilliseconds": 450,
+  "additionalSpeechWaitSeconds": 8
+}

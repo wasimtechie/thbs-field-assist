@@ -1,0 +1,12 @@
+[
+  {"id":"hook","label":"The engineer's moment","minSeconds":6,"lines":[{"text":"Your engineer knows the work. Let the record catch up.","voice":"bf_emma"}]},
+  {"id":"reveal","label":"Meet the voice assistant","minSeconds":7,"lines":[{"text":"Field Assist. Voice-guided reporting, designed for the applications your engineers already use.","voice":"bf_emma"}]},
+  {"id":"capture","label":"Speak once, fill the record","minSeconds":15,"lines":[{"text":"I installed the O N T in the living room. I used the existing duct. Optical receive was minus eighteen point two d B m. The service test passed. The job is complete.","display":"I installed the ONT in the living room. I used the existing duct. Optical receive was −18.2 dBm. The service test passed. The job is complete.","voice":"am_michael","role":"ENGINEER"}]},
+  {"id":"followup","label":"Only the missing answer","minSeconds":9,"lines":[{"text":"Is any follow-up work required?","voice":"bm_george","role":"ASSISTANT","gapAfter":0.6},{"text":"No further work required.","voice":"am_michael","role":"ENGINEER","gapAfter":0.7},{"text":"Ready for your review.","voice":"bf_emma"}]},
+  {"id":"repair","label":"Corrections stay in the conversation","minSeconds":9,"lines":[{"text":"The reading is eighteen point two. No, sorry. The reading is minus eighteen point one nine d B m.","display":"The reading is 18.2. No, sorry. The reading is −18.19 dBm.","voice":"am_michael","role":"ENGINEER"}]},
+  {"id":"speed","label":"Early recognition benchmark","minSeconds":9,"lines":[{"text":"Early synthetic tests measured short-answer recognition at about zero point four five seconds.","voice":"bf_emma"}]},
+  {"id":"offline","label":"Capture offline","minSeconds":8,"lines":[{"text":"Capture offline after setup. Save on the phone. Sync confirmed records when connected.","voice":"bf_emma"}]},
+  {"id":"integration","label":"Designed for your existing apps","minSeconds":8,"lines":[{"text":"Bring voice into your existing application, through agreed interfaces and your approved rules.","voice":"bf_emma"}]},
+  {"id":"adapt","label":"Adapted to your requirements","minSeconds":11,"lines":[{"text":"Configure forms, terminology and voices. For deeper adaptation, fine-tuning can be scoped around approved engineer recordings and validated against your requirements.","voice":"bf_emma"}]},
+  {"id":"close","label":"Start with one workflow","minSeconds":8,"lines":[{"text":"Speak the visit. Complete the record. Start with one workflow. Prove it with your engineers.","voice":"bf_emma"}]}
+]

@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-25",
+  "version": "0.3.3+21",
+  "scope": [
+    "Question-scoped homophones",
+    "Spoken clarification with asset-type context",
+    "Editable speech transcripts and grounded remapping",
+    "Rotating fresh/resume openings",
+    "Four selectable offline voices"
+  ],
+  "models": "Existing Moonshine Small Streaming, Needle3 and Kokoro English v0.19; no fine-tuning or new model weights",
+  "tests": {
+    "regression": {
+      "passed": 130,
+      "log": ".local/context-voice-regression.log"
+    },
+    "focused_journeys": {
+      "passed": 11,
+      "log": ".local/context-voice-final-journeys.log"
+    }
+  },
+  "analysis": [
+    ".local/context-voice-analysis.log",
+    ".local/context-field-voice-analysis.log"
+  ],
+  "simulator_build": ".local/context-voice-ios-build.log",
+  "voice_packs": {
+    "bm_george": {
+      "speakerId": 9,
+      "clips": 97
+    },
+    "bf_emma": {
+      "speakerId": 7,
+      "clips": 24
+    },
+    "am_michael": {
+      "speakerId": 6,
+      "clips": 24
+    },
+    "af_sarah": {
+      "speakerId": 3,
+      "clips": 24
+    }
+  },
+  "prepared_audio_bytes": 32389612,
+  "prepared_index_sha256": "786079a25a2d10129b09b2dad4ac35484559da07054f747849c1d97e67ce5dd6",
+  "limits": [
+    "Bounded semantic repair, not a changed STT checkpoint",
+    "No physical-phone accent/noise accuracy measured",
+    "Android artifact remains v0.3.1"
+  ],
+  "data_safety": [
+    "Original simulator data privately backed up before in-place install",
+    "No uninstall or erase in this change",
+    "Demo access renewed through normal login/provision after existing Docker database restarted"
+  ],
+  "sources": {
+    "apps/mobile/lib/features/voice/asset_reference.dart": "f7bb7f2e7c202cb520f702659a6a94befb5c448273621e6bb48c075900906b78",
+    "apps/mobile/lib/features/voice/conversation.dart": "3da7f308959c7e195d971f21431682afacec0d71a30b89859091cd7b9dfd9f9f",
+    "apps/mobile/lib/features/closure/closure_speech.dart": "d582a8ce697815143885fdabbdc548bf0773148ea884cdccac67084ab03039a4",
+    "apps/mobile/lib/features/closure/closure_voice_assistant.dart": "827112cfc7415b1092b68826f34aa7cf5ad93145e6e2f2606d5c94e7a4d33794",
+    "apps/mobile/lib/features/closure/compact_closure_screen.dart": "3e32c1c9805cbbf93d534ce2e9a168956c553c08c540605b96d265268d48b26e",
+    "apps/mobile/lib/features/closure/compact_narrative.dart": "925f40d0d86ebdb6b1fd522cfbefd5289c334872d3a7573e072653afb8fc6859",
+    "apps/mobile/lib/features/closure/transcript_editor.dart": "428faf50647e4c4a054ebc5680deee249c304a02c25d7a8c377417bd1796150c",
+    "apps/mobile/lib/features/closure/question_voice.dart": "ff15838bf5568fc2aa7601c4c088b4da7abbd77af039587fb73010b0f696b3e7",
+    "apps/mobile/lib/features/settings/voice_picker.dart": "f6fc8a37402d48d5fc10f8314cba162d81bf51d57f7a7fada684961806900a48",
+    "apps/mobile/lib/app/app_controller.dart": "d314cba2e7ed908b80cd0e44c4f9cbf58631aa858d9e63ee753716efab4fb18f",
+    "packages/field_voice/lib/field_voice.dart": "0103389532595b94b19b88b530f7be60f0c1511a7f87bfddc090c96311011f68",
+    "packages/field_voice/lib/speech_voices.dart": "b3eda78c88e16825c58932c8c6bfe531591707fa9e9fa971c1c7577bc8aade48"
+  },
+  "installed_app": {
+    "version": "0.3.3",
+    "build": "21"
+  },
+  "simulator_observation": [
+    "AI voice choices visibly listed in Profile",
+    "Emma preview started and returned to idle without error",
+    "Michael preview started",
+    "User testing reached the new spoken asset-type clarification in the normal voice session; app remained running"
+  ],
+  "verification_limits": "Simulator behaviour and prepared-audio integrity; no new accent accuracy score or physical-device certification"
+}

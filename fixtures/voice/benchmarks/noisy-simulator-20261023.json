@@ -1,0 +1,22 @@
+{
+  "scope": "iPhone simulator debug diagnostic: generated Kokoro audio, deterministic synthetic noise, adaptive endpoint and native Whistle recognition. No live microphone, OS denoising or physical Android measurement.",
+  "sampleRateHz": 16000,
+  "seed": 42,
+  "noise": {
+    "humHz": 100,
+    "humAmplitude": 0.007,
+    "uniformNoiseAmplitude": 0.006,
+    "approximateNoiseRms": 0.006,
+    "leadingNoiseSeconds": 0.6,
+    "trailingNoiseSeconds": 1.5
+  },
+  "cases": [
+    {"utterance": "The work is fully completed.", "transcript": "The work is fully completed.", "value": "completed", "endpointSecondsFromInputStart": 3.04},
+    {"utterance": "The service test passed.", "transcript": "The service test passed.", "value": "passed", "endpointSecondsFromInputStart": 2.96},
+    {"utterance": "The test has not passed.", "transcript": "The test has not passed.", "value": null, "endpointSecondsFromInputStart": 3.0},
+    {"utterance": "Minus eighteen point two d B M.", "transcript": "minus 18.2 dbm.", "value": -18.2, "endpointSecondsFromInputStart": 3.68}
+  ],
+  "passed": true,
+  "endToEndResponseLatencyMeasured": false,
+  "physicalAndroidTested": false
+}

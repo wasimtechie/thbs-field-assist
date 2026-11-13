@@ -1,0 +1,15 @@
+import {readFileSync} from 'node:fs';
+import {describe,it,expect} from 'vitest';
+import {templateSchema,validateValues,isVisible,closureChecks,schemaHash} from '../index';
+const read=(p:string)=>JSON.parse(readFileSync(p,'utf8'));
+const schema=templateSchema.parse(read('fixtures/templates/closure-mvp.json'));
+const cases=read('fixtures/closure-mvp/pathways.json') as {id:string;values:Record<string,any>;expectedRecommendation:string;expectedHidden:string[]}[];
+const photos=['before','installation','test','blocker'].map(stage=>({stage}));
+describe('Manager FTTP closure MVP',()=>{
+ it('preserves the complete source catalogue and 125 uniquely versioned bank entries',()=>{const c=read('fixtures/closure-mvp/catalogue.json');expect(c.jobTypes).toHaveLength(15);expect(c.jobTypes.flatMap((j:any)=>j.questions)).toHaveLength(251);expect(c.jobTypes.flatMap((j:any)=>j.rules)).toHaveLength(70);const q=schema.closurePolicy!.banks.flatMap(b=>b.questions);expect(q).toHaveLength(125);expect(new Set(q.map(q=>q.questionId)).size).toBe(125);expect(schemaHash(schema)).toHaveLength(64);});
+ for(const c of cases)it(c.id,()=>{const result=closureChecks(schema,c.values,photos);expect(result.recommendation).toBe(c.expectedRecommendation);if(c.expectedRecommendation!=='completed')expect(result.serviceLive).toBe(false);for(const id of c.expectedHidden)expect(isVisible(schema.fields.find(f=>f.id===id)!,c.values,schema.fields)).toBe(false);});
+ it('has usable synthetic examples without hidden values in a frozen submission',()=>{for(const [id,v] of Object.entries(read('fixtures/closure-mvp/examples.json'))){const a=v as Record<string,any>;const result=validateValues(schema,a);expect(result.errors,`${id}: ${JSON.stringify(result.errors)}`).toEqual([]);expect(closureChecks(schema,result.values,photos).issues,`${id}`).toEqual([]);}});
+ it('accepts an S1 blocked-route handoff without invented ONT or optical readings',()=>{const values=cases.find(c=>c.id==='T1-03')!.values;const result=validateValues(schema,values);expect(result.errors).toEqual([]);expect(result.values.ont_serial).toBeUndefined();expect(result.values.optical_rx_dbm).toBeUndefined();expect(closureChecks(schema,result.values,photos).issues).toEqual([]);});
+ it('rejects duplicate bank IDs and unknown rule or question targets',()=>{for(const mutate of [(s:any)=>s.closurePolicy.banks[1].id='S1',(s:any)=>s.closurePolicy.banks[0].questions[0].fieldId='unknown',(s:any)=>s.closurePolicy.holdRequired.push('unknown')]){const bad=structuredClone(schema);mutate(bad);expect(templateSchema.safeParse(bad).success).toBe(false);}});
+ it('refuses false completion, missing evidence, consent and unknown measurements',()=>{const v=read('fixtures/closure-mvp/examples.json').S1;for(const patch of [{identity_verified:false},{ont_fitted:false},{property_damage:true,reinstatement_accepted:false},{optical_rx_dbm:null},{drilling_consent:false,penetration_required:true},{service_live:false},{safety_hazard:true,hazard_mitigated:false}])expect(closureChecks(schema,{...v,...patch},photos).issues.length).toBeGreaterThan(0);expect(closureChecks(schema,v,[]).issues.length).toBeGreaterThan(0);});
+});

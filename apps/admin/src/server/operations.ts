@@ -1,3 +1,4 @@
+import {FTTP_TEMPLATE_ID,CLOSURE_TEMPLATE_ID} from '@field-assist/contracts';
 import {db} from '../../../../packages/database';
 import {Prisma} from '@prisma/client';
 import {workOrderInputSchema,reviewInputSchema,workOrderStatuses,workOrderPriorities,jobIsOverdue,hasPermission} from '@field-assist/contracts';
@@ -9,7 +10,7 @@ import {workScope,reportScope,engineerScope,ledTeams,clientScope} from './scopes
 import {notify} from './collaboration';
 import {boardScope} from './workspace';
 
-const details=async(job:any)=>({...job,assignedBy:publicUser(await db.user.findUniqueOrThrow({where:{id:job.assignedById??job.createdBy}})),board:job.boardId?await db.jobBoard.findUnique({where:{id:job.boardId},select:{id:true,name:true}}):null,latestReportOwnerId:job.latestReportId?(await db.report.findUnique({where:{id:job.latestReportId},select:{userId:true}}))?.userId:null,assignee:publicUser(await db.user.findUniqueOrThrow({where:{id:job.assigneeId}})),client:job.clientId?await db.client.findUnique({where:{id:job.clientId},select:{id:true,name:true,teamId:true}}):null,team:job.teamId?await db.team.findUnique({where:{id:job.teamId},select:{id:true,name:true,leadId:true}}):null,responses:await db.assignmentResponse.findMany({where:{workOrderId:job.id},orderBy:{respondedAt:'desc'}}),latestReview:job.latestReportId?await db.reportReview.findUnique({where:{reportId:job.latestReportId}}):null});
+const details=async(job:any)=>({...job,customerStatus:await db.customerJobStatus.findUnique({where:{workOrderId:job.id}}),assignedBy:publicUser(await db.user.findUniqueOrThrow({where:{id:job.assignedById??job.createdBy}})),board:job.boardId?await db.jobBoard.findUnique({where:{id:job.boardId},select:{id:true,name:true}}):null,latestReportOwnerId:job.latestReportId?(await db.report.findUnique({where:{id:job.latestReportId},select:{userId:true}}))?.userId:null,assignee:publicUser(await db.user.findUniqueOrThrow({where:{id:job.assigneeId}})),client:job.clientId?await db.client.findUnique({where:{id:job.clientId},select:{id:true,name:true,teamId:true}}):null,team:job.teamId?await db.team.findUnique({where:{id:job.teamId},select:{id:true,name:true,leadId:true}}):null,responses:await db.assignmentResponse.findMany({where:{workOrderId:job.id},orderBy:{respondedAt:'desc'}}),latestReview:job.latestReportId?await db.reportReview.findUnique({where:{reportId:job.latestReportId}}):null});
 export async function listWorkOrders(ctx:Context,url:URL){
   requirePermission(ctx,'work_orders.read');const {limit,...pagination}=pageParams(url);
   const boardId=url.searchParams.get('boardId');const response=url.searchParams.get('response'),clientId=url.searchParams.get('clientId'),jobId=url.searchParams.get('jobId');if(response&&!['pending','accepted','declined'].includes(response))throw new ApiError(400,'INVALID_FILTER','Choose an assignment response.');
@@ -56,6 +57,9 @@ export async function reviewReport(ctx:Context,id:string,input:unknown){
   requirePermission(ctx,'reports.review');const data=parse(reviewInputSchema,input);
   return transaction(async tx=>{
     const report=await tx.report.findFirst({where:{id,...await reportScope(ctx,tx)}});if(!report)notFound();
+    const version=await tx.templateVersion.findUniqueOrThrow({where:{id:report.templateVersionId}});
+    if(version.templateId===FTTP_TEMPLATE_ID&&(report.values as Record<string,unknown>).installation_outcome!=='completed'&&data.decision==='approved')throw new ApiError(422,'FTTP_FOLLOW_UP_REQUIRED','This visit did not complete the installation. Request follow-up with the next team and action instead of closing the job.');
+    if(version.templateId===CLOSURE_TEMPLATE_ID&&!['completed','stage_completed','network_ready'].includes(String((report.values as Record<string,unknown>).claimed_outcome))&&data.decision==='approved')throw new ApiError(422,'CLOSURE_FOLLOW_UP_REQUIRED','This is a hold, partial or referral. Record the next action as a follow-up.');
     const previous=await tx.reportReview.findUnique({where:{reportId:id}});
     if(previous){if(previous.decision===data.decision&&previous.note===data.note)return previous;throw new ApiError(409,'ALREADY_REVIEWED','This report already has a recorded decision. Follow-up uses a new report.');}
     if(report.workOrderId){
@@ -74,7 +78,7 @@ export async function listReviews(ctx:Context,url:URL){
   // NOT EXISTS avoids truncating the review filter to an arbitrary ID list.
   const ids=await db.$queryRaw<{id:string}[]>`SELECT r.id FROM "Report" r WHERE r."organizationId"=${ctx.user.organizationId}::uuid AND (${decisions}::text IS NULL AND NOT EXISTS(SELECT 1 FROM "ReportReview" v WHERE v."reportId"=r.id) OR EXISTS(SELECT 1 FROM "ReportReview" v WHERE v."reportId"=r.id AND v.decision=${decisions})) ORDER BY r."receivedAt" DESC,r.id DESC`;
   const where={...await reportScope(ctx),id:{in:ids.map(r=>r.id)}};
-  const reports=await db.report.findMany({where,...pagination,orderBy:[{receivedAt:'desc'},{id:'desc'}]});
+  const reports=await db.report.findMany({where,omit:{evidence:true,closureReview:true},...pagination,orderBy:[{receivedAt:'desc'},{id:'desc'}]});
   return {items:await Promise.all(reports.slice(0,limit).map(async r=>({...r,engineer:publicUser(await db.user.findUniqueOrThrow({where:{id:r.userId}})),workOrder:r.workOrderId?await db.workOrder.findUnique({where:{id:r.workOrderId}}):null,review:await db.reportReview.findUnique({where:{reportId:r.id}})}))),total:await db.report.count({where}),nextCursor:reports.length>limit?reports[limit-1].id:null};
 }
 export async function mobileOperations(ctx:Context){
